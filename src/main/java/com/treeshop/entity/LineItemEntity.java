@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "lineitem")
-public class LineItemEntity {
+public class LineItemEntity implements Serializable {
     @EmbeddedId
     private LineItemIdKey lineItemIdKey;
     @Column(name = "quantity")

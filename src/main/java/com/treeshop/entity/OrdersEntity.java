@@ -28,6 +28,10 @@ public class OrdersEntity {
     private String orderDate;
     @Column(name = "note")
     private String note;
+    @Column(name = "user_name")
+    private String userName;
+    @Column(name = "code_id")
+    private String codeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_name", insertable = false, updatable = false)

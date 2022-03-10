@@ -19,7 +19,7 @@ public class RoleEntity implements Serializable {
     @Column(name = "role_name", length = 100)
     private String roleName;
 
-    @OneToMany(mappedBy = "roleEntity")
+    @OneToMany(mappedBy = "roleEntity", fetch = FetchType.LAZY)
     private List<UserEntity> userEntityList;
 
 }

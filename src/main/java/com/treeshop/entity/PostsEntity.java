@@ -15,18 +15,16 @@ public class PostsEntity {
     @Id
     @Column(name = "posts_id", length = 10)
     private String postsId;
-
     @Column(name = "title", length = 300)
     private String title;
-
     @Column(name = "descriptions")
     private String descriptions;
-
     @Column(name= "header_image", length = 100)
     private String headerImage;
-
     @Column(name = "create_date")
     private Timestamp createDate;
+    @Column(name = "user_name", length = 20)
+    private String userName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "postsEntity")
     private List<ItemPostsListEntity> itemPostsListEntityList;

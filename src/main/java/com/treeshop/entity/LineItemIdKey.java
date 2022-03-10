@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
@@ -15,8 +16,9 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 public class LineItemIdKey implements Serializable {
-    @Column(length = 10)
+    @Column(name = "order_id", length = 10)
     private String orderId;
-    @Column(length = 10)
+    @Column(name = "product_id", length = 10)
     private String productId;
+
 }

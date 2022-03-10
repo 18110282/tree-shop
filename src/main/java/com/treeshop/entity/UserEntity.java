@@ -13,10 +13,10 @@ import java.util.List;
 @Table(name = "user")
 public class UserEntity implements Serializable {
     @Id
-    @Column(name = "user_name")
+    @Column(name = "user_name", length = 20)
     private String userName;
 
-    @Column(name = "pass_word")
+    @Column(name = "pass_word", length = 20)
     private String passWord;
 
     @Column(name = "email", unique = true, length = 100)
@@ -28,8 +28,11 @@ public class UserEntity implements Serializable {
     @Column(name = "status", length = 100)
     private String status;
 
+    @Column(name = "role_id", length = 10)
+    private String role_id;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
     private RoleEntity roleEntity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")

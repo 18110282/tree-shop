@@ -25,15 +25,16 @@ public class UserRepositoryTest {
     @Test
     public void insert(){
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserName("hieuxttt");
-        userEntity.setPassWord("hieuxt");
-        userEntity.setEmail("@1t");
-        userEntity.setPhoneNumber("032t11");
+        userEntity.setUserName("hieuxt2tt1");
+        userEntity.setPassWord("hieux2t1");
+        userEntity.setEmail("@1t21");
+        userEntity.setPhoneNumber("032t1121");
         userEntity.setStatus("active");
+        userEntity.setRole_id("2");
 
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setRoleId("1");
-        userEntity.setRoleEntity(roleEntity);
+//        RoleEntity roleEntity = new RoleEntity();
+//        roleEntity.setRoleId("1");
+//        userEntity.setRoleEntity(roleEntity);
         userRepository.save(userEntity);
     }
 
