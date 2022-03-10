@@ -19,11 +19,11 @@ public class LineItemEntity {
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderId", insertable = false, updatable = false)
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private OrdersEntity ordersEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productId", insertable = false, updatable = false)
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private ProductsEntity productsEntity;
 
 }

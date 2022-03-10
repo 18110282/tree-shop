@@ -12,9 +12,9 @@ import java.util.List;
 @Table(name = "category")
 public class CategoryEntity {
     @Id
-    @Column(name = "categoryId", length = 10)
+    @Column(name = "category_id", length = 10)
     private String categoryId;
-    @Column(name = "categoryName", length = 200)
+    @Column(name = "category_name", length = 200)
     private String categoryName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoryEntity")

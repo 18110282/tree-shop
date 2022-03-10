@@ -4,32 +4,33 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "user")
-public class UserEntity {
+public class UserEntity implements Serializable {
     @Id
-    @Column(name = "userName", length = 20)
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "passWord")
+    @Column(name = "pass_word")
     private String passWord;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, length = 100)
     private String email;
 
-    @Column(name = "phoneNumber", unique = true)
+    @Column(name = "phone_number", unique = true, length = 10)
     private String phoneNumber;
 
-    @Column(name = "status")
+    @Column(name = "status", length = 100)
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roleId", insertable = false, updatable = false)
-    private RoleEntity role;
+    @JoinColumn(name = "role_id")
+    private RoleEntity roleEntity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<OrdersEntity> ordersEntityList;
@@ -45,7 +46,7 @@ public class UserEntity {
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", status='" + status + '\'' +
-                ", role=" + role +
+                ", role=" + roleEntity +
                 '}';
     }
 }

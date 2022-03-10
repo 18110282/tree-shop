@@ -4,21 +4,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "role")
-public class RoleEntity {
+public class RoleEntity implements Serializable {
     @Id
-    @Column(name = "roleId", length = 10)
-    private String id;
+    @Column(name = "role_id", length = 10)
+    private String roleId;
 
-    @Column(name = "roleName", length = 100)
+    @Column(name = "role_name", length = 100)
     private String roleName;
 
-    @OneToMany(mappedBy = "role",  fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "roleEntity")
     private List<UserEntity> userEntityList;
 
 }

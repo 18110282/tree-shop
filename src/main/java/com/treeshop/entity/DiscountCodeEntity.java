@@ -13,15 +13,15 @@ import java.sql.Timestamp;
 @Table(name = "discountcode")
 public class DiscountCodeEntity {
     @Id
-    @Column(name = "codeId", length = 10)
+    @Column(name = "code_id", length = 10)
     private String codeId;
-    @Column(name = "codeName", length = 200)
+    @Column(name = "code_name", length = 200)
     private String codeName;
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     private Timestamp startDate;
-    @Column(name = "endDate")
+    @Column(name = "end_date")
     private Timestamp endDate;
-    @Column(name = "discountPercent")
+    @Column(name = "discount_percent")
     private Integer discountPercent;
     @Column(name = "status", length = 100)
     private String status;

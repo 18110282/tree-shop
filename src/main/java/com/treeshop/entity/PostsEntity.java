@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "posts")
 public class PostsEntity {
     @Id
-    @Column(name = "postsId", length = 10)
+    @Column(name = "posts_id", length = 10)
     private String postsId;
 
     @Column(name = "title", length = 300)
@@ -22,16 +22,16 @@ public class PostsEntity {
     @Column(name = "descriptions")
     private String descriptions;
 
-    @Column(name="headerImage", length = 100)
+    @Column(name= "header_image", length = 100)
     private String headerImage;
 
-    @Column(name = "createDate")
+    @Column(name = "create_date")
     private Timestamp createDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "postsEntity")
     private List<ItemPostsListEntity> itemPostsListEntityList;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userName", insertable = false, updatable = false)
+    @JoinColumn(name = "user_name", insertable = false, updatable = false)
     private UserEntity userEntity;
 }
