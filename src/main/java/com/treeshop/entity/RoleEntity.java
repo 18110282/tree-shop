@@ -15,7 +15,6 @@ public class RoleEntity implements Serializable {
     @Id
     @Column(name = "role_id", length = 10)
     private String roleId;
-
     @Column(name = "role_name", length = 100)
     private String roleName;
 

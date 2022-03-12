@@ -38,7 +38,7 @@ public class OrdersEntity {
     private UserEntity userEntity;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "code_id")
+    @JoinColumn(name = "code_id", insertable = false, updatable = false)
     private DiscountCodeEntity discountCodeEntity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ordersEntity")

@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 public class TestController {
     @Autowired
     HttpServletRequest request;
-    @GetMapping("/2")
+    @GetMapping("/admin/login")
     public String home() {
-        request.setAttribute("text", "Hieu o ");
-        return "admin/test";
+        //request.setAttribute("text", "Hieu o ");
+        return "adminLogin";
     }
 
 //    @GetMapping("/1")
