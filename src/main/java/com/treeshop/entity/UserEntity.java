@@ -2,6 +2,7 @@ package com.treeshop.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,21 +11,23 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity implements Serializable {
     @Id
     @Column(name = "user_name", length = 20)
-    private String userName;
+    private String username;
     @Column(name = "pass_word", length = 20)
-    private String passWord;
-    @Column(name = "email", unique = true, length = 100)
+    private String password;
+    @Column(name = "email", length = 100)
     private String email;
-    @Column(name = "phone_number", unique = true, length = 10)
+    @Column(name = "phone_number", length = 10)
     private String phoneNumber;
     @Column(name = "status", length = 100)
     private String status;
     @Column(name = "role_id", length = 10)
-    private String role_id;
+    private String roleId;
+    @Column(name = "full_name", length = 100)
+    private String fullname;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", insertable = false, updatable = false)
@@ -39,8 +42,8 @@ public class UserEntity implements Serializable {
     @Override
     public String toString() {
         return "UserEntity{" +
-                "userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
+                "userName='" + username + '\'' +
+                ", passWord='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", status='" + status + '\'' +

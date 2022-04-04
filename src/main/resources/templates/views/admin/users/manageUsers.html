@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorator/admin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Manage User</title>
+    <style>
+        .tColor{
+            color: black;!important;
+        }
+    </style>
+</head>
+<body>
+<div class="main-content" layout:fragment="~{content}">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a th:href="@{/admin/home}">Trang chủ</a>
+                </li>
+                <li><a th:href="@{/admin/user/list}">Quản lí người dùng</a></li>
+                <li class="active">[[${titlePage}]]</li>
+            </ul><!-- /.breadcrumb -->
+        </div>
+        <div class="page-header">
+            <h1>
+                &ensp;[[${titlePage}]]
+            </h1>
+
+        </div><!-- /.page-header -->
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-block alert-success" th:if="${errorMessage}">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="ace-icon fa fa-times"></i>
+                        </button>
+
+                        <i class="ace-icon fa fa-close red"></i>
+
+                        Lỗi! User
+                        <strong class="red">
+                            [[${errorMessage}]]
+                        </strong>
+                        đã tồn tại.
+                    </div>
+                    <form class="form-horizontal" role="form" th:action="@{/admin/user/save}" method="post" th:object="${user}">
+                        <input type="text" class="hidden" th:field="*{username}" th:if="${edit}"/>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                                Username </label>
+                            <div class="col-sm-9">
+                                <input type="text" id="form-field-1" pattern="[a-zA-Z0-9.]{0,20}" title="Không chứa chữ có dấu, khoảng trắng và kí tự đặc biệt, tối đa 20 kí tự!" placeholder="Username"
+                                       class="col-xs-10 col-sm-5" th:field="*{username}" onfocus="this.style.color='black'" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-2">
+                                Password </label>
+
+                            <div class="col-sm-9">
+                                <input type="password" id="form-field-2" placeholder="Password"
+                                       class="col-xs-10 col-sm-5" th:field="*{password}" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-7">
+                                Họ tên </label>
+
+                            <div class="col-sm-9">
+                                <input type="text" id="form-field-7"  pattern="[a-zA-ZàáạảãâầấậẩẫăằắặẳẵÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴèéẹẻẽêềếệểễÈÉẸẺẼÊỀẾỆỂỄìíịỉĩÌÍỊỈĨòóọỏõôồốộổỗơờớợởỡÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠùúụủũưừứựửữÙÚỤỦŨƯỪỨỰỬỮỳýỵỷỹỲÝỴỶỸđĐ ]{0,100}" title="Chỉ bao gồm chữ, tối đa 100 kí tự!" placeholder="Họ tên"
+                                       class="col-xs-10 col-sm-5" th:field="*{fullname}" onfocus="this.style.color='black'" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-3">
+                                Email </label>
+
+                            <div class="col-sm-9">
+                                <input type="email" id="form-field-3" placeholder="Email"
+                                       class="col-xs-10 col-sm-5" th:field="*{email}" onfocus="this.style.color='black'" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-4">
+                                Số điện thoại </label>
+
+                            <div class="col-sm-9">
+                                <input type="text" id="form-field-4"  pattern="[0-9]{8,10}" title="Chỉ bao gồm số, giới hạn từ 8 đến 10 số!" placeholder="Số điện thoại"
+                                       class="col-xs-10 col-sm-5" th:field="*{phoneNumber}" onfocus="this.style.color='black'" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-5">
+                                Status </label>
+
+                            <div class="col-sm-3">
+                                <select id="form-field-5" class="col-xs-10 col-sm-5 tColor" th:field="*{status}">
+                                    <option value="active" class="tColor">Active</option>
+                                    <option value="noActive" class="tColor">noActive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-6">
+                                Vai trò </label>
+
+                            <div class="col-sm-3">
+                                <select id="form-field-6" class="col-xs-10 col-sm-5 tColor" th:field="*{roleId}">
+                                    <option value="1" class="tColor">Admin</option>
+                                    <option value="2" class="tColor">User</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-offset-1 col-md-9">
+                            <button class="btn btn-info" type="submit">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Submit
+                            </button>
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn" type="reset">
+                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                Reset
+                            </button>
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn btn-inverse" type="button" onclick="canCelForm()">
+                                <i class="ace-icon fa fa-arrow-circle-left bigger-110"></i>
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                    <script type="text/javascript" th:inline="javascript">
+                        window.jQuery || document.write("<script th:src='@{/admin/assets/js/jquery.min.js}'>" + "<" + "/script>");
+                    </script>
+                    <script type="text/javascript" th:inline="javascript">
+                        window.jQuery || document.write("<script th:src='@{/admin/assets/js/jquery1x.min.js}'>" + "<" + "/script>");
+                    </script>
+                    <!-- <![endif]-->
+
+                    <![endif]-->
+                    <script type="text/javascript" th:inline="javascript">
+                        if ('ontouchstart' in document.documentElement) document.write("<script th:src='@{/admin/assets/js/jquery.mobile.custom.min.js}'>" + "<" + "/script>");
+                    </script>
+                    <script th:src="@{/admin/assets/js/bootstrap.min.js}" type="text/javascript"></script>
+                    <script th:src="@{/admin/assets/js/ace-elements.min.js}" type="text/javascript"></script>
+                    <script th:src="@{/admin/assets/js/ace.min.js}"></script>
+                    <script type="text/javascript" th:inline="javascript">
+                        //active curren li
+                        var a = document.getElementById('manage-users');
+                        a.classList.toggle('active');
+                        function canCelForm() {
+                           window.location = "/admin/user/list";
+                        }
+                        if([[${edit}]] != null){
+                            var element = document.getElementById('form-field-1');
+                            element.removeAttribute("enabled", "");
+                            element.setAttribute("disabled", "");
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

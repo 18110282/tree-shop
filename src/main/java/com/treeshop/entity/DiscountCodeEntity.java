@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -18,9 +19,9 @@ public class DiscountCodeEntity {
     @Column(name = "code_name", length = 200)
     private String codeName;
     @Column(name = "start_date")
-    private Timestamp startDate;
+    private Date startDate;
     @Column(name = "end_date")
-    private Timestamp endDate;
+    private Date endDate;
     @Column(name = "discount_percent")
     private Integer discountPercent;
     @Column(name = "status", length = 100)
