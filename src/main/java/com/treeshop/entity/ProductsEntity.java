@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -40,6 +39,9 @@ public class ProductsEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productsEntity")
     private List<LineItemEntity> lineItemEntityList;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productsEntity")
+    private List<CartEntity> cartEntityList;
+
     @Transient
     public String getPhotosImagePath() {
         if (imageUrl == null || productId == null) {
@@ -47,4 +49,8 @@ public class ProductsEntity {
         }
         return "/dynamic-resources/product-imgs/" + productId + "/" + imageUrl;
     }
+
+    @Transient
+    public Integer discountPrice = 0;
+
 }

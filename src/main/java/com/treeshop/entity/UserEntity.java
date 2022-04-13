@@ -39,6 +39,9 @@ public class UserEntity implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<PostsEntity> postsEntityList;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<CartEntity> cartEntityList;
+
     @Override
     public String toString() {
         return "UserEntity{" +

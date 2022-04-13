@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorator/web}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Shoping Cart Section Begin -->
+<div layout:fragment="~{content}">
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="shoping__product">Products</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+<!--                            <tr th:unless="${cartDetailList}"> Giỏ hàng trống</tr>-->
+                            <th:block th:each="item :${cartDetailList}">
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img style="height: 86px; width: 87px"
+                                             th:src="@{${item.productsEntity.getPhotosImagePath()}}">
+                                        <h5>[[${item.productsEntity.getProductName()}]]</h5>
+                                        <br>
+                                        <h6 th:if="${item.productsEntity.getUnitInStock == 0}" style="color: red">
+                                            <strong><i>Đã hết hàng</i></strong></h6>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        [[${item.price}]]
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" th:id="${item.cartIdKey.getProductId()}"
+                                                       th:value="${item.quantity}"
+                                                       th:name="${item.productsEntity.getUnitInStock()}"
+                                                       class="quantity"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total"
+                                        th:id="'subtotal' + ${item.cartIdKey.getProductId()}">
+                                        [[${item.getTotalPerProduct()}]]
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <a th:if="${session.client}"
+                                           th:href="@{'/home/' + ${session.client.username} + '/cart/delete/' + ${item.cartIdKey.getProductId()}}"><span
+                                                class="icon_close"></span></a>
+                                        <a th:unless="${session.client}"
+                                           th:href="@{'/home/no-user/cart/delete/' + ${item.cartIdKey.getProductId()}}"><span
+                                                class="icon_close"></span></a>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a th:href="@{/home/list-web-product}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__continue">
+                        <div class="shoping__discount" th:if="${session.client}">
+                            <h5>Discount Codes </h5>
+                            <div th:if="${session.discountCode}">
+                            <span> Đã áp dụng mã <strong> [[${session.discountCode.getCodeId()}]]</strong> thành công,
+                                giảm <strong>[[${session.discountCode.getDiscountPercent()}]]% </strong>giá trị đơn hàng.</span>
+                                <br>
+                                <br>
+                                <a th:if="${session.discountCode}" th:href="@{'/home/'+ ${session.client.username} +'/cart/detail/delete-discount-code'}">
+                                    <button class="btn-secondary"> Thử mã khác</button>
+                                </a>
+                            </div>
+                            <form th:action="@{'/home/'+ ${session.client.username} +'/cart/detail/check-discount-code'}" method="post"
+                                  th:unless="${session.discountCode}">
+                                <input th:name="discountCode" type="text" placeholder="Enter your coupon code" required>
+                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Cart Total</h5>
+                        <ul>
+                            <li>Subtotal <span id="sub-total"></span></li>
+                            <li th:if="${session.discountCode}">Giảm <span>[[${session.discountCode.getDiscountPercent()}]]%</span>
+                            </li>
+                            <li>Total <span id="all-total"></span></li>
+                        </ul>
+                        <a th:if="${session.client}" th:href="@{'/home/' + ${session.client.username} + '/cart/check-out'}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a th:unless="${session.client}" th:href="@{/home/no-user/cart/check-out}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script th:if="${alert}" type="text/javascript" th:inline="javascript">
+        alert([[${alert}]])
+    </script>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            updateTotal();
+        });
+
+        function updateTotal() {
+            total = 0;
+            $('.shoping__cart__total').each(function (index, element) {
+                total = total + parseInt(element.innerHTML);
+            });
+            $('#sub-total').text(total);
+            if ([[${session.discountCode}]] != null) {
+                total = parseInt(total * (100 - [[${session.discountPercent}]]) / 100);
+                $('#all-total').text(total);
+            } else {
+                $('#all-total').text(total);
+            }
+        }
+
+        var proQty = $('.pro-qty');
+        proQty.prepend('<span class="dec qtybtn">-</span>');
+        proQty.append('<span class="inc qtybtn">+</span>');
+        proQty.on('change', '.quantity', function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find('input').val();
+            var maxUnit = parseFloat($button.parent().find('input')[0].name);
+            var productId = $button.parent().find('input')[0].id;
+            if (maxUnit > oldValue) {
+                var newVal = parseFloat(oldValue);
+            } else {
+                alert("Số lượng sản phẩm này trong kho chỉ còn " + maxUnit);
+                newVal = maxUnit;
+            }
+            $button.parent().find('input').val(newVal);
+            var url = "/home/cart/update/" + productId + "/" + newVal;
+            $.ajax({
+                type: "POST",
+                url: url,
+            }).done(function (newSubtotal) {
+                updateSubTotal(newSubtotal, productId);
+                updateTotal();
+            })
+        });
+        proQty.on('click', '.qtybtn', function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find('input').val();
+            var maxUnit = parseFloat($button.parent().find('input')[0].name);
+            var productId = $button.parent().find('input')[0].id;
+            if ($button.hasClass('inc')) {
+                if (maxUnit > oldValue) {
+                    var newVal = parseFloat(oldValue) + 1;
+                } else {
+                    alert("Số lượng sản phẩm này trong kho chỉ còn " + maxUnit);
+                    newVal = maxUnit;
+                }
+            } else {
+                if (maxUnit < oldValue) {
+                    alert("Số lượng sản phẩm này trong kho chỉ còn " + maxUnit);
+                    newVal = maxUnit;
+                } else if (oldValue > 0) {
+                    newVal = parseFloat(oldValue) - 1;
+                } else {
+                    newVal = 0;
+                }
+            }
+            $button.parent().find('input').val(newVal);
+            var url = "/home/cart/update/" + productId + "/" + newVal;
+            $.ajax({
+                type: "POST",
+                url: url,
+            }).done(function (newSubtotal) {
+                updateSubTotal(newSubtotal, productId);
+                updateTotal();
+            })
+        });
+
+        function updateSubTotal(newSubtotal, productId) {
+            $("#subtotal" + productId).text(newSubtotal);
+        }
+    </script>
+</div>
+<!-- Shoping Cart Section End -->
+
+</body>
+</html>

@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
+    //Image Resource Of Product
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        Path productUploadDir = Paths.get("./src/main/resources/static/product-imgs/");

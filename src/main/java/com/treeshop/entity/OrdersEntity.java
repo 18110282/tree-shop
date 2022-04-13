@@ -29,7 +29,7 @@ public class OrdersEntity {
     @Column(name = "note")
     private String note;
     @Column(name = "user_name")
-    private String userName;
+    private String username;
     @Column(name = "code_id")
     private String codeId;
 

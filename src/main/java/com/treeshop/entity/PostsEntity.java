@@ -24,7 +24,7 @@ public class PostsEntity {
     @Column(name = "create_date")
     private Timestamp createDate;
     @Column(name = "user_name", length = 20)
-    private String userName;
+    private String username;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "postsEntity")
     private List<ItemPostsListEntity> itemPostsListEntityList;

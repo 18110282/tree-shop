@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional
 public class UsersService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public List<UserEntity> findAll() {
         return userRepository.findAll();
@@ -26,7 +26,8 @@ public class UsersService {
         return userRepository.existsByUsernameAndPassword(username, password);
     }
 
-    public UserEntity changePassword(UserEntity userEntity) {
+    public UserEntity changePassword(UserEntity userEntity, String password) {
+        userEntity.setPassword(password);
         return userRepository.save(userEntity);
     }
 
@@ -34,10 +35,11 @@ public class UsersService {
         return userRepository.save(userEntity);
     }
 
-    public void deleteUser(String username){
+    public void deleteUser(String username) {
         userRepository.deleteByUsername(username);
     }
-    public boolean checkUsername(String username){
+
+    public boolean checkUsername(String username) {
         return userRepository.existsByUsername(username);
     }
 }

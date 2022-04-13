@@ -21,4 +21,5 @@ public class LineItemIdKey implements Serializable {
     @Column(name = "product_id", length = 10)
     private String productId;
 
+
 }
