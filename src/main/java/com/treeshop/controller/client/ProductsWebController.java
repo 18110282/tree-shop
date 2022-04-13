@@ -57,12 +57,9 @@ public class ProductsWebController {
             } else {
                 List<CartEntity> cartEntityList = (List<CartEntity>) session.getAttribute("cart");
                 if (cartEntityList == null) {
-                    numberProductInCart = cartService.countByUser(client.getUsername());
+                    numberProductInCart = 0;
                 } else {
-                    for (CartEntity cartEntity : cartEntityList) {
-                        cartEntity.getCartIdKey().setUsername(client.getUsername());
-                        cartService.saveCart(cartEntity);
-                    }
+                    cartService.saveCartFromSessionToCartEntity(cartEntityList, client.getUsername());
                     numberProductInCart = cartEntityList.size();
                 }
             }

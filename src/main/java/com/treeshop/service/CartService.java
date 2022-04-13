@@ -20,6 +20,12 @@ public class CartService {
         cartRepository.save(cartEntity);
     }
 
+    public void saveCartFromSessionToCartEntity(List<CartEntity> cartEntityList, String usernme){
+        for (CartEntity cartEntity : cartEntityList) {
+            cartEntity.getCartIdKey().setUsername(usernme);
+            cartRepository.save(cartEntity);
+        }
+    }
 
     public boolean checkExistUser(String username) {
         return cartRepository.existsByCartIdKey_Username(username);

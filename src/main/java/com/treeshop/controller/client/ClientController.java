@@ -33,8 +33,8 @@ public class ClientController {
     public String loginClientCheck(@RequestParam(value = "username", required = false) String username,
                                    @RequestParam(value = "password", required = false) String password,
                                    RedirectAttributes ra,
-                                   HttpSession session) {
-//        String url = request.getHeader("referer");
+                                   HttpSession session, HttpServletRequest request) {
+        String url = request.getHeader("referer");
         if (usersService.checkLogin(username, password)) {
             UserEntity client = usersService.findByUserName(username);
             if (Objects.equals(client.getRoleId(), "2")) {
@@ -45,10 +45,10 @@ public class ClientController {
         } else {
             ra.addFlashAttribute("errorMessage", "Tài khoản hoặc mật khẩu sai");
         }
-//        if(url.contains("/home/no-user/cart/detail"))
-//        {
-//            url = "/home/" + username + "/cart/detail";
-//        }
-        return "redirect:/home/list-web-product";
+        if(url.contains("/home/no-user/cart/detail"))
+        {
+            url = request.getContextPath() + "/home/" + username + "/cart/detail";
+        }
+        return "redirect:" + url;
     }
 }
