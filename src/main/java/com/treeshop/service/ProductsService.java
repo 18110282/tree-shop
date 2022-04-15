@@ -22,6 +22,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -88,7 +90,20 @@ public class ProductsService {
     }
 
     public List<ProductsEntity> findListDiscountProduct() {
+        List<ProductsEntity> listDiscountProduct = productsRepository.findDiscountProduct();
+        for (ProductsEntity discountProduct : listDiscountProduct) {
+            discountProduct.setDiscountPrice(this.setDiscountPriceInDiscountList(discountProduct));
+        }
         return productsRepository.findDiscountProduct();
+    }
+
+    public List<ProductsEntity> findListLatestProduct(){
+        List<ProductsEntity> productsEntityList = productsRepository.findAllByOrderByCreateDateDesc();
+        List<ProductsEntity> productsEntityListLatestTop6 = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            productsEntityListLatestTop6.add(productsEntityList.get(i));
+        }
+        return productsEntityListLatestTop6;
     }
 
     public Integer findDiscountPriceByProductId(String productId) {

@@ -25,4 +25,5 @@ public interface ProductsRepository extends PagingAndSortingRepository<ProductsE
     Integer findPriceByProductId(@Param("productId") String productId);
     @Query("select p.discountPercent from  ProductsEntity p where p.productId = :productId ")
     Integer findDiscountPercentByProductId(@Param("productId") String productId);
+    List<ProductsEntity> findAllByOrderByCreateDateDesc();
 }

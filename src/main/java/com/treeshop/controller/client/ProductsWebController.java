@@ -43,9 +43,9 @@ public class ProductsWebController {
 
         //List Discount Product
         List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
-        for (ProductsEntity discountProduct : listDiscountProduct) {
-            discountProduct.setDiscountPrice(productsService.setDiscountPriceInDiscountList(discountProduct));
-        }
+
+        //List Latest Product - 3 items have newest create date
+        List<ProductsEntity> listLatestProduct = productsService.findListLatestProduct();
 
         UserEntity client = (UserEntity) session.getAttribute("client");
         Integer numberProductInCart = 0;
@@ -70,6 +70,7 @@ public class ProductsWebController {
             }
         }
         model.addAttribute("numberProductInCart", numberProductInCart);
+        model.addAttribute("listLatestProduct", listLatestProduct);
         model.addAttribute("listDiscountProduct", listDiscountProduct);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalProducts", totalProducts);

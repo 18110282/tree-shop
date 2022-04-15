@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DataJpaTest
@@ -147,6 +148,17 @@ public class RepositoryTest {
         String username = "hieu";
         Integer quantity = 0;
         List<CartEntity> cartEntityList = cartRepository.getProductIdEmptyQuantity(username);
+    }
+
+    @Test
+    public void listLatestProduct(){
+        List<ProductsEntity> productsEntityList = productsRepository.findAllByOrderByCreateDateDesc();
+
+        List<String> dayList = new ArrayList<>();
+        for(int i = 0; i < productsEntityList.size(); i++){
+            dayList.add(productsEntityList.get(i).getCreateDate().toString());
+        }
+
     }
 
 
