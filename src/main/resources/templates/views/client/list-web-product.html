@@ -5,6 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Tree Shop</title>
+    <style>
+        .active-category{
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <!-- Product Section Begin -->
@@ -17,16 +22,9 @@
                         <div class="sidebar__item">
                             <h4>Department</h4>
                             <ul>
-                                <li><a href="#">Fresh Meat</a></li>
-                                <li><a href="#">Vegetables</a></li>
-                                <li><a href="#">Fruit & Nut Gifts</a></li>
-                                <li><a href="#">Fresh Berries</a></li>
-                                <li><a href="#">Ocean Foods</a></li>
-                                <li><a href="#">Butter & Eggs</a></li>
-                                <li><a href="#">Fastfood</a></li>
-                                <li><a href="#">Fresh Onion</a></li>
-                                <li><a href="#">Papayaya & Crisps</a></li>
-                                <li><a href="#">Oatmeal</a></li>
+                                <th:block th:each="category: ${categoryList}">
+                                    <li><a th:href="'/home/list-web-product/category/' + ${category.categoryId}" th:name="${category.categoryId}" th:value="${category.categoryId}">[[${category.categoryName}]]</a></li>
+                                </th:block>
                             </ul>
                         </div>
                         <div class="sidebar__item">
@@ -157,15 +155,30 @@
                             </div>
                         </th:block>
                     </div>
-                    <div class="product__pagination">
+                    <div class="product__pagination" th:if="${totalPages}">
                         <span th:each="i :${#numbers.sequence(1, totalPages)}">
                             <a th:if="${i != currentPage}" th:href="@{'/home/list-web-product/'+ ${i}}">[[${i}]]</a>
+                            <a th:if="${i == currentPage}" style="background-color: #2c7659; pointer-events: none">[[${i}]]</a>
+                        </span>
+                    </div>
+                    <div class="product__pagination" th:if="${totalPagesByCategory}">
+                        <span th:each="i :${#numbers.sequence(1, totalPagesByCategory)}">
+                            <a th:if="${i != currentPage}" th:href="@{'/home/list-web-product/category/' + ${categoryId} + '/' + ${i}}">[[${i}]]</a>
                             <a th:if="${i == currentPage}" style="background-color: #2c7659; pointer-events: none">[[${i}]]</a>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
+        <script type="text/javascript" th:inline="javascript">
+            $(function($) {
+                $('li a').each(function() {
+                    if (this.href.includes("/home/list-web-product/category/" + [[${categoryId}]])) {
+                        $(this).closest('li').addClass("active-category");
+                    }
+                });
+            });
+        </script>
     </section>
 </div>
 <!-- Product Section End -->

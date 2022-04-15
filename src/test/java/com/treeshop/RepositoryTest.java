@@ -1,16 +1,17 @@
 package com.treeshop;
 
 import com.treeshop.dao.CartRepository;
+import com.treeshop.dao.CategoryRepository;
 import com.treeshop.dao.ProductsRepository;
 import com.treeshop.dao.UserRepository;
-import com.treeshop.entity.CartEntity;
-import com.treeshop.entity.CartIdKey;
-import com.treeshop.entity.ProductsEntity;
-import com.treeshop.entity.UserEntity;
+import com.treeshop.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class RepositoryTest {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Test
     public void insert(){
@@ -159,6 +163,15 @@ public class RepositoryTest {
             dayList.add(productsEntityList.get(i).getCreateDate().toString());
         }
 
+    }
+
+    @Test
+    public void listProductsInCategory(){
+        Pageable pageable = PageRequest.of(1,3);
+        Page<ProductsEntity> productsEntityList = categoryRepository.findListProductInCategory("1", pageable);
+        List<ProductsEntity> categoryEntityList = productsEntityList.getContent();
+
+      //  List<ProductsEntity> productsEntityList1 = productsEntityList.getProductsEntityList();
     }
 
 
