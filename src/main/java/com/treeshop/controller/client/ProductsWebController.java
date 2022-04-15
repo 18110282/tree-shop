@@ -26,6 +26,9 @@ public class ProductsWebController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private CommonController commonController;
+
     @GetMapping("/home/list-web-product")
     public String showListWebProduct(Model model, HttpSession session) {
         return showListProductByPage(model, 1, session);
@@ -40,38 +43,7 @@ public class ProductsWebController {
         List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
         Long totalProducts = productsEntityPage.getTotalElements();
         Integer totalPages = productsEntityPage.getTotalPages();
-
-        //List Discount Product
-        List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
-
-        //List Latest Product - 3 items have newest create date
-        List<ProductsEntity> listLatestProduct = productsService.findListLatestProduct();
-
-        UserEntity client = (UserEntity) session.getAttribute("client");
-        Integer numberProductInCart = 0;
-
-        if (client != null) {
-            boolean checkUser = cartService.checkExistUser(client.getUsername());
-            if (checkUser) {
-                numberProductInCart = cartService.countByUser(client.getUsername());
-            } else {
-                List<CartEntity> cartEntityList = (List<CartEntity>) session.getAttribute("cart");
-                if (cartEntityList == null) {
-                    numberProductInCart = 0;
-                } else {
-                    cartService.saveCartFromSessionToCartEntity(cartEntityList, client.getUsername());
-                    numberProductInCart = cartEntityList.size();
-                }
-            }
-        } else {
-            List<CartEntity> cartEntityList = (List<CartEntity>) session.getAttribute("cart");
-            if (cartEntityList != null) {
-                numberProductInCart = cartEntityList.size();
-            }
-        }
-        model.addAttribute("numberProductInCart", numberProductInCart);
-        model.addAttribute("listLatestProduct", listLatestProduct);
-        model.addAttribute("listDiscountProduct", listDiscountProduct);
+        commonController.setUpCommonAttributeOfListWebProduct(session, model);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("totalPages", totalPages);
@@ -86,7 +58,6 @@ public class ProductsWebController {
         String previousUrl = request.getHeader("referer");
         CartEntity cartEntity = new CartEntity();
         CartIdKey cartIdKey = new CartIdKey();
-        CommonController commonController = new CommonController();
         UserEntity client = (UserEntity) session.getAttribute("client");
         Integer price = productsService.findDiscountPriceByProductId(productId);
         if (client == null) {
