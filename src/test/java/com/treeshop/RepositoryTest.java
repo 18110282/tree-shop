@@ -174,5 +174,12 @@ public class RepositoryTest {
       //  List<ProductsEntity> productsEntityList1 = productsEntityList.getProductsEntityList();
     }
 
+    @Test
+    public void searchProduct(){
+        String value = "Bông Vạn Thọ";
+        Pageable pageable = PageRequest.of(0, 3);
+        Page<ProductsEntity> productsEntityList = productsRepository.searchProducts(value, pageable);
+    }
+
 
 }
