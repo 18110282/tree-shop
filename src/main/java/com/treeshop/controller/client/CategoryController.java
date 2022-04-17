@@ -43,7 +43,7 @@ public class CategoryController {
     }
 
     @GetMapping("/list-web-product/category/{categoryId}/{page}")
-    public String showListWebProductInCategoryByPage(@PathVariable(value = "categoryId", required = false) String categoryId, Model model, HttpSession session,
+    public String showListWebProductInCategoryByPage(@PathVariable(name = "categoryId") String categoryId, Model model, HttpSession session,
                                                      @PathVariable(name = "page") Integer currentPage) {
         Page<ProductsEntity> productsEntityPage = categoryService.findListProductInCategory(categoryId, currentPage);
         List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
