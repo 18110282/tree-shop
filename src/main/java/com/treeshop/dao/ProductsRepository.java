@@ -25,7 +25,7 @@ public interface ProductsRepository extends PagingAndSortingRepository<ProductsE
     Integer findPriceByProductId(@Param("productId") String productId);
     @Query("select p.discountPercent from  ProductsEntity p where p.productId = :productId ")
     Integer findDiscountPercentByProductId(@Param("productId") String productId);
-    @Query("select p from ProductsEntity p where concat(p.productName, p.categoryEntity.categoryName, p.price, p.description) like %:keyword%")
+    @Query("select p from ProductsEntity p where concat(p.productName, ' ', p.categoryEntity.categoryName, ' ', p.price, ' ', p.description) like %:keyword%")
     Page<ProductsEntity> searchProducts(@Param("keyword") String keyword, Pageable pageable);
 
     List<ProductsEntity> findAllByOrderByCreateDateDesc();
