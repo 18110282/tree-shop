@@ -16,6 +16,7 @@ public class CartService {
     @Autowired
     private CartRepository cartRepository;
 
+
     public void saveCart(CartEntity cartEntity) {
         cartRepository.save(cartEntity);
     }
@@ -79,5 +80,20 @@ public class CartService {
             cartEntity.setQuantity(quantityUrl);
         }
         return cartEntity;
+    }
+
+    public CartEntity compareQuantityInStockVsCart(List<CartEntity> cartEntityList){
+        CartEntity cart = new CartEntity();
+        int quantityInCart;
+        int quantityInStock;
+        for (CartEntity cartEntity: cartEntityList) {
+            quantityInStock = cartEntity.getProductsEntity().getUnitInStock();
+            quantityInCart = cartEntity.getQuantity();
+            if(quantityInCart > quantityInStock){
+                cart = cartEntity;
+                break;
+            }
+        }
+        return cart;
     }
 }

@@ -44,14 +44,25 @@ public class CheckoutController {
                 }
             }
             if(checkUnitInStock){
-                ra.addFlashAttribute("alert", "Có sản phẩm đã hết hàng, mời bạn xóa sản phẩm khỏi giỏ hàng hoặc chờ đợi hàng về, xin cảm ơn!");
+                ra.addFlashAttribute("alert", "Có sản phẩm đã hết hàng, mời bạn xóa sản phẩm khỏi giỏ hàng hoặc chờ hàng về trong thời gian tới, xin cảm ơn!");
                 return url;
             }
             else if(cartService.checkQuantity(username, 0)){
                 List<CartEntity> cartEntityEmptyQuantityList = cartService.findListCartByUsernameEmptyQuantity(username);
-                String productId = cartEntityEmptyQuantityList.get(0).getProductsEntity().getProductName();
-                ra.addFlashAttribute("alert", "Sản phẩm " + productId + " chưa điền số lượng (>0)");
+                String productName = cartEntityEmptyQuantityList.get(0).getProductsEntity().getProductName();
+                ra.addFlashAttribute("alert", "Sản phẩm " + productName + " chưa điền số lượng (>0)");
                 return url;
+            }
+            else if(cartService.compareQuantityInStockVsCart(cartService.findListCartByUsername(username)) != null){
+                CartEntity cartEntity = cartService.compareQuantityInStockVsCart(cartService.findListCartByUsername(username));
+                StringBuilder alert = new StringBuilder("Sản phẩm ");
+                alert.append(cartEntity.getProductsEntity().getProductName());
+                alert.append(" số lượng trong kho chỉ còn ");
+                alert.append(cartEntity.getProductsEntity().getUnitInStock());
+                alert.append(". \nMời bạn cập nhật lại để có thể tiến hành đặt đơn!");
+                ra.addFlashAttribute("alert", alert);
+                return url;
+
             }
         }
         if(!checkoutService.checkUserInCart(username)){
