@@ -80,7 +80,7 @@ public class CartController {
         } else {
             cartService.deleteItem(username, productId);
         }
-        return "redirect:/home/{username}/cart/detail";
+        return "redirect:/home/" + username +"/cart/detail";
     }
 
     @PostMapping("/{username}/cart/detail/check-discount-code")
@@ -102,7 +102,7 @@ public class CartController {
         } else {
             ra.addFlashAttribute("alert", "Mã không tồn tại, hãy nhập lại");
         }
-        return "redirect:/home/{username}/cart/detail";
+        return "redirect:/home/" + username + "/cart/detail";
     }
 
     @GetMapping("/{username}/cart/detail/delete-discount-code")
@@ -111,6 +111,6 @@ public class CartController {
         HttpSession session = request.getSession();
         session.removeAttribute("discountPercent");
         session.removeAttribute("discountCode");
-        return "redirect:/home/{username}/cart/detail";
+        return "redirect:/home/" + username + "/cart/detail";
     }
 }
