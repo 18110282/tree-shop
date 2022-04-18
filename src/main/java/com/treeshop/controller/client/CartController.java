@@ -57,7 +57,7 @@ public class CartController {
         }
         model.addAttribute("numberProductInCart", numberProductInCart);
         model.addAttribute("cartDetailList", cartEntityList);
-        return "/views/client/cart/detail-cart";
+        return "views/client/cart/cart-detail";
     }
 
     @GetMapping("/{username}/cart/delete/{productId}")
