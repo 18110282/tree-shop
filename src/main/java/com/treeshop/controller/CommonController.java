@@ -9,6 +9,7 @@ import com.treeshop.service.ProductsService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +47,9 @@ public class CommonController {
         return -1;
     }
 
-    public void setUpCommonAttributeOfListWebProduct(HttpSession session, Model model){
+    public void setUpCommonAttributeOfListWebProduct(Page<ProductsEntity> productsEntityPage, HttpSession session, Model model){
+        List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
+        Long totalProducts = productsEntityPage.getTotalElements();
         List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
         List<ProductsEntity> listLatestProduct = productsService.findListLatestProduct();
         List<CategoryEntity> categoryEntityList = productsService.findAllCategory();
@@ -75,6 +78,8 @@ public class CommonController {
         model.addAttribute("categoryList", categoryEntityList);
         model.addAttribute("listLatestProduct", listLatestProduct);
         model.addAttribute("listDiscountProduct", listDiscountProduct);
+        model.addAttribute("totalProducts", totalProducts);
+        model.addAttribute("listProduct", listAllProduct);
         this.listDiscountProduct = listDiscountProduct;
         this.listLatestProduct = listLatestProduct;
         this.categoryEntityList = categoryEntityList;

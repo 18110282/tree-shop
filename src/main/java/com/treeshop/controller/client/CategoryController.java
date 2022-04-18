@@ -14,23 +14,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping(path = "/home")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-
-    @Autowired
-    private ProductsService productsService;
-
-    @Autowired
-    private CartService cartService;
 
     @Autowired
     private CommonController commonController;
@@ -46,15 +37,11 @@ public class CategoryController {
     public String showListWebProductInCategoryByPage(@PathVariable(name = "categoryId") String categoryId, Model model, HttpSession session,
                                                      @PathVariable(name = "page") Integer currentPage) {
         Page<ProductsEntity> productsEntityPage = categoryService.findListProductInCategory(categoryId, currentPage);
-        List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
-        Long totalProducts = productsEntityPage.getTotalElements();
         Integer totalPages = productsEntityPage.getTotalPages();
-        commonController.setUpCommonAttributeOfListWebProduct(session, model);
+        commonController.setUpCommonAttributeOfListWebProduct(productsEntityPage, session, model);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("currentPage", currentPage);
-        model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("totalPagesByCategory", totalPages);
-        model.addAttribute("listProduct", listAllProduct);
         return "/views/client/list-web-product";
     }
 }

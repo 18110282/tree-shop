@@ -40,14 +40,10 @@ public class ProductsWebController {
                                         HttpSession session) {
         //List All Product
         Page<ProductsEntity> productsEntityPage = productsService.findAll(currentPage);
-        List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
-        Long totalProducts = productsEntityPage.getTotalElements();
         Integer totalPages = productsEntityPage.getTotalPages();
-        commonController.setUpCommonAttributeOfListWebProduct(session, model);
+        commonController.setUpCommonAttributeOfListWebProduct(productsEntityPage, session, model);
         model.addAttribute("currentPage", currentPage);
-        model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("listProduct", listAllProduct);
         return "/views/client/list-web-product";
     }
 
