@@ -30,41 +30,49 @@ public class CheckoutController {
                            RedirectAttributes ra,
                            HttpSession session){
         List<CartEntity> cartEntityList = cartService.findListCartByUsername(username);
+        String url = "redirect:/home/" + username + "/cart/detail";
         if(username.equals("no-user")){
             ra.addFlashAttribute("alert", "Mời bạn đăng nhập tài khoản để tiến hành đặt đơn");
-            return "redirect:/home/{username}/cart/detail";
+            return url;
         }
         else {
             boolean checkUnitInStock = false;
             for (CartEntity cartEntity: cartEntityList) {
-                if(cartEntity.getProductsEntity().getUnitInStock() == 0){
+                if (cartEntity.getProductsEntity().getUnitInStock() == 0) {
                     checkUnitInStock = true;
+                    break;
                 }
             }
             if(checkUnitInStock){
                 ra.addFlashAttribute("alert", "Có sản phẩm đã hết hàng, mời bạn xóa sản phẩm khỏi giỏ hàng hoặc chờ đợi hàng về, xin cảm ơn!");
-                return "redirect:/home/{username}/cart/detail";
+                return url;
             }
             else if(cartService.checkQuantity(username, 0)){
                 List<CartEntity> cartEntityEmptyQuantityList = cartService.findListCartByUsernameEmptyQuantity(username);
                 String productId = cartEntityEmptyQuantityList.get(0).getProductsEntity().getProductName();
                 ra.addFlashAttribute("alert", "Sản phẩm " + productId + " chưa điền số lượng (>0)");
-                return "redirect:/home/{username}/cart/detail";
+                return url;
             }
         }
-        Integer discountPercent = 0;
-        Integer discount = (Integer) session.getAttribute("discountPercent");
-        if(discount!= null){
-            discountPercent = discount;
+        if(!checkoutService.checkUserInCart(username)){
+            ra.addFlashAttribute("alert", "Giỏ hàng trống, không thể đặt đơn!");
+            return url;
         }
-        checkoutService.checkMoneyInCart(cartEntityList, discountPercent);
-        Integer subTotal = checkoutService.getSubTotal();
-        Integer total = checkoutService.getTotal();
-        model.addAttribute("discountPercent", discountPercent);
-        model.addAttribute("subTotal", subTotal);
-        model.addAttribute("total", total);
-        model.addAttribute("cartDetailList", cartEntityList);
-        model.addAttribute("numberProductInCart", cartEntityList.size());
+        else {
+            Integer discountPercent = 0;
+            Integer discount = (Integer) session.getAttribute("discountPercent");
+            if (discount != null) {
+                discountPercent = discount;
+            }
+            checkoutService.checkMoneyInCart(cartEntityList, discountPercent);
+            Integer subTotal = checkoutService.getSubTotal();
+            Integer total = checkoutService.getTotal();
+            model.addAttribute("discountPercent", discountPercent);
+            model.addAttribute("subTotal", subTotal);
+            model.addAttribute("total", total);
+            model.addAttribute("cartDetailList", cartEntityList);
+            model.addAttribute("numberProductInCart", cartEntityList.size());
+        }
         return "/views/client/check-out";
     }
 }

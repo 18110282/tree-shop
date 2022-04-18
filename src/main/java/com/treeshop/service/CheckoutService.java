@@ -1,12 +1,16 @@
 package com.treeshop.service;
 
+import com.treeshop.dao.CartRepository;
 import com.treeshop.entity.CartEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CheckoutService {
+    @Autowired
+    private CartRepository cartRepository;
     private Integer subTotal;
     private Integer total;
 
@@ -25,5 +29,9 @@ public class CheckoutService {
         }
         this.subTotal = subTotal;
         this.total = subTotal * (100-discoutPercent)/100;
+    }
+
+    public boolean checkUserInCart(String username){
+        return cartRepository.existsByCartIdKey_Username(username);
     }
 }
