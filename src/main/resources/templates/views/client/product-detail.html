@@ -111,7 +111,7 @@
                         </ul>
                     </div>
                     <div class="product__discount__item__text">
-                        <h6><a href="#">[[${product.productName}]]</a></h6>
+                        <a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><h6>[[${product.productName}]]</h6></a>
                         <h5 th:if="${product.discountPercent != 0}" class="product__item__price">
                             [[${product.discountPrice}]]VND <span>[[${product.price}]]VND</span></h5>
                         <h5 th:if="${product.discountPercent == 0}" class="product__item__price">
