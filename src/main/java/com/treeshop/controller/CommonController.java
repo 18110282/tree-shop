@@ -13,10 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,7 +23,7 @@ public class CommonController {
     private List<ProductsEntity> listDiscountProduct;
     private List<ProductsEntity> listLatestProduct;
     private List<CategoryEntity> categoryEntityList;
-    private Integer numberProductInCart;
+    private int numberProductInCart;
 
     @Autowired
     private ProductsService productsService;
@@ -47,12 +45,7 @@ public class CommonController {
         return -1;
     }
 
-    public void setUpCommonAttributeOfListWebProduct(Page<ProductsEntity> productsEntityPage, HttpSession session, Model model){
-        List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
-        Long totalProducts = productsEntityPage.getTotalElements();
-        List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
-        List<ProductsEntity> listLatestProduct = productsService.findListLatestProduct();
-        List<CategoryEntity> categoryEntityList = productsService.findAllCategory();
+    public int getNumberProductInCart(HttpSession session) {
         UserEntity client = (UserEntity) session.getAttribute("client");
         Integer numberProductInCart = 0;
         if (client != null) {
@@ -64,6 +57,7 @@ public class CommonController {
                 if (cartEntityList == null) {
                     numberProductInCart = 0;
                 } else {
+                    //If in cart table doesn't exist user, we will add cart from session to cart table with their username
                     cartService.saveCartFromSessionToCartEntity(cartEntityList, client.getUsername());
                     numberProductInCart = cartEntityList.size();
                 }
@@ -74,16 +68,26 @@ public class CommonController {
                 numberProductInCart = cartEntityList.size();
             }
         }
+        return numberProductInCart;
+    }
+
+    public void setUpCommonAttributeOfListWebProduct(Page<ProductsEntity> productsEntityPage, HttpSession session, Model model){
+        List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
+        Long totalProducts = productsEntityPage.getTotalElements();
+        List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
+        List<ProductsEntity> listLatestProduct = productsService.findListLatestProduct();
+        List<CategoryEntity> categoryEntityList = productsService.findAllCategory();
+        Integer numberProductInCart = this.getNumberProductInCart(session);
         model.addAttribute("numberProductInCart", numberProductInCart);
         model.addAttribute("categoryList", categoryEntityList);
         model.addAttribute("listLatestProduct", listLatestProduct);
         model.addAttribute("listDiscountProduct", listDiscountProduct);
         model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("listProduct", listAllProduct);
-        this.listDiscountProduct = listDiscountProduct;
-        this.listLatestProduct = listLatestProduct;
-        this.categoryEntityList = categoryEntityList;
-        this.numberProductInCart = numberProductInCart;
+//        this.listDiscountProduct = listDiscountProduct;
+//        this.listLatestProduct = listLatestProduct;
+//        this.categoryEntityList = categoryEntityList;
+//        this.numberProductInCart = numberProductInCart;
     }
 
 }

@@ -53,4 +53,8 @@ public class ProductsEntity {
     @Transient
     public Integer discountPrice = 0;
 
+    @Transient
+    public Integer getDiscountPrice(){
+        return price * (100 - discountPercent) / 100;
+    }
 }

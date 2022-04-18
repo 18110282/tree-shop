@@ -29,12 +29,13 @@
                             <th:block th:each="item :${cartDetailList}">
                                 <tr>
                                     <td class="shoping__cart__item">
-                                        <img style="height: 86px; width: 87px"
+                                        <a th:href="@{'/home/product/' + ${item.productsEntity.productId} + '/detail'}"><img style="height: 86px; width: 87px"
                                              th:src="@{${item.productsEntity.getPhotosImagePath()}}">
+                                        </a>
                                         <h5>[[${item.productsEntity.getProductName()}]]</h5>
                                         <br>
-                                        <h6 th:if="${item.productsEntity.getUnitInStock == 0}" style="color: red">
-                                            <strong><i>Đã hết hàng</i></strong></h6>
+                                        <h6 th:if="${item.productsEntity.getUnitInStock == 0}" style="color: red; font-family: Arial ">
+                                            <strong>Đã hết hàng</strong></h6>
                                     </td>
                                     <td class="shoping__cart__price">
                                         [[${item.price}]]
@@ -141,7 +142,7 @@
             var oldValue = $button.parent().find('input').val();
             var maxUnit = parseFloat($button.parent().find('input')[0].name);
             var productId = $button.parent().find('input')[0].id;
-            if (maxUnit > oldValue) {
+            if (maxUnit > oldValue-1) {
                 var newVal = parseFloat(oldValue);
             } else {
                 alert("Số lượng sản phẩm này trong kho chỉ còn " + maxUnit);

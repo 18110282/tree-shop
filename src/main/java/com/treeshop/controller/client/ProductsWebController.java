@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping(path = "/home")
 public class ProductsWebController {
 
     @Autowired
@@ -29,12 +31,12 @@ public class ProductsWebController {
     @Autowired
     private CommonController commonController;
 
-    @GetMapping("/home/list-web-product")
+    @GetMapping("/list-web-product")
     public String showListWebProduct(Model model, HttpSession session) {
         return showListProductByPage(model, 1, session);
     }
 
-    @GetMapping("/home/list-web-product/{page}")
+    @GetMapping("/list-web-product/{page}")
     public String showListProductByPage(Model model,
                                         @PathVariable("page") Integer currentPage,
                                         HttpSession session) {
@@ -47,8 +49,9 @@ public class ProductsWebController {
         return "/views/client/list-web-product";
     }
 
-    @GetMapping("/home/add-product/{productId}")
+    @GetMapping("/add-product/{productId}/{quantity}")
     public String addCart(@PathVariable(name = "productId") String productId,
+                          @PathVariable(name = "quantity") Integer quantityUrl,
                           HttpServletRequest request,
                           HttpSession session) {
         String previousUrl = request.getHeader("referer");
@@ -59,24 +62,34 @@ public class ProductsWebController {
         if (client == null) {
             if (session.getAttribute("cart") == null) {
                 List<CartEntity> cartEntityList = new ArrayList<>();
-                cartService.setCartEntityOfNoUserInCartSession(cartEntityList, cartEntity, cartIdKey, productId, price);
+                cartService.setCartEntityOfNoUserInCartSession(cartEntityList, cartEntity, cartIdKey, productId, price, quantityUrl);
                 session.setAttribute("cart", cartEntityList);
             } else {
                 List<CartEntity> cartEntityList = (List<CartEntity>) session.getAttribute("cart");
                 int index = commonController.exists(productId, cartEntityList);
                 if (index == -1) {
-                    cartService.setCartEntityOfNoUserInCartSession(cartEntityList, cartEntity, cartIdKey, productId, price);
+                    cartService.setCartEntityOfNoUserInCartSession(cartEntityList, cartEntity, cartIdKey, productId, price, quantityUrl);
                 } else {
                     Integer quantity = cartEntityList.get(index).getQuantity();
-                    cartEntityList.get(index).setQuantity(quantity + 1);
+                    cartEntityList.get(index).setQuantity(quantity + quantityUrl);
                 }
                 session.setAttribute("cart", cartEntityList);
             }
         } else {
             String username = client.getUsername();
-            cartEntity = cartService.setCartEntityOfUserInCartDB(cartEntity, cartIdKey, username, productId, price);
+            cartEntity = cartService.setCartEntityOfUserInCartDB(cartEntity, cartIdKey, username, productId, price, quantityUrl);
             cartService.saveCart(cartEntity);
         }
         return "redirect:" + previousUrl;
+    }
+
+    @GetMapping("/product/{productId}/detail")
+    public String showProductDetail(@PathVariable(name="productId") String productId, Model model,
+                                    HttpSession session){
+        Integer numberProductInCart = commonController.getNumberProductInCart(session);
+        ProductsEntity productsEntity = productsService.findByProductId(productId);
+        model.addAttribute("product", productsEntity);
+        model.addAttribute("numberProductInCart", numberProductInCart);
+        return "/views/client/product-detail";
     }
 }

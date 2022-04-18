@@ -20,9 +20,9 @@ public class CartService {
         cartRepository.save(cartEntity);
     }
 
-    public void saveCartFromSessionToCartEntity(List<CartEntity> cartEntityList, String usernme){
+    public void saveCartFromSessionToCartEntity(List<CartEntity> cartEntityList, String username){
         for (CartEntity cartEntity : cartEntityList) {
-            cartEntity.getCartIdKey().setUsername(usernme);
+            cartEntity.getCartIdKey().setUsername(username);
             cartRepository.save(cartEntity);
         }
     }
@@ -59,24 +59,24 @@ public class CartService {
         cartRepository.deleteCartEntityByCartIdKey_UsernameAndCartIdKey_ProductId(username, productId);
     }
 
-    public void setCartEntityOfNoUserInCartSession(List<CartEntity> cartEntityList, CartEntity cartEntity, CartIdKey cartIdKey, String productId, Integer price){
+    public void setCartEntityOfNoUserInCartSession(List<CartEntity> cartEntityList, CartEntity cartEntity, CartIdKey cartIdKey, String productId, Integer price, Integer quantityUrl){
         cartIdKey.setProductId(productId);
         cartIdKey.setUsername("");
         cartEntity.setCartIdKey(cartIdKey);
-        cartEntity.setQuantity(1);
+        cartEntity.setQuantity(quantityUrl);
         cartEntity.setPrice(price);
         cartEntityList.add(cartEntity);
     }
-    public CartEntity setCartEntityOfUserInCartDB(CartEntity cartEntity, CartIdKey cartIdKey, String username, String productId, Integer price){
+    public CartEntity setCartEntityOfUserInCartDB(CartEntity cartEntity, CartIdKey cartIdKey, String username, String productId, Integer price, Integer quantityUrl){
         if (cartRepository.existsByCartIdKey_UsernameAndCartIdKey_ProductId(username, productId)) {
             cartEntity = cartRepository.findByCartIdKey_UsernameAndCartIdKey_ProductId(username, productId);
-            cartEntity.setQuantity(cartEntity.getQuantity() + 1);
+            cartEntity.setQuantity(cartEntity.getQuantity() + quantityUrl);
         } else {
             cartIdKey.setUsername(username);
             cartIdKey.setProductId(productId);
             cartEntity.setCartIdKey(cartIdKey);
             cartEntity.setPrice(price);
-            cartEntity.setQuantity(1);
+            cartEntity.setQuantity(quantityUrl);
         }
         return cartEntity;
     }
