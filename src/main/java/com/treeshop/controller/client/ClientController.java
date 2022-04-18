@@ -44,6 +44,7 @@ public class ClientController {
             }
         } else {
             ra.addFlashAttribute("errorMessage", "Tài khoản hoặc mật khẩu sai");
+            return "redirect:" + url;
         }
         if(url.contains("/home/no-user/cart/detail"))
         {
