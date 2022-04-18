@@ -40,6 +40,10 @@ public class ProductsService {
         return productsRepository.findAllQuery();
     }
 
+    public List<ProductsEntity> findRelatedProduct(String categoryId){
+        return productsRepository.findRandomProductInSameCategory(categoryId);
+    }
+
     public void saveProduct(ProductsEntity productsEntity) {
         productsRepository.save(productsEntity);
     }

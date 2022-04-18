@@ -88,6 +88,9 @@ public class ProductsWebController {
                                     HttpSession session){
         Integer numberProductInCart = commonController.getNumberProductInCart(session);
         ProductsEntity productsEntity = productsService.findByProductId(productId);
+        String categoryId = productsEntity.getCategoryId();
+        List<ProductsEntity> productsEntityList = productsService.findRelatedProduct(categoryId);
+        model.addAttribute("listRelatedProduct", productsEntityList);
         model.addAttribute("product", productsEntity);
         model.addAttribute("numberProductInCart", numberProductInCart);
         return "/views/client/product-detail";

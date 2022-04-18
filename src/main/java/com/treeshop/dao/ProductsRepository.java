@@ -27,6 +27,9 @@ public interface ProductsRepository extends PagingAndSortingRepository<ProductsE
     Integer findDiscountPercentByProductId(@Param("productId") String productId);
     @Query("select p from ProductsEntity p where concat(p.productName, ' ', p.categoryEntity.categoryName, ' ', p.price, ' ', p.description) like %:keyword%")
     Page<ProductsEntity> searchProducts(@Param("keyword") String keyword, Pageable pageable);
+    //List random 4 related products with main product
+    @Query(value = "select * from products p where p.category_id = :categoryId order by RAND() limit 4", nativeQuery = true)
+    List<ProductsEntity> findRandomProductInSameCategory(@Param("categoryId") String categoryId);
 
     List<ProductsEntity> findAllByOrderByCreateDateDesc();
 

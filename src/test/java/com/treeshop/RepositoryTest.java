@@ -181,5 +181,12 @@ public class RepositoryTest {
         Page<ProductsEntity> productsEntityList = productsRepository.searchProducts(value, pageable);
     }
 
+    @Test
+    public void findRandomListProductInSameCategory(){
+        String categoryId = "1";
+        List<ProductsEntity> productsEntityList = productsRepository.findRandomProductInSameCategory(categoryId);
+
+    }
+
 
 }
