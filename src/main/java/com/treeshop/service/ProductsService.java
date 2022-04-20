@@ -117,4 +117,8 @@ public class ProductsService {
     public Integer setDiscountPriceInDiscountList(ProductsEntity discountProduct){
         return discountProduct.getPrice() * (100 - discountProduct.getDiscountPercent()) / 100;
     }
+
+    public Integer findMaxPriceInAllProduct(){
+        return productsRepository.findMaxPrice();
+    }
 }

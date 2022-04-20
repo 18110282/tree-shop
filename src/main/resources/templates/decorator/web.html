@@ -184,17 +184,9 @@
                         <span>All departments</span>
                     </div>
                     <ul>
-                        <li><a href="#">Fresh Meat</a></li>
-                        <li><a href="#">Vegetables</a></li>
-                        <li><a href="#">Fruit & Nut Gifts</a></li>
-                        <li><a href="#">Fresh Berries</a></li>
-                        <li><a href="#">Ocean Foods</a></li>
-                        <li><a href="#">Butter & Eggs</a></li>
-                        <li><a href="#">Fastfood</a></li>
-                        <li><a href="#">Fresh Onion</a></li>
-                        <li><a href="#">Papayaya & Crisps</a></li>
-                        <li><a href="#">Oatmeal</a></li>
-                        <li><a href="#">Fresh Bananas</a></li>
+                        <th:block th:each="category: ${categoryList}">
+                            <li><a th:href="'/home/list-web-product/category/' + ${category.categoryId}" th:name="${category.categoryId}" th:value="${category.categoryId}">[[${category.categoryName}]]</a></li>
+                        </th:block>
                     </ul>
                 </div>
             </div>

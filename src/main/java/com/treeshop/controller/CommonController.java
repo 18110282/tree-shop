@@ -77,12 +77,14 @@ public class CommonController {
         List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
         List<ProductsEntity> listLatestProduct = productsService.findListLatestProduct();
         List<CategoryEntity> categoryEntityList = productsService.findAllCategory();
+        Integer maxPrice = productsService.findMaxPriceInAllProduct();
         Integer numberProductInCart = this.getNumberProductInCart(session);
         model.addAttribute("numberProductInCart", numberProductInCart);
         model.addAttribute("categoryList", categoryEntityList);
         model.addAttribute("listLatestProduct", listLatestProduct);
         model.addAttribute("listDiscountProduct", listDiscountProduct);
         model.addAttribute("totalProducts", totalProducts);
+        model.addAttribute("maxPrice", maxPrice);
         model.addAttribute("listProduct", listAllProduct);
 //        this.listDiscountProduct = listDiscountProduct;
 //        this.listLatestProduct = listLatestProduct;

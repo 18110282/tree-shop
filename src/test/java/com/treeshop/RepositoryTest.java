@@ -185,7 +185,17 @@ public class RepositoryTest {
     public void findRandomListProductInSameCategory(){
         String categoryId = "1";
         List<ProductsEntity> productsEntityList = productsRepository.findRandomProductInSameCategory(categoryId);
+    }
 
+    @Test
+    public void findMaxPrice(){
+        Integer max = productsRepository.findMaxPrice();
+    }
+
+    @Test
+    public void findListProductBetweenPrice(){
+        Pageable page = PageRequest.of(1, 2);
+        Page<ProductsEntity> productsEntityList = productsRepository.findAllByPriceBetween(1, 5000, page);
     }
 
 

@@ -18,4 +18,10 @@ public class SearchService {
         Pageable pageable = PageRequest.of(number - 1, 6);
         return productsRepository.searchProducts(keyword, pageable);
     }
+
+    public Page<ProductsEntity> searchProductByPrice(Integer minPrice, Integer maxPrice, Integer number){
+        Pageable pageable = PageRequest.of(number - 1, 6);
+        return productsRepository.findAllByPriceBetween(minPrice, maxPrice, pageable);
+    }
+
 }

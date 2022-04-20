@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Tree Shop</title>
     <style>
-        .active-category{
+        .active-category {
             font-weight: bold;
         }
     </style>
@@ -23,7 +23,9 @@
                             <h4>Department</h4>
                             <ul>
                                 <th:block th:each="category: ${categoryList}">
-                                    <li><a th:href="'/home/list-web-product/category/' + ${category.categoryId}" th:name="${category.categoryId}" th:value="${category.categoryId}">[[${category.categoryName}]]</a></li>
+                                    <li><a th:href="'/home/list-web-product/category/' + ${category.categoryId}"
+                                           th:name="${category.categoryId}" th:value="${category.categoryId}">[[${category.categoryName}]]</a>
+                                    </li>
                                 </th:block>
                             </ul>
                         </div>
@@ -31,15 +33,21 @@
                             <h4>Price</h4>
                             <div class="price-range-wrap">
                                 <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                     data-min="10" data-max="540">
+                                     data-min="0" th:data-max="${maxPrice}">
                                     <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                                     <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                                     <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                                 </div>
                                 <div class="range-slider">
                                     <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
+                                        <form th:action="@{/home/list-web-product/search/price}" method="get">
+                                            <input type="number" id="minamount" th:name="min"  onclick="checkPrice()" onkeyup="checkPrice()" required>
+                                            <span> - </span>
+                                            <input type="number" id="maxamount" th:name="max"  onclick="checkPrice()" onkeyup="checkPrice()" required>
+                                            <br>
+                                            <span id="errorInput" style="color: red"></span>
+                                            <br><input type="submit" value="Tìm" id="searchPrice">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +58,8 @@
                                 <div class="latest-product__slider owl-carousel">
                                     <div class="latest-prdouct__slider__item">
                                         <th:block th:each="item: ${listLatestProduct}">
-                                            <a th:href="@{'/home/product/' + ${item.productId} + '/detail'}" class="latest-product__item">
+                                            <a th:href="@{'/home/product/' + ${item.productId} + '/detail'}"
+                                               class="latest-product__item">
                                                 <div class="latest-product__item__pic">
                                                     <img style="width: 110px; height: 110px"
                                                          th:src="@{${item.photosImagePath}}"
@@ -80,20 +89,26 @@
                                     <div class="col-lg-4">
                                         <div class="product__discount__item">
                                             <div class="product__discount__item__pic set-bg"
-                                                 th:data-setbg="@{${discountProduct.photosImagePath}}" th:tittle="${discountProduct.productName}">
+                                                 th:data-setbg="@{${discountProduct.photosImagePath}}"
+                                                 th:tittle="${discountProduct.productName}">
                                                 <div class="product__discount__percent">
                                                     -[[${discountProduct.discountPercent}]]%
                                                 </div>
                                                 <ul class="product__item__pic__hover">
-                                                    <li><a th:href="@{'/home/product/' + ${discountProduct.productId} + '/detail'}"><i class="fa fa-eye" title="Xem sản phẩm"></i></a></li>
+                                                    <li>
+                                                        <a th:href="@{'/home/product/' + ${discountProduct.productId} + '/detail'}"><i
+                                                                class="fa fa-eye" title="Xem sản phẩm"></i></a></li>
                                                     <li>
                                                         <a th:href="@{'/home/add-product/' + ${discountProduct.productId} + '/1'}"><i
-                                                                class="fa fa-shopping-cart" title="Thêm vào giỏ hàng"></i></a></li>
+                                                                class="fa fa-shopping-cart"
+                                                                title="Thêm vào giỏ hàng"></i></a></li>
                                                 </ul>
                                             </div>
                                             <div class="product__discount__item__text">
                                                 <span>[[${discountProduct.categoryEntity.categoryName}]]</span>
-                                                <h5><a th:href="@{'/home/product/' + ${discountProduct.productId} + '/detail'}">[[${discountProduct.productName}]]</a></h5>
+                                                <h5>
+                                                    <a th:href="@{'/home/product/' + ${discountProduct.productId} + '/detail'}">[[${discountProduct.productName}]]</a>
+                                                </h5>
                                                 <div class="product__item__price">
                                                     [[${discountProduct.discountPrice}]]VND <span>[[${discountProduct.price}]]VND</span>
                                                 </div>
@@ -133,18 +148,21 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__discount__item">
                                     <div class="product__discount__item__pic set-bg"
-                                         th:data-setbg="@{${product.photosImagePath}}" th:tittle="${product.productName}">
+                                         th:data-setbg="@{${product.photosImagePath}}"
+                                         th:tittle="${product.productName}">
                                         <div th:if="${product.discountPercent != 0}" class="product__discount__percent">
                                             -[[${product.discountPercent}]]%
                                         </div>
                                         <ul class="product__item__pic__hover">
-                                            <li><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><i class="fa fa-eye" title="Chi tiết sản phẩm"></i></a></li>
+                                            <li><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><i
+                                                    class="fa fa-eye" title="Chi tiết sản phẩm"></i></a></li>
                                             <li><a th:href="@{'/home/add-product/' + ${product.productId} + '/1'}"><i
                                                     class="fa fa-shopping-cart" title="Thêm vào giỏ hàng"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__discount__item__text">
-                                        <h5><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}">[[${product.productName}]]</a></h5>
+                                        <h5><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}">[[${product.productName}]]</a>
+                                        </h5>
                                         <div th:if="${product.discountPercent != 0}" class="product__item__price">
                                             [[${product.discountPrice}]]VND <span>[[${product.price}]]VND</span></div>
                                         <div th:if="${product.discountPercent == 0}" class="product__item__price">
@@ -163,13 +181,22 @@
                     </div>
                     <div class="product__pagination" th:if="${totalPagesByCategory}">
                         <span th:each="i :${#numbers.sequence(1, totalPagesByCategory)}">
-                            <a th:if="${i != currentPage}" th:href="@{'/home/list-web-product/category/' + ${categoryId} + '/' + ${i}}">[[${i}]]</a>
+                            <a th:if="${i != currentPage}"
+                               th:href="@{'/home/list-web-product/category/' + ${categoryId} + '/' + ${i}}">[[${i}]]</a>
                             <a th:if="${i == currentPage}" style="background-color: #2c7659; pointer-events: none">[[${i}]]</a>
                         </span>
                     </div>
                     <div class="product__pagination" th:if="${totalPagesOfSearchFunction}">
                         <span th:each="i :${#numbers.sequence(1, totalPagesOfSearchFunction)}">
-                            <a th:if="${i != currentPage}" th:href="@{'/home/list-web-product/search/result/' + ${keyword} + '/' + ${i}}">[[${i}]]</a>
+                            <a th:if="${i != currentPage}"
+                               th:href="@{'/home/list-web-product/search/result/' + ${keyword} + '/' + ${i}}">[[${i}]]</a>
+                            <a th:if="${i == currentPage}" style="background-color: #2c7659; pointer-events: none">[[${i}]]</a>
+                        </span>
+                    </div>
+                    <div class="product__pagination" th:if="${totalPagesOfSearchByPrice}">
+                        <span th:each="i :${#numbers.sequence(1, totalPagesOfSearchByPrice)}">
+                            <a th:if="${i != currentPage}"
+                               th:href="@{'/home/list-web-product/search/price/' + ${min} + '/' + ${max} + '/' + ${i}}">[[${i}]]</a>
                             <a th:if="${i == currentPage}" style="background-color: #2c7659; pointer-events: none">[[${i}]]</a>
                         </span>
                     </div>
@@ -177,13 +204,29 @@
             </div>
         </div>
         <script type="text/javascript" th:inline="javascript" th:if="${categoryId}">
-            $(function($) {
-                $('li a').each(function() {
+            $(function ($) {
+                $('li a').each(function () {
                     if (this.href.includes("/home/list-web-product/category/" + [[${categoryId}]])) {
                         $(this).closest('li').addClass("active-category");
                     }
                 });
             });
+        </script>
+        <script>
+            function checkPrice(){
+                let min= $("#minamount").val();
+                let max = $("#maxamount").val();
+                let search = $("#searchPrice");
+                let errorInput = $("#errorInput");
+                if(min < 0 || max < 0){
+                    search.prop("disabled", true);
+                    errorInput.html("Không thể tìm giá âm");
+                }
+                else {
+                    search.prop("disabled", false);
+                    errorInput.html("");
+                }
+            }
         </script>
     </section>
 </div>
