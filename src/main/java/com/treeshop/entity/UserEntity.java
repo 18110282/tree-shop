@@ -22,12 +22,14 @@ public class UserEntity implements Serializable {
     private String email;
     @Column(name = "phone_number", length = 10)
     private String phoneNumber;
-    @Column(name = "status", length = 100)
-    private String status;
     @Column(name = "role_id", length = 10)
     private String roleId;
     @Column(name = "full_name", length = 100)
     private String fullname;
+    @Column(name = "verification_code", length = 100, updatable = false)
+    private String verificationCode;
+    @Column(name = "enabled")
+    private boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", insertable = false, updatable = false)
@@ -45,12 +47,14 @@ public class UserEntity implements Serializable {
     @Override
     public String toString() {
         return "UserEntity{" +
-                "userName='" + username + '\'' +
-                ", passWord='" + password + '\'' +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", status='" + status + '\'' +
-                ", role=" + roleEntity +
+                ", roleId='" + roleId + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", enabled=" + enabled +
                 '}';
     }
 }

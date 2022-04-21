@@ -40,7 +40,6 @@ public class RepositoryTest {
         userEntity.setPassword("hieuxt");
         userEntity.setEmail("@1t211");
         userEntity.setPhoneNumber("032t11121");
-        userEntity.setStatus("active");
         userEntity.setRoleId("2");
 
 //        RoleEntity roleEntity = new RoleEntity();
@@ -85,8 +84,7 @@ public class RepositoryTest {
         userEntity.setPassword("hieua");
         userEntity.setFullname("hieua");
         userEntity.setEmail("hieua");
-        userEntity.setPhoneNumber("hieua");
-        userEntity.setStatus("active");
+        userEntity.setPhoneNumber("hieua");;
         userEntity.setRoleId("1");
         userRepository.save(userEntity);
     }
@@ -196,6 +194,11 @@ public class RepositoryTest {
     public void findListProductBetweenPrice(){
         Pageable page = PageRequest.of(1, 2);
         Page<ProductsEntity> productsEntityList = productsRepository.findAllByPriceBetween(1, 5000, page);
+    }
+
+    @Test
+    public void enableUser(){
+        userRepository.setEnableTrue("nhuan1");
     }
 
 

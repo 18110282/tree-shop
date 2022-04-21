@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -91,5 +92,14 @@ public class CommonController {
 //        this.categoryEntityList = categoryEntityList;
 //        this.numberProductInCart = numberProductInCart;
     }
+
+    public String getSiteUrl(HttpServletRequest request){
+        String siteUrl = request.getRequestURL().toString();
+        return siteUrl.replace(request.getServletPath(), "");
+    }
+
+//    public String getHeaderURL(HttpServletRequest request){
+//        return request.getHeader("referer");
+//    }
 
 }
