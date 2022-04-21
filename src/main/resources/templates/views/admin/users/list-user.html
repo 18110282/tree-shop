@@ -95,7 +95,8 @@
                                         [[${user.phoneNumber}]]
                                     </td>
                                     <td class="hidden-480">
-                                        [[${user.status}]]
+                                        <div th:if="${user.isEnabled()}"> Đã xác thực</div>
+                                        <div th:if="${!user.isEnabled()}"> Chưa xác thực</div>
                                     </td>
                                     <td>
                                         [[${user.roleEntity.getRoleName()}]]

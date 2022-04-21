@@ -105,9 +105,9 @@
                                 Status </label>
 
                             <div class="col-sm-3">
-                                <select id="form-field-5" class="col-xs-10 col-sm-5 tColor" th:field="*{status}">
-                                    <option value="active" class="tColor">Active</option>
-                                    <option value="noActive" class="tColor">noActive</option>
+                                <select id="form-field-5" class="col-xs-10 col-sm-5 tColor" th:field="*{enabled}">
+                                    <option value="true" class="tColor">Đã xác thực</option>
+                                    <option value="false" class="tColor">Chưa xác thực</option>
                                 </select>
                             </div>
                         </div>
@@ -139,6 +139,11 @@
                                 Cancel
                             </button>
                         </div>
+                        <script type="text/javascript" th:inline="javascript" th:if="${user.isEnabled()}">
+                            if([[${user.isEnabled()}]]){
+                                $("#form-field-5").prop("disabled", true);
+                            }
+                        </script>
                     </form>
                     <script type="text/javascript" th:inline="javascript">
                         window.jQuery || document.write("<script th:src='@{/admin/assets/js/jquery.min.js}'>" + "<" + "/script>");
