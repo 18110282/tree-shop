@@ -37,7 +37,7 @@ public class ClientController {
     public String loginClientCheck(@ModelAttribute("user") UserEntity user,
                                    RedirectAttributes ra,
                                    HttpSession session, HttpServletRequest request) {
-        String url = request.getHeader("referer");
+        String url = commonController.getHeaderURL(request);
         String username = user.getUsername();
         String password = user.getPassword();
         if (usersService.checkLogin(username, password)) {
@@ -62,7 +62,7 @@ public class ClientController {
     @PostMapping("/user/register")
     private String registerClient(@ModelAttribute("user") UserEntity user,
                                   HttpServletRequest request, RedirectAttributes ra) throws MessagingException, UnsupportedEncodingException {
-        String url = request.getHeader("referer");
+        String url = commonController.getHeaderURL(request);
         String siteURL = commonController.getSiteUrl(request);
         if (usersService.checkUsername(user.getUsername())) {
             ra.addFlashAttribute("registerMessage", "Tên đăng nhập " + user.getUsername() + " đã tồn tại!");
@@ -87,7 +87,7 @@ public class ClientController {
     public String sendVerifyAccountAgain(@RequestParam(value = "username") String username,
                                          @RequestParam(value = "email") String email,
                                          RedirectAttributes ra, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-        String url = request.getHeader("referer");
+        String url = commonController.getHeaderURL(request);
         UserEntity client = usersService.findByUserName(username);
         if(client == null){
             ra.addFlashAttribute("verifyError", "Không tồn tại tài khoản " + username);

@@ -1,6 +1,7 @@
 package com.treeshop.controller.admin;
 
 
+import com.treeshop.controller.CommonController;
 import com.treeshop.entity.CategoryEntity;
 import com.treeshop.entity.ProductsEntity;
 import com.treeshop.service.ProductsService;
@@ -19,7 +20,10 @@ import java.util.List;
 @RequestMapping(path = "/admin/products")
 public class ProductsController {
     @Autowired
-    ProductsService productsService;
+    private ProductsService productsService;
+
+    @Autowired
+    private CommonController commonController;
 
 
     @GetMapping("/add-product")
@@ -64,7 +68,7 @@ public class ProductsController {
                               HttpServletRequest request,
                               RedirectAttributes ra) throws IOException {
         //get previousUrl
-        String previousUrl = request.getHeader("referer");
+        String previousUrl = commonController.getHeaderURL(request);
         String url = previousUrl.substring((request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()).length());
         //upload file
         String productId = productsEntity.getProductId();

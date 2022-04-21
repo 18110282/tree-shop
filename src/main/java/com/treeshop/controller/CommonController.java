@@ -98,8 +98,8 @@ public class CommonController {
         return siteUrl.replace(request.getServletPath(), "");
     }
 
-//    public String getHeaderURL(HttpServletRequest request){
-//        return request.getHeader("referer");
-//    }
+    public String getHeaderURL(HttpServletRequest request){
+        return request.getHeader("referer");
+    }
 
 }

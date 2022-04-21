@@ -54,7 +54,7 @@ public class ProductsWebController {
                           @PathVariable(name = "quantity") Integer quantityUrl,
                           HttpServletRequest request,
                           HttpSession session) {
-        String previousUrl = request.getHeader("referer");
+        String previousUrl = commonController.getHeaderURL(request);
         CartEntity cartEntity = new CartEntity();
         CartIdKey cartIdKey = new CartIdKey();
         UserEntity client = (UserEntity) session.getAttribute("client");

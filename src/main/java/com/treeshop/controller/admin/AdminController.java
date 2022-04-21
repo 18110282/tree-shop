@@ -1,5 +1,6 @@
 package com.treeshop.controller.admin;
 
+import com.treeshop.controller.CommonController;
 import com.treeshop.entity.UserEntity;
 import com.treeshop.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import java.util.Objects;
 public class AdminController {
     @Autowired
     private UsersService userService;
+
+    @Autowired
+    private CommonController commonController;
 
     //Begin Admin Management
     @GetMapping(value = {"/login", "/logout"})
@@ -128,7 +132,7 @@ public class AdminController {
     public String saveUser(UserEntity user,
                            RedirectAttributes ra,
                            HttpServletRequest request) {
-        String previousUrl = request.getHeader("referer");
+        String previousUrl = commonController.getHeaderURL(request);
         String url = previousUrl.substring((request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()).length());
         String username = user.getUsername();
         if (url.equals("/admin/user/add-user")) {

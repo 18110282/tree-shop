@@ -1,5 +1,6 @@
 package com.treeshop.controller.admin;
 
+import com.treeshop.controller.CommonController;
 import com.treeshop.entity.DiscountCodeEntity;
 import com.treeshop.entity.ProductsEntity;
 import com.treeshop.service.DiscountCodeService;
@@ -22,6 +23,9 @@ public class DiscountController {
 
     @Autowired
     private DiscountCodeService discountCodeService;
+
+    @Autowired
+    private CommonController commonController;
 
     //Begin Discount By Product
     @GetMapping("/list-by-product")
@@ -96,7 +100,7 @@ public class DiscountController {
                                      HttpServletRequest request){
         discountCodeEntity.setStatus(discountCodeService.checkStatus(discountCodeEntity));
         String codeId = discountCodeEntity.getCodeId();
-        String previousUrl = request.getHeader("referer");
+        String previousUrl = commonController.getHeaderURL(request);
         String url = previousUrl.substring((request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()).length());
         if(url.equals("/admin/discount/add-by-code")){
             if(discountCodeService.checkCodeId(codeId)){
