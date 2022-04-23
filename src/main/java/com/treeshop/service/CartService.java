@@ -2,6 +2,7 @@ package com.treeshop.service;
 
 
 import com.treeshop.dao.CartRepository;
+import com.treeshop.dao.OrdersRepository;
 import com.treeshop.entity.CartEntity;
 import com.treeshop.entity.CartIdKey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import java.util.List;
 public class CartService {
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private OrdersRepository ordersRepository;
 
 
     public void saveCart(CartEntity cartEntity) {
@@ -83,7 +87,7 @@ public class CartService {
     }
 
     public CartEntity compareQuantityInStockVsCart(List<CartEntity> cartEntityList){
-        CartEntity cart = new CartEntity();
+        CartEntity cart = null;
         int quantityInCart;
         int quantityInStock;
         for (CartEntity cartEntity: cartEntityList) {
@@ -95,5 +99,9 @@ public class CartService {
             }
         }
         return cart;
+    }
+
+    public boolean checkUsedCodeIdOfUser(String username, String codeId){
+        return ordersRepository.existsByUsernameAndCodeId(username, codeId);
     }
 }

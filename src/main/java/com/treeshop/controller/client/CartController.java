@@ -93,9 +93,14 @@ public class CartController {
             DiscountCodeEntity discountCodeEntity = discountCodeService.findByCodeId(discountCode);
             String status = discountCodeEntity.getStatus();
             if (status.equals("Còn hạng")) {
-                session.setAttribute("discountPercent", discountCodeEntity.getDiscountPercent());
-                session.setAttribute("discountCode", discountCodeEntity);
-                ra.addFlashAttribute("alert", "Áp dụng mã thành công");
+                if(cartService.checkUsedCodeIdOfUser(username, discountCode)){
+                    ra.addFlashAttribute("alert", "Bạn đã sử dụng mã này rồi ^^ Mời bạn nhập mã khác!");
+                }
+                else {
+                    session.setAttribute("discountPercent", discountCodeEntity.getDiscountPercent());
+                    session.setAttribute("discountCode", discountCodeEntity);
+                    ra.addFlashAttribute("alert", "Áp dụng mã thành công");
+                }
             } else {
                 ra.addFlashAttribute("alert", "Mã đã hết hạng, hãy nhập mã khác");
             }
