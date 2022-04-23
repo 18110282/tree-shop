@@ -67,7 +67,7 @@ public class UsersService {
         StringBuilder mailContent = new StringBuilder("<p>Dear, " + userEntity.getFullname() + "</p>");
         mailContent.append("<p> Bấm vào link sau để tiến hành xác nhận tài khoản người dùng: </p>");
         String verifyURL = siteURL + "/home/" + userEntity.getUsername() +"/verify?code=" + userEntity.getVerificationCode();
-        mailContent.append("<h3><a href=\"" + verifyURL + "\">VERIFY</a></h3>");
+        mailContent.append("<h3><a href=\"").append(verifyURL).append("\">VERIFY</a></h3>");
         mailContent.append("<p>Xin cám ơn, <br> Tree Shop</p>");
 
         MimeMessage message = javaMailSender.createMimeMessage();

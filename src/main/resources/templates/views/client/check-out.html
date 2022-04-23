@@ -13,39 +13,39 @@
         <div class="container">
             <div class="checkout__form">
                 <h4>Billing Details</h4>
-                <form action="#">
+                <form th:action="@{'/home/' + ${session.client.username} + '/create-order'}"  method="post" th:object="${order}">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Fist Name<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" th:name="contactName">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add">
+                                <input type="text" placeholder="Street Address" class="checkout__input__add" th:name="address">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" th:name="phoneNumber">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text">
+                                        <input type="email" th:name="email">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Order notes<span>*</span></p>
                                 <input type="text"
-                                       placeholder="Notes about your order, e.g. special notes for delivery.">
+                                       placeholder="Notes about your order, e.g. special notes for delivery." th:name="note">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -53,11 +53,11 @@
                                 <h4>Your Order</h4>
                                 <div class="checkout__order__products">Products <span>Total</span></div>
                                 <ul th:each="item :${cartDetailList}">
-                                    <li>[[${item.getProductsEntity.getProductName()}]]<span>[[${item.getTotalPerProduct()}]]</span></li>
+                                    <li>[[${item.getProductsEntity.getProductName()}]] (x[[${item.quantity}]])<span>[[${item.getTotalPerProduct()}]]</span></li>
                                 </ul>
                                 <div class="checkout__order__total">Subtotal <span>[[${subTotal}]]</span></div>
                                 <div th:if="${discountPercent != 0}" class="checkout__order__total">Giảm: <span>[[${discountPercent}]]%</span></div>
-                                <div class="checkout__order__total">Total <span>[[${total}]]</span></div>
+                                <div class="checkout__order__total">Total <span th:name="totalPrice">[[${total}]]</span></div>
                                 <div class="checkout__input__checkbox">
                                     <label for="payment">
                                         Check Payment

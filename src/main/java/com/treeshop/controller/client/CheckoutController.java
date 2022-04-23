@@ -2,16 +2,17 @@ package com.treeshop.controller.client;
 
 
 import com.treeshop.entity.CartEntity;
+import com.treeshop.entity.ProductsEntity;
 import com.treeshop.service.CartService;
 import com.treeshop.service.CheckoutService;
+import com.treeshop.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -24,14 +25,18 @@ public class CheckoutController {
     @Autowired
     private CheckoutService checkoutService;
 
+    @Autowired
+    private OrdersService ordersService;
+
     @GetMapping("/{username}/cart/check-out")
     public String checkOut(@PathVariable(name="username") String username,
                            Model model,
                            RedirectAttributes ra,
                            HttpSession session){
         List<CartEntity> cartEntityList = cartService.findListCartByUsername(username);
+        Object client = session.getAttribute("client");
         String url = "redirect:/home/" + username + "/cart/detail";
-        if(username.equals("no-user")){
+        if(username.equals("no-user") || client == null ){
             ra.addFlashAttribute("alert", "Mời bạn đăng nhập tài khoản để tiến hành đặt đơn");
             return url;
         }
@@ -86,4 +91,5 @@ public class CheckoutController {
         }
         return "/views/client/check-out";
     }
+
 }

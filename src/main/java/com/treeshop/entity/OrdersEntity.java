@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "orders")
 public class OrdersEntity {
     @Id
-    @Column(name = "order_id", length = 10)
+    @Column(name = "order_id", length = 20)
     private String orderId;
     @Column(name = "contact_name", length = 100)
     private String contactName;
@@ -32,6 +32,8 @@ public class OrdersEntity {
     private String username;
     @Column(name = "code_id")
     private String codeId;
+    @Column(name = "total_price")
+    private Integer totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_name", insertable = false, updatable = false)

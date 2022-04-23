@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class LineItemIdKey implements Serializable {
-    @Column(name = "order_id", length = 10)
+public class LineItemIdKey implements Serializable{
+    @Column(name = "order_id", length = 20)
     private String orderId;
     @Column(name = "product_id", length = 10)
     private String productId;

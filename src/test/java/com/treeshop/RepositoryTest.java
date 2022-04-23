@@ -1,10 +1,8 @@
 package com.treeshop;
 
-import com.treeshop.dao.CartRepository;
-import com.treeshop.dao.CategoryRepository;
-import com.treeshop.dao.ProductsRepository;
-import com.treeshop.dao.UserRepository;
+import com.treeshop.dao.*;
 import com.treeshop.entity.*;
+import com.treeshop.service.OrdersService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -33,6 +31,8 @@ public class RepositoryTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private LineItemRepository lineItemRepository;
     @Test
     public void insert(){
         UserEntity userEntity = new UserEntity();
@@ -201,5 +201,16 @@ public class RepositoryTest {
         userRepository.setEnableTrue("nhuan1");
     }
 
+    @Test
+    public void getProductInLineItem(){
+        LineItemIdKey lineItemIdKey = new LineItemIdKey();
+        lineItemIdKey.setProductId("1");
+        lineItemIdKey.setOrderId("202204235KyFn7");
+        LineItemEntity lineItemEntity = lineItemRepository.findByLineItemIdKey(lineItemIdKey);
+        ProductsEntity productsEntity = lineItemEntity.getProductsEntity();
+        OrdersEntity ordersEntity = lineItemEntity.getOrdersEntity();
+        String productName = productsEntity.getProductName();
+        String order = ordersEntity.getContactName();
 
+    }
 }
