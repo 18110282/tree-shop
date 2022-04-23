@@ -27,7 +27,5 @@ public class DiscountCodeEntity {
     @Column(name = "status", length = 100)
     private String status;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "discountCodeEntity")
-    private OrdersEntity ordersEntity;
 
 }
