@@ -27,4 +27,8 @@ public class LineItemEntity implements Serializable {
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private ProductsEntity productsEntity;
 
+    @Transient
+    public Integer getTotalPerProduct() {
+        return quantity * price;
+    }
 }
