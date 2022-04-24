@@ -204,13 +204,13 @@ public class RepositoryTest {
     @Test
     public void getProductInLineItem(){
         LineItemIdKey lineItemIdKey = new LineItemIdKey();
-        lineItemIdKey.setProductId("1");
-        lineItemIdKey.setOrderId("202204235KyFn7");
-        LineItemEntity lineItemEntity = lineItemRepository.findByLineItemIdKey(lineItemIdKey);
-        ProductsEntity productsEntity = lineItemEntity.getProductsEntity();
-        OrdersEntity ordersEntity = lineItemEntity.getOrdersEntity();
-        String productName = productsEntity.getProductName();
-        String order = ordersEntity.getContactName();
+//        lineItemIdKey.setProductId("1");
+//        lineItemIdKey.setOrderId("202204235KyFn7");
+//        LineItemEntity lineItemEntity = lineItemRepository.findByLineItemIdKey(lineItemIdKey);
+//        ProductsEntity productsEntity = lineItemEntity.getProductsEntity();
+//        OrdersEntity ordersEntity = lineItemEntity.getOrdersEntity();
+//        String productName = productsEntity.getProductName();
+//        String order = ordersEntity.getContactName();
 
     }
 }
