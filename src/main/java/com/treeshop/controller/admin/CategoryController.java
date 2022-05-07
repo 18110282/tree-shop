@@ -39,7 +39,7 @@ public class CategoryController {
     public String showEditCategoryForm(@PathVariable("categoryId") String categoryId,
                                       Model model) {
         CategoryEntity categoryEntity = categoryService.findCategoryById(categoryId);
-        model.addAttribute("categoryId", categoryEntity);
+        model.addAttribute("category", categoryEntity);
         model.addAttribute("titlePage", "Chỉnh sửa danh mục: " + categoryId);
         model.addAttribute("edit", "");
         return "/views/admin/category/manage-category";

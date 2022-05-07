@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 import java.util.List;
 
 @Controller
@@ -47,9 +48,12 @@ public class CartController {
         } else {
             boolean checkUser = cartService.checkExistUser(username);
             if (!checkUser) {
-                cartEntityList = (List<CartEntity>) session.getAttribute("cart");
-                if (cartEntityList != null) {
-                    cartService.saveCartFromSessionToCartEntity(cartEntityList, username);
+                if (model.asMap().get("delete") == null) {
+                    cartEntityList = (List<CartEntity>) session.getAttribute("cart");
+                    if (cartEntityList != null) {
+                        cartService.saveCartFromSessionToCartEntity(cartEntityList, username);
+                        session.removeAttribute("cart");
+                    }
                 }
             }
             cartEntityList = cartService.findListCartByUsername(username);
@@ -64,7 +68,7 @@ public class CartController {
     public String deleteItemInCart(@PathVariable(name = "username") String username,
                                    @PathVariable(name = "productId") String productId,
                                    HttpSession session,
-                                   Model model) {
+                                   Model model, RedirectAttributes ra) {
         CommonController commonController = new CommonController();
         List<CartEntity> cartEntityList;
         if (username.equals("no-user")) {
@@ -79,8 +83,10 @@ public class CartController {
             }
         } else {
             cartService.deleteItem(username, productId);
+            session.removeAttribute("cart");
         }
-        return "redirect:/home/" + username +"/cart/detail";
+        ra.addFlashAttribute("delete", "yes");
+        return "redirect:/home/" + username + "/cart/detail";
     }
 
     @PostMapping("/{username}/cart/detail/check-discount-code")
@@ -93,10 +99,9 @@ public class CartController {
             DiscountCodeEntity discountCodeEntity = discountCodeService.findByCodeId(discountCode);
             String status = discountCodeEntity.getStatus();
             if (status.equals("Còn hạng")) {
-                if(cartService.checkUsedCodeIdOfUser(username, discountCode)){
+                if (cartService.checkUsedCodeIdOfUser(username, discountCode)) {
                     ra.addFlashAttribute("alert", "Bạn đã sử dụng mã này rồi ^^ Mời bạn nhập mã khác!");
-                }
-                else {
+                } else {
                     session.setAttribute("discountPercent", discountCodeEntity.getDiscountPercent());
                     session.setAttribute("discountCode", discountCodeEntity);
                     ra.addFlashAttribute("alert", "Áp dụng mã thành công");
