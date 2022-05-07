@@ -14,6 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -78,8 +81,6 @@ public class CartController {
                 if (index != -1) {
                     cartEntityList.remove(index);
                 }
-            } else {
-                model.addAttribute("a", "No product");
             }
         } else {
             cartService.deleteItem(username, productId);
@@ -102,9 +103,14 @@ public class CartController {
                 if (cartService.checkUsedCodeIdOfUser(username, discountCode)) {
                     ra.addFlashAttribute("alert", "Bạn đã sử dụng mã này rồi ^^ Mời bạn nhập mã khác!");
                 } else {
-                    session.setAttribute("discountPercent", discountCodeEntity.getDiscountPercent());
-                    session.setAttribute("discountCode", discountCodeEntity);
-                    ra.addFlashAttribute("alert", "Áp dụng mã thành công");
+                    if (Date.valueOf(LocalDate.now()).before(discountCodeEntity.getStartDate())) {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        ra.addFlashAttribute("alert", "Mã " + discountCode + " chỉ áp dụng từ ngày " + dateFormat.format(discountCodeEntity.getStartDate()));
+                    } else {
+                        session.setAttribute("discountPercent", discountCodeEntity.getDiscountPercent());
+                        session.setAttribute("discountCode", discountCodeEntity);
+                        ra.addFlashAttribute("alert", "Áp dụng mã thành công");
+                    }
                 }
             } else {
                 ra.addFlashAttribute("alert", "Mã đã hết hạng, hãy nhập mã khác");
