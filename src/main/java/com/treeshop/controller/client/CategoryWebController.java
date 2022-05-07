@@ -1,16 +1,10 @@
 package com.treeshop.controller.client;
 
 import com.treeshop.controller.CommonController;
-import com.treeshop.entity.CartEntity;
-import com.treeshop.entity.CategoryEntity;
 import com.treeshop.entity.ProductsEntity;
-import com.treeshop.entity.UserEntity;
-import com.treeshop.service.CartService;
 import com.treeshop.service.CategoryService;
-import com.treeshop.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(path = "/home")
-public class CategoryController {
+public class CategoryWebController {
     @Autowired
     private CategoryService categoryService;
 

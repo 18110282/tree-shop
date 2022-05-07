@@ -15,6 +15,8 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends PagingAndSortingRepository<CategoryEntity, String> {
     List<CategoryEntity> findAll();
+    CategoryEntity findByCategoryId(String categoryId);
+    boolean existsByCategoryId(String categoryId);
 
     @Query("select listP from CategoryEntity c join c.productsEntityList listP where c.categoryId = :categoryId")
     Page<ProductsEntity> findListProductInCategory(@Param("categoryId")String categoryId, Pageable pageable);

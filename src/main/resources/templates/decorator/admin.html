@@ -133,6 +133,35 @@
 
                 <b class="arrow"></b>
             </li>
+            <li id="manage-category">
+                <a th:href="@{/admin/}" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-product-hunt"></i>
+                    <span class="menu-text"> Quản lí danh mục </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a th:href="@{/admin/category/list}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Danh sách danh mục
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a th:href="@{/admin/category/add-category}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Thêm danh mục
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
             <li id="manage-products">
                 <a th:href="@{/admin/}" class="dropdown-toggle">
                     <i class="menu-icon fa fa-product-hunt"></i>

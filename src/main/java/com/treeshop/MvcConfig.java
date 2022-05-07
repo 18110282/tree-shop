@@ -13,8 +13,8 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        Path productUploadDir = Paths.get("./src/main/resources/static/product-imgs/");
-        Path productUploadDir = Paths.get("./dynamic-resources/product-imgs/");
+        Path productUploadDir = Paths.get("./dynamic-resources/");
         String productUploadPath = productUploadDir.toFile().getAbsolutePath();
-        registry.addResourceHandler("/dynamic-resources/product-imgs/**").addResourceLocations("file:/" + productUploadPath +"/");
+        registry.addResourceHandler("/dynamic-resources/**").addResourceLocations("file:/" + productUploadPath +"/");
     }
 }
