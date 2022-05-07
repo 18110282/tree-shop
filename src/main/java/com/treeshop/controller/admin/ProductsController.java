@@ -83,7 +83,7 @@ public class ProductsController {
 
                 ra.addFlashAttribute("successMessage", "Chỉnh sửa sản phẩm: <strong> " + productId + "</strong> thành công.");
             }
-        productsService.saveProductFile(productsEntity, multipartFile);
+        productsService.saveProduct(productsEntity, multipartFile);
         return "redirect:/admin/products/list";
     }
 }

@@ -36,6 +36,8 @@ public class ProductsService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private CommonService commonService;
     public List<ProductsEntity> findAllProductByQ() {
         return productsRepository.findAllQuery();
     }
@@ -48,10 +50,9 @@ public class ProductsService {
         productsRepository.save(productsEntity);
     }
 
-    public void saveProductFile(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException {
+    public void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-        productsEntity.setCreateDate(timestamp);
+        productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
         productsEntity.setImageUrl(fileName);
         productsEntity.setDiscountPercent(0);
         String productId = productsEntity.getProductId();
@@ -59,15 +60,16 @@ public class ProductsService {
 //            String uploadDir = "./src/main/resources/static/product-imgs/" + savedProduct.getProductId();
             String uploadDir = "./dynamic-resources/product-imgs/" + productId;
             Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            try (InputStream inputStream = multipartFile.getInputStream()) {
-                Path filePath = uploadPath.resolve(fileName);
-                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                throw new IOException("Could not save uploaded file: " + fileName);
-            }
+            commonService.processFile(uploadPath, multipartFile, fileName);
+//            if (!Files.exists(uploadPath)) {
+//                Files.createDirectories(uploadPath);
+//            }
+//            try (InputStream inputStream = multipartFile.getInputStream()) {
+//                Path filePath = uploadPath.resolve(fileName);
+//                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+//            } catch (IOException e) {
+//                throw new IOException("Could not save uploaded file: " + fileName);
+//            }
         }
         productsRepository.save(productsEntity);
     }

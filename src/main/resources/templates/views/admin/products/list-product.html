@@ -71,7 +71,7 @@
                             <tr>
                                 <th class="center">Mã sản phẩm</th>
                                 <th>Tên</th>
-                                <th style="width: 187px" class="hidden-480">Hình ảnh</th>
+                                <th style="width: 187px">Hình ảnh</th>
                                 <th class="hidden-480">Mô tả</th>
                                 <th>Giá</th>
                                 <th>Số lượng</th>
@@ -88,19 +88,19 @@
                                     <td>
                                         [[${product.productName}]]
                                     </td>
-                                    <td class="hidden-480">
+                                    <td>
                                         <img th:title="${product.productName}" class="img-responsive"
                                              th:src="@{${product.photosImagePath}}"
-                                             style="height:150px; width: 186px;" alt="No Image" accept="image/*"/>
+                                             accept="image/*"/>
                                     </td>
                                     <td class="hidden-480">
                                         <span
                                                 style="
                                                        max-height:150px;
-                                                       white-space: pre-line;display: -webkit-box;-webkit-line-clamp: 8;-webkit-box-orient: vertical;
+                                                       white-space: pre-line;display: -webkit-box;-webkit-line-clamp: 6;-webkit-box-orient: vertical;
                                                        overflow: hidden;
                                                        text-overflow: ellipsis;
-                                                       max-width: 90ch;">
+                                                       max-width: 100ch;">
                                         [[${product.description}]]
                                         </span>
                                     </td>
