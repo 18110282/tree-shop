@@ -40,6 +40,9 @@ public class OrdersService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    public  List<OrdersEntity> findAll(){
+        return ordersRepository.findAll();
+    }
     public OrdersEntity findOrderEntityById(String orderId){
         return ordersRepository.findByOrderId(orderId);
     }
@@ -91,7 +94,7 @@ public class OrdersService {
         //Get date-month-year to generate orderId
         String orderId = timestamp.toString().substring(0, 10);
         orderId = orderId.replace("-", "");
-        orderId = orderId + RandomString.make(6);
+        orderId = orderId + RandomString.make(5);
 
         return orderId;
     }
@@ -144,5 +147,16 @@ public class OrdersService {
             subTotal = subTotal + lineItemEntity.getTotalPerProduct();
         }
         return subTotal;
+    }
+    public void setTransientOfOrder(String orderId){
+        OrdersEntity ordersEntity = this.findOrderEntityById(orderId);
+        ordersEntity.setSubTotalPrice(this.getSubToTalOfOrder(orderId));
+        if(ordersEntity.getDiscountCodeEntity() != null) {
+            ordersEntity.setDiscountPercent(ordersEntity.getDiscountCodeEntity().getDiscountPercent());
+        }
+        else {
+            ordersEntity.setDiscountPercent(0);
+        }
+        ordersRepository.save(ordersEntity);
     }
 }

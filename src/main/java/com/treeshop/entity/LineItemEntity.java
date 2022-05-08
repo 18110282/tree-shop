@@ -1,6 +1,8 @@
 package com.treeshop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,10 +21,12 @@ public class LineItemEntity implements Serializable {
     @Column(name = "price")
     private Integer price;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private OrdersEntity ordersEntity;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private ProductsEntity productsEntity;
@@ -31,4 +35,10 @@ public class LineItemEntity implements Serializable {
     public Integer getTotalPerProduct() {
         return quantity * price;
     }
+
+    @Transient
+    public String getProductName(){
+        return productsEntity.getProductName();
+    }
+
 }

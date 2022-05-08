@@ -1,5 +1,7 @@
 package com.treeshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,14 +37,24 @@ public class OrdersEntity {
     @Column(name = "total_price")
     private Integer totalPrice;
 
+    @Transient
+    private Integer subTotalPrice;
+
+    @Transient
+    private Integer discountPercent;
+
+
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_name", insertable = false, updatable = false)
     private UserEntity userEntity;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "code_id", insertable = false, updatable = false)
     private DiscountCodeEntity discountCodeEntity;
 
+    @JsonSerialize(using = CustomListLineItemSerializer.class)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ordersEntity")
     private List<LineItemEntity> lineItemEntityList;
 }
