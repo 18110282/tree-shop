@@ -91,7 +91,7 @@
                                     <td>
                                         <img th:title="${product.productName}" class="img-responsive"
                                              th:src="@{${product.photosImagePath}}"
-                                             accept="image/*"/>
+                                             style="height: 120px" accept="image/*"/>
                                     </td>
                                     <td class="hidden-480">
                                         <span
@@ -215,7 +215,6 @@
                         })
                     </script>
                     <script th:unless="${session.adminEntity}" th:inline="javascript">
-                        var a = [[${#request.}]];
                         window.location.assign("/admin/login");
                     </script>
                 </div>
