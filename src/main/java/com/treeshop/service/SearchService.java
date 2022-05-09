@@ -21,7 +21,7 @@ public class SearchService {
 
     public Page<ProductsEntity> searchProductByPrice(Integer minPrice, Integer maxPrice, Integer number){
         Pageable pageable = PageRequest.of(number - 1, 6);
-        return productsRepository.findAllByPriceBetween(minPrice, maxPrice, pageable);
+        return productsRepository.findAllByPriceBetweenAndEnabledIsTrue(minPrice, maxPrice, pageable);
     }
 
 }

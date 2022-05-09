@@ -46,7 +46,7 @@ public class ProductsService {
         return productsRepository.findRandomProductInSameCategory(categoryId);
     }
 
-    public void saveProduct(ProductsEntity productsEntity) {
+    public void saveProductWithDiscountPercent(ProductsEntity productsEntity) {
         productsRepository.save(productsEntity);
     }
 
@@ -55,6 +55,7 @@ public class ProductsService {
         productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
         productsEntity.setImageUrl(fileName);
         productsEntity.setDiscountPercent(0);
+        productsEntity.setEnabled(true);
         String productId = productsEntity.getProductId();
         if (!fileName.equals("")) {
 //            String uploadDir = "./src/main/resources/static/product-imgs/" + savedProduct.getProductId();
@@ -83,7 +84,9 @@ public class ProductsService {
     }
 
     public void deleteProduct(String productId) {
-        productsRepository.deleteById(productId);
+        ProductsEntity productsEntity = this.findByProductId(productId);
+        productsEntity.setEnabled(false);
+        productsRepository.save(productsEntity);
     }
 
     public List<CategoryEntity> findAllCategory() {
@@ -92,7 +95,7 @@ public class ProductsService {
 
     public Page<ProductsEntity> findAll(Integer pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber - 1, 6);
-        return productsRepository.findAll(pageable);
+        return productsRepository.findAllByEnabledIsTrue(pageable);
     }
 
     public List<ProductsEntity> findListDiscountProduct() {
@@ -104,12 +107,15 @@ public class ProductsService {
     }
 
     public List<ProductsEntity> findListLatestProduct(){
-        List<ProductsEntity> productsEntityList = productsRepository.findAllByOrderByCreateDateDesc();
-        List<ProductsEntity> productsEntityListLatestTop6 = new ArrayList<>();
-        for(int i = 0; i < 3; i++){
-            productsEntityListLatestTop6.add(productsEntityList.get(i));
+        List<ProductsEntity> productsEntityList = productsRepository.findAllByEnabledIsTrueOrderByCreateDateDesc();
+        List<ProductsEntity> productsEntityListLatestTop3 = new ArrayList<>();
+        for(int i = 0; i < productsEntityList.size(); i++){
+            if (i == 3){
+                break;
+            }
+            productsEntityListLatestTop3.add(productsEntityList.get(i));
         }
-        return productsEntityListLatestTop6;
+        return productsEntityListLatestTop3;
     }
 
     public Integer findDiscountPriceByProductId(String productId) {
@@ -123,4 +129,5 @@ public class ProductsService {
     public Integer findMaxPriceInAllProduct(){
         return productsRepository.findMaxPrice();
     }
+
 }

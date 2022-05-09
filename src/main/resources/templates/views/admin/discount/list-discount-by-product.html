@@ -8,9 +8,10 @@
     <title>Admin Manage Discount</title>
     <style>
         .modal-dialog {
-            top: 150px;
+            top: 150px  ;
             left: auto;
             right: auto;
+            bottom: auto;
         }
     </style>
 </head>
@@ -132,13 +133,13 @@
                                                                                     Giảm:
                                                                                 </label>
                                                                                 <div class="input-group">
-                                                                                    <input class="form-control" pattern="[0-9]{0,3}" title="Chỉ bao gồm số, lớn nhất là 100%" th:id="${product.productId}" th:value="${product.discountPercent}" th:name="inputPercent" style="width: 55px; height: 25px"
-                                                                                           type="text" maxlength="3"/>%
+                                                                                    <input class="form-control" pattern="[0-9]{0,3}" title="Chỉ bao gồm số lớn hơn 0 và lớn nhất là 100%" th:id="${product.productId}" th:value="${product.discountPercent}" th:name="inputPercent" style="width: 55px; height: 25px"
+                                                                                           type="text" maxlength="3" th:attr="onkeyup='checkInput(' + ${product.productId} +')'"/>%
                                                                                 </div>
                                                                             </div>
                                                                             <br>
                                                                             <div>
-                                                                                &nbsp;&nbsp;<button type="submit" id="submit" style="background-color: darkseagreen; height: 30px" th:attr="onclick='checkInput(' + ${product.productId} +')'">
+                                                                                &nbsp;&nbsp;<button type="submit" id="submit" style="background-color: darkseagreen; height: 30px"  th:attr="onclick='checkInput(' + ${product.productId} +')'">
                                                                                 <i class="ace-icon fa fa-upload bigger-110"></i>
                                                                                 Thêm
                                                                             </button>
@@ -193,11 +194,10 @@
                     <!-- inline scripts related to this page -->
                     <script type="text/javascript" th:inline="javascript">
                         function checkInput(x) {
-                            inputValue = document.getElementById(x);
-                            console.log(x);
-                            if(inputValue.value > 100) {
-                                inputValue.value = "";
-                                alert('Lo nhất là 100%!');
+                            console.log(x.value);
+                            if(x.value > 100) {
+                                x.value = "";
+                                alert('Lớn nhất là 100%!');
                             }
                         }
                         jQuery(function ($) {

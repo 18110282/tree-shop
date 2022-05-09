@@ -110,6 +110,7 @@
                                     <option value="false" class="tColor">Chưa xác thực</option>
                                 </select>
                             </div>
+                            <input class="hidden" value="true" th:name="enabled" th:if="${user.isEnabled()}">
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label no-padding-right" for="form-field-6">

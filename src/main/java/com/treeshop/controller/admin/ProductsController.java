@@ -74,8 +74,13 @@ public class ProductsController {
         String productId = productsEntity.getProductId();
         if (url.equals("/admin/products/add-product")) {
             if (productsService.checkProductId(productId)) {
-                ra.addFlashAttribute("errorMessage", productId);
-                return "redirect:/admin/products/add-product";
+                if(productsService.findByProductId(productId).isEnabled()){
+                    ra.addFlashAttribute("errorMessage", productId);
+                    return "redirect:/admin/products/add-product";
+                }
+                else {
+                    ra.addFlashAttribute("successMessage", "Thêm sản phẩm: <strong> " + productId + "</strong> thành công.");
+                }
             } else {
                 ra.addFlashAttribute("successMessage", "Thêm sản phẩm: <strong> " + productId + "</strong> thành công.");
             }

@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping(path = "/admin")
-public class AdminController {
+public class UserController {
     @Autowired
     private UsersService userService;
 
@@ -129,7 +129,7 @@ public class AdminController {
     }
 
     @PostMapping("/user/save")
-    public String saveUser(UserEntity user,
+    public String saveUser(@ModelAttribute("user") UserEntity user,
                            RedirectAttributes ra,
                            HttpServletRequest request) {
         String previousUrl = commonController.getHeaderURL(request);

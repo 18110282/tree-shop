@@ -40,7 +40,7 @@ public class DiscountController {
                                          RedirectAttributes ra){
         ProductsEntity productsEntity = productsService.findByProductId(productId);
         productsEntity.setDiscountPercent(0);
-        productsService.saveProduct(productsEntity);
+        productsService.saveProductWithDiscountPercent(productsEntity);
         ra.addFlashAttribute("successMessage", "Xoá % giảm giá của <strong>" + productId  + "</strong> thành công!");
         return "redirect:/admin/discount/list-by-product";
     }
@@ -54,7 +54,7 @@ public class DiscountController {
         else {
             ProductsEntity productsEntity = productsService.findByProductId(productId);
             productsEntity.setDiscountPercent(inputValue);
-            productsService.saveProduct(productsEntity);
+            productsService.saveProductWithDiscountPercent(productsEntity);
             ra.addFlashAttribute("successMessage", "Thêm giảm giá cho sản phẩm <strong>" + productId + "</strong> thành công!");
         }
         return "redirect:/admin/discount/list-by-product";

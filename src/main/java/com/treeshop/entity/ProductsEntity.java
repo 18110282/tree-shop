@@ -31,6 +31,8 @@ public class ProductsEntity {
     private Integer discountPercent;
     @Column(name = "category_id", length = 10)
     private String categoryId;
+    @Column(name = "enabled")
+    private boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)

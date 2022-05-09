@@ -19,14 +19,8 @@ public class OrdersRestController {
     private OrdersService ordersService;
     @GetMapping("/admin/order/detail/{orderId}")
     public OrdersEntity getOrderDetail(@PathVariable(name = "orderId") String orderId){
-//    public List<LineItemEntity> getOrderDetail(@PathVariable(name = "orderId") String orderId) {
-//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//        OrdersEntity ordersEntity = ordersService.findOrderEntityById(orderId);
-//        String json = ow.writeValueAsString(ordersService.findOrderEntityById(orderId));
         OrdersEntity ordersEntity = ordersService.findOrderEntityById(orderId);
         ordersService.setTransientOfOrder(orderId);
-//        String result = new ObjectMapper().writeValueAsString(ordersEntity);
-//        List<LineItemEntity> lineItemEntityList = ordersService.findLineItemOfOrderId(orderId);
         return ordersEntity;
     }
 }
