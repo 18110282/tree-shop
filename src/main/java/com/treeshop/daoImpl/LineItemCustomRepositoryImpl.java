@@ -21,7 +21,7 @@ public class LineItemCustomRepositoryImpl implements LineItemCustomRepository {
         }
         return entityManagerFactory.unwrap(SessionFactory.class);
     }
-    @Autowired
+    @Override
     public List<ProductsEntity> findTopSellProduct(){
         SessionFactory sessionFactory = this.getSessionFactory();
         Session session = sessionFactory.openSession();
