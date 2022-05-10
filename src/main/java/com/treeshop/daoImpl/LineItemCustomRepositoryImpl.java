@@ -25,7 +25,7 @@ public class LineItemCustomRepositoryImpl implements LineItemCustomRepository {
     public List<ProductsEntity> findTopSellProduct(){
         SessionFactory sessionFactory = this.getSessionFactory();
         Session session = sessionFactory.openSession();
-        String hql = "select l.productsEntity from LineItemEntity l group by l.lineItemIdKey.productId order by sum(l.quantity) desc";
+        String hql = "select l.productsEntity from LineItemEntity l where l.productsEntity.enabled = true group by l.lineItemIdKey.productId order by sum(l.quantity) desc";
         return session.createQuery(hql, ProductsEntity.class).setMaxResults(8).list();
     }
 
