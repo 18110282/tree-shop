@@ -45,12 +45,19 @@ public class OrdersEntity {
     @Transient
     private Integer discountPercent;
 
-
+    /**
+     * @JsonIgnoreProperties (value = {"applications", "hibernateLazyInitializer"})
+     * Đối với các entity mà có những thuộc tính ta định nghĩa là với Lazy loading,
+     * khi cần dùng các API Json để xử lí thì @Annotation này giúp bỏ qua chuỗi hoặc thuộc tính rác,
+     * không hữu ích mà Hibernate thêm vào, nên ta cần khai báo @Annotation này trước thuộc tính có Lazy loading.
+     */
+//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_name", insertable = false, updatable = false)
     private UserEntity userEntity;
 
+    //    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "code_id", insertable = false, updatable = false)
