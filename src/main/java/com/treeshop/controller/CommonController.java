@@ -1,13 +1,12 @@
 package com.treeshop.controller;
 
-import com.treeshop.entity.CartEntity;
+import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.entity.CategoryEntity;
 import com.treeshop.entity.ProductsEntity;
 import com.treeshop.entity.UserEntity;
 import com.treeshop.service.CartService;
 import com.treeshop.service.ProductsService;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

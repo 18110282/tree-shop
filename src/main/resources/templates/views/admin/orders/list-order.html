@@ -296,7 +296,7 @@
                                 $('#orderId').html("<strong>#" + orderEntity.orderId+"</strong>");
                                 $('#orderDate').html(orderEntity.orderDate);
                                 $('#username').html("<i class=\"ace-icon fa fa-caret-right green\"></i>Tài khoản đặt hàng: " + orderEntity.username);
-                                $('#contactName').html("<i class=\"ace-icon fa fa-caret-right green\"></i>Tên: " + orderEntity.contactName);
+                                $('#contactName').html("<i class=\"ace-icon fa fa-caret-right green\"></i>Tên người nhận: " + orderEntity.contactName);
                                 $('#phoneNumber').html("<i class=\"ace-icon fa fa-caret-right green\"></i>Số điện thoại: " + orderEntity.phoneNumber);
                                 $('#email').html("<i class=\"ace-icon fa fa-caret-right green\"></i>Email: " + orderEntity.email);
                                 if(orderEntity.note == ""){
@@ -318,6 +318,9 @@
                                 if (orderEntity.discountPercent != 0) {
                                     $('#discountPercent').html(orderEntity.discountPercent + "%");
                                     $('#discount').removeClass("hidden");
+                                }
+                                else {
+                                    $('#discount').addClass("hidden");
                                 }
                             })
                         })

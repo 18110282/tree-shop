@@ -1,5 +1,7 @@
 package com.treeshop.entity;
 
+import com.treeshop.entity.cart.CartEntity;
+import com.treeshop.entity.lineitem.LineItemEntity;
 import lombok.Getter;
 import lombok.Setter;
 

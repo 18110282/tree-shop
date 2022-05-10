@@ -1,7 +1,9 @@
 package com.treeshop.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.treeshop.entity.lineitem.CustomListLineItemSerializer;
+import com.treeshop.entity.lineitem.LineItemEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,17 +46,18 @@ public class OrdersEntity {
     private Integer discountPercent;
 
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_name", insertable = false, updatable = false)
     private UserEntity userEntity;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "code_id", insertable = false, updatable = false)
     private DiscountCodeEntity discountCodeEntity;
 
     @JsonSerialize(using = CustomListLineItemSerializer.class)
+//    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ordersEntity")
     private List<LineItemEntity> lineItemEntityList;
 }

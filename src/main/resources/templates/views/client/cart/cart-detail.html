@@ -25,7 +25,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:if="${cartDetailList.size() == 0}">
+                            <tr th:if="${numberProductInCart == 0}">
                                 <td class="shoping__cart__item" style="color: red;"><strong>Giỏ hàng trống</strong></td>
                             </tr>
                             <th:block th:each="item :${cartDetailList}">

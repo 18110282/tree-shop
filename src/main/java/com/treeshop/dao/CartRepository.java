@@ -1,7 +1,7 @@
 package com.treeshop.dao;
 
-import com.treeshop.entity.CartEntity;
-import com.treeshop.entity.CartIdKey;
+import com.treeshop.entity.cart.CartEntity;
+import com.treeshop.entity.cart.CartIdKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

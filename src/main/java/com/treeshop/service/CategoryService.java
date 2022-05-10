@@ -50,12 +50,18 @@ public class CategoryService {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         String categoryId = categoryEntity.getCategoryId();
         categoryEntity.setCreateDay(Timestamp.valueOf(LocalDateTime.now()));
-        categoryEntity.setImageUrl(fileName);
         if (!fileName.equals("")) {
             String uploadDir = "./dynamic-resources/category-imgs/" + categoryId;
             Path uploadPath = Paths.get(uploadDir);
             commonService.processFile(uploadPath,multipartFile,fileName);
         }
+        else {
+            CategoryEntity categoryEntity1 = this.findCategoryById(categoryId);
+            if(categoryEntity1 != null) {
+                fileName = categoryEntity1.getImageUrl();
+            }
+        }
+        categoryEntity.setImageUrl(fileName);
         categoryRepository.save(categoryEntity);
     }
 

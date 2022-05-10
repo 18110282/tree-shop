@@ -1,4 +1,4 @@
-package com.treeshop.entity;
+package com.treeshop.entity.lineitem;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

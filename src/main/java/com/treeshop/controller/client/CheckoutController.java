@@ -1,8 +1,7 @@
 package com.treeshop.controller.client;
 
 
-import com.treeshop.entity.CartEntity;
-import com.treeshop.entity.ProductsEntity;
+import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.service.CartService;
 import com.treeshop.service.CheckoutService;
 import com.treeshop.service.OrdersService;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 

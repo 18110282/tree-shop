@@ -1,8 +1,8 @@
 package com.treeshop.entity;
 
+import com.treeshop.entity.cart.CartEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;

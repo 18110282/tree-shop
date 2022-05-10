@@ -1,7 +1,7 @@
 package com.treeshop.controller.client;
 
 
-import com.treeshop.entity.LineItemEntity;
+import com.treeshop.entity.lineitem.LineItemEntity;
 import com.treeshop.entity.OrdersEntity;
 import com.treeshop.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;

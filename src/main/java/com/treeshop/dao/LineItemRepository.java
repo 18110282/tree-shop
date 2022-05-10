@@ -1,7 +1,7 @@
 package com.treeshop.dao;
 
-import com.treeshop.entity.LineItemEntity;
-import com.treeshop.entity.LineItemIdKey;
+import com.treeshop.entity.lineitem.LineItemEntity;
+import com.treeshop.entity.lineitem.LineItemIdKey;
 import com.treeshop.entity.ProductsEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

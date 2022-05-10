@@ -1,9 +1,9 @@
 package com.treeshop.service;
 
 import com.treeshop.dao.CategoryRepository;
+import com.treeshop.dao.LineItemRepository;
 import com.treeshop.dao.ProductsRepository;
 import com.treeshop.entity.CategoryEntity;
-import com.treeshop.entity.DiscountCodeEntity;
 import com.treeshop.entity.ProductsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,15 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,6 +33,9 @@ public class ProductsService {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private LineItemRepository lineItemRepository;
+
+    @Autowired
     private CommonService commonService;
     public List<ProductsEntity> findAllProductByQ() {
         return productsRepository.findAllQuery();
@@ -45,7 +44,9 @@ public class ProductsService {
     public List<ProductsEntity> findRelatedProduct(String categoryId){
         return productsRepository.findRandomProductInSameCategory(categoryId);
     }
-
+    public List<ProductsEntity> findTopEightBestSellingProduct(){
+        return lineItemRepository.findTopSellProduct();
+    }
     public void saveProductWithDiscountPercent(ProductsEntity productsEntity) {
         productsRepository.save(productsEntity);
     }
@@ -53,7 +54,6 @@ public class ProductsService {
     public void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
-        productsEntity.setImageUrl(fileName);
         productsEntity.setDiscountPercent(0);
         productsEntity.setEnabled(true);
         String productId = productsEntity.getProductId();
@@ -72,6 +72,13 @@ public class ProductsService {
 //                throw new IOException("Could not save uploaded file: " + fileName);
 //            }
         }
+        else {
+            ProductsEntity productsEntity1 = this.findByProductId(productId);
+            if(productsEntity1 != null) {
+                fileName = productsEntity1.getImageUrl();
+            }
+        }
+        productsEntity.setImageUrl(fileName);
         productsRepository.save(productsEntity);
     }
 

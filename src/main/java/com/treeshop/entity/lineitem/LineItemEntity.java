@@ -1,8 +1,10 @@
-package com.treeshop.entity;
+package com.treeshop.entity.lineitem;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.treeshop.entity.OrdersEntity;
+import com.treeshop.entity.ProductsEntity;
+import com.treeshop.entity.lineitem.LineItemIdKey;
 import lombok.Getter;
 import lombok.Setter;
 

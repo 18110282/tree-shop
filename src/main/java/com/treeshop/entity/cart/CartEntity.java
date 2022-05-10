@@ -1,6 +1,8 @@
-package com.treeshop.entity;
+package com.treeshop.entity.cart;
 
 
+import com.treeshop.entity.ProductsEntity;
+import com.treeshop.entity.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -3,8 +3,8 @@ package com.treeshop.service;
 
 import com.treeshop.dao.CartRepository;
 import com.treeshop.dao.OrdersRepository;
-import com.treeshop.entity.CartEntity;
-import com.treeshop.entity.CartIdKey;
+import com.treeshop.entity.cart.CartEntity;
+import com.treeshop.entity.cart.CartIdKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
