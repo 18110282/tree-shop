@@ -35,6 +35,8 @@ public class ProductsEntity {
     private String categoryId;
     @Column(name = "enabled")
     private boolean enabled;
+    @Column(name="visit")
+    private Integer visit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)

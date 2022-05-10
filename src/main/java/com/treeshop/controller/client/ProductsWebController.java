@@ -89,7 +89,7 @@ public class ProductsWebController {
     public String showProductDetail(@PathVariable(name="productId") String productId, Model model,
                                     HttpSession session){
         Integer numberProductInCart = commonController.getNumberProductInCart(session);
-        ProductsEntity productsEntity = productsService.findByProductId(productId);
+        ProductsEntity productsEntity = productsService.findByProductIdInWeb(productId);
         String categoryId = productsEntity.getCategoryId();
         List<ProductsEntity> productsEntityList = productsService.findRelatedProduct(categoryId);
         model.addAttribute("listRelatedProduct", productsEntityList);

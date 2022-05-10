@@ -56,6 +56,13 @@ public class ProductsService {
         productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
         productsEntity.setDiscountPercent(0);
         productsEntity.setEnabled(true);
+        Integer visit = productsEntity.getVisit();
+        if(visit != null){
+            productsEntity.setVisit(visit);
+        }
+        else {
+            productsEntity.setVisit(0);
+        }
         String productId = productsEntity.getProductId();
         if (!fileName.equals("")) {
 //            String uploadDir = "./src/main/resources/static/product-imgs/" + savedProduct.getProductId();
@@ -83,6 +90,12 @@ public class ProductsService {
     }
 
     public ProductsEntity findByProductId(String productId) {
+        return productsRepository.findByProductId(productId);
+    }
+    public ProductsEntity findByProductIdInWeb(String productId) {
+        ProductsEntity productsEntity = productsRepository.findByProductId(productId);
+        productsEntity.setVisit(productsEntity.getVisit()+1);
+        productsRepository.save(productsEntity);
         return productsRepository.findByProductId(productId);
     }
 
