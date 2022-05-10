@@ -47,5 +47,9 @@ public interface ProductsRepository extends PagingAndSortingRepository<ProductsE
 
     List<ProductsEntity> findAllByEnabledIsTrueOrderByCreateDateDesc();
 
+    List<ProductsEntity> findTop6ByEnabledIsTrueOrderByCreateDateDesc();
+
+    List<ProductsEntity> findTop6ByEnabledIsTrueOrderByVisitDesc();
+
 
 }

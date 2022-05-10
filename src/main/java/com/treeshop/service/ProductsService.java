@@ -33,7 +33,7 @@ public class ProductsService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private LineItemRepository lineItemRepository;
+    private HomeService homeService;
 
     @Autowired
     private CommonService commonService;
@@ -43,9 +43,6 @@ public class ProductsService {
 
     public List<ProductsEntity> findRelatedProduct(String categoryId){
         return productsRepository.findRandomProductInSameCategory(categoryId);
-    }
-    public List<ProductsEntity> findTopEightBestSellingProduct(){
-        return lineItemRepository.findTopSellProduct();
     }
     public void saveProductWithDiscountPercent(ProductsEntity productsEntity) {
         productsRepository.save(productsEntity);
@@ -126,16 +123,9 @@ public class ProductsService {
         return productsRepository.findDiscountProduct();
     }
 
-    public List<ProductsEntity> findListLatestProduct(){
-        List<ProductsEntity> productsEntityList = productsRepository.findAllByEnabledIsTrueOrderByCreateDateDesc();
-        List<ProductsEntity> productsEntityListLatestTop3 = new ArrayList<>();
-        for(int i = 0; i < productsEntityList.size(); i++){
-            if (i == 3){
-                break;
-            }
-            productsEntityListLatestTop3.add(productsEntityList.get(i));
-        }
-        return productsEntityListLatestTop3;
+    public List<ProductsEntity> findListLatestProduct(Integer slide){
+        List<ProductsEntity> productsEntityList = productsRepository.findTop6ByEnabledIsTrueOrderByCreateDateDesc();
+        return homeService.handleSlideOfTopSixProduct(slide, productsEntityList);
     }
 
     public Integer findDiscountPriceByProductId(String productId) {

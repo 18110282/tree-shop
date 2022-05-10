@@ -57,7 +57,23 @@
                                 <h4>Latest Products</h4>
                                 <div class="latest-product__slider owl-carousel">
                                     <div class="latest-prdouct__slider__item">
-                                        <th:block th:each="item: ${listLatestProduct}">
+                                        <th:block th:each="item: ${topLatestProductList1}">
+                                            <a th:href="@{'/home/product/' + ${item.productId} + '/detail'}"
+                                               class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img style="width: 110px; height: 110px"
+                                                         th:src="@{${item.photosImagePath}}"
+                                                         th:tittle="${item.productName}">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>[[${item.productName}]]</h6>
+                                                    <span>[[${item.price}]]VND</span>
+                                                </div>
+                                            </a>
+                                        </th:block>
+                                    </div>
+                                    <div class="latest-prdouct__slider__item">
+                                        <th:block th:each="item: ${topLatestProductList2}">
                                             <a th:href="@{'/home/product/' + ${item.productId} + '/detail'}"
                                                class="latest-product__item">
                                                 <div class="latest-product__item__pic">

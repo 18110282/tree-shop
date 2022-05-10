@@ -20,10 +20,6 @@ import java.util.List;
 @Controller
 @Getter
 public class CommonController {
-    private List<ProductsEntity> listDiscountProduct;
-    private List<ProductsEntity> listLatestProduct;
-    private List<CategoryEntity> categoryEntityList;
-    private int numberProductInCart;
 
     @Autowired
     private ProductsService productsService;
@@ -75,21 +71,17 @@ public class CommonController {
         List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
         Long totalProducts = productsEntityPage.getTotalElements();
         List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
-        List<ProductsEntity> listLatestProduct = productsService.findListLatestProduct();
         List<CategoryEntity> categoryEntityList = productsService.findAllCategory();
         Integer maxPrice = productsService.findMaxPriceInAllProduct();
         Integer numberProductInCart = this.getNumberProductInCart(session);
         model.addAttribute("numberProductInCart", numberProductInCart);
         model.addAttribute("categoryList", categoryEntityList);
-        model.addAttribute("listLatestProduct", listLatestProduct);
         model.addAttribute("listDiscountProduct", listDiscountProduct);
+        model.addAttribute("topLatestProductList1", productsService.findListLatestProduct(1));
+        model.addAttribute("topLatestProductList2", productsService.findListLatestProduct(2));
         model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("maxPrice", maxPrice);
         model.addAttribute("listProduct", listAllProduct);
-//        this.listDiscountProduct = listDiscountProduct;
-//        this.listLatestProduct = listLatestProduct;
-//        this.categoryEntityList = categoryEntityList;
-//        this.numberProductInCart = numberProductInCart;
     }
 
     public String getSiteUrl(HttpServletRequest request){
