@@ -4,7 +4,7 @@
       layout:decorate="~{decorator/web}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Chi Tiết Giỏ Hàng</title>
 </head>
 <body>
 <!-- Shoping Cart Section Begin -->
@@ -82,7 +82,7 @@
                 <div class="col-lg-6">
                     <div class="shoping__continue">
                         <div class="shoping__discount" th:if="${session.client}">
-                            <h5>Mã Giảm Giá(Nếu Có) </h5>
+                            <h5>Mã Giảm Giá (Nếu Có) </h5>
                             <div th:if="${session.discountCode}">
                             <span> Đã áp dụng mã <strong> [[${session.discountCode.getCodeId()}]]</strong> thành công,
                                 giảm <strong>[[${session.discountCode.getDiscountPercent()}]]% </strong>giá trị đơn hàng.</span>
