@@ -12,26 +12,26 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <h4>Billing Details</h4>
+                <h4>THÔNG TIN THANH TOÁN</h4>
                 <form th:action="@{'/home/' + ${session.client.username} + '/create-order'}"  method="post" th:object="${order}">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Fist Name<span>*</span></p>
+                                        <p>Họ Và Tên<span>*</span></p>
                                         <input type="text" th:name="contactName" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
-                                <p>Address<span>*</span></p>
+                                <p>Địa Chỉ<span>*</span></p>
                                 <input type="text" placeholder="Street Address" class="checkout__input__add" th:name="address" required>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Phone<span>*</span></p>
+                                        <p>Số Điện Thoại<span>*</span></p>
                                         <input type="text" th:name="phoneNumber" required>
                                     </div>
                                 </div>
@@ -43,36 +43,36 @@
                                 </div>
                             </div>
                             <div class="checkout__input">
-                                <p>Order notes</p>
+                                <p>Ghi Chú</p>
                                 <input type="text"
-                                       placeholder="Notes about your order, e.g. special notes for delivery." th:name="note">
+                                       placeholder="Ghi chú đơn hàng của bạn. Ví dụ: Thời gian nhận hàng hay chỉ dẫn địa điểm nhận hàng chi tiết hơn, ..." th:name="note">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
-                                <h4>Your Order</h4>
-                                <div class="checkout__order__products">Products <span>Total</span></div>
+                                <h4>Đơn Hàng Của Bạn</h4>
+                                <div class="checkout__order__products">Sản Phẩm<span>Tổng Tiền</span></div>
                                 <ul th:each="item :${cartDetailList}">
                                     <li>[[${item.getProductsEntity.getProductName()}]] (x[[${item.quantity}]])<span>[[${item.getTotalPerProduct()}]]</span></li>
                                 </ul>
-                                <div class="checkout__order__total">Subtotal <span>[[${subTotal}]]</span></div>
+                                <div class="checkout__order__total">Tổng Số Lượng <span>[[${subTotal}]]</span></div>
                                 <div th:if="${discountPercent != 0}" class="checkout__order__total">Giảm: <span>[[${discountPercent}]]%</span></div>
                                 <div class="checkout__order__total">Total <span th:name="totalPrice">[[${total}]]</span></div>
                                 <div class="checkout__input__checkbox">
                                     <label for="payment">
-                                        Check Payment
+                                        Trả Tiền Khi Nhận (COD)
                                         <input type="checkbox" id="payment">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
                                 <div class="checkout__input__checkbox">
                                     <label for="paypal">
-                                        Paypal
+                                        Thanh Toán Qua Paypal
                                         <input type="checkbox" id="paypal">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                                <button type="submit" class="site-btn">Đặt Hàng</button>
                             </div>
                         </div>
                     </div>

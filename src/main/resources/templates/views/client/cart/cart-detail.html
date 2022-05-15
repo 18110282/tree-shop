@@ -17,10 +17,10 @@
                         <table>
                             <thead>
                             <tr>
-                                <th class="shoping__product">Products</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
+                                <th class="shoping__product">Sản Phẩm</th>
+                                <th>Đơn Giá</th>
+                                <th>Số Lượng</th>
+                                <th>Thành Tiền</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -76,13 +76,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a th:href="@{/home/list-web-product}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a th:href="@{/home/list-web-product}" class="primary-btn cart-btn">TIẾP TỤC MUA HÀNG</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__continue">
                         <div class="shoping__discount" th:if="${session.client}">
-                            <h5>Discount Codes </h5>
+                            <h5>Mã Giảm Giá(Nếu Có) </h5>
                             <div th:if="${session.discountCode}">
                             <span> Đã áp dụng mã <strong> [[${session.discountCode.getCodeId()}]]</strong> thành công,
                                 giảm <strong>[[${session.discountCode.getDiscountPercent()}]]% </strong>giá trị đơn hàng.</span>
@@ -96,26 +96,24 @@
                             <form th:action="@{'/home/'+ ${session.client.username} +'/cart/detail/check-discount-code'}"
                                   method="post"
                                   th:unless="${session.discountCode}">
-                                <input th:name="discountCode" type="text" placeholder="Enter your coupon code" required>
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                                <input th:name="discountCode" type="text" placeholder="Nhập mã giảm giá" required>
+                                <button type="submit" class="site-btn">ÁP DỤNG</button>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
-                        <h5>Cart Total</h5>
+                        <h5>Cộng Giỏ Hàng</h5>
                         <ul>
-                            <li>Subtotal <span id="sub-total"></span></li>
+                            <li>Tổng Sản Phẩm <span id="sub-total"></span></li>
                             <li th:if="${session.discountCode}">Giảm <span>[[${session.discountCode.getDiscountPercent()}]]%</span>
                             </li>
-                            <li>Total <span id="all-total"></span></li>
+                            <li>Tổng Tiền <span id="all-total"></span></li>
                         </ul>
                         <a th:if="${session.client}"
-                           th:href="@{'/home/' + ${session.client.username} + '/cart/check-out'}" class="primary-btn">PROCEED
-                            TO CHECKOUT</a>
-                        <a th:unless="${session.client}" th:href="@{/home/no-user/cart/check-out}" class="primary-btn">PROCEED
-                            TO CHECKOUT</a>
+                           th:href="@{'/home/' + ${session.client.username} + '/cart/check-out'}" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>
+                        <a th:unless="${session.client}" th:href="@{/home/no-user/cart/check-out}" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>
                     </div>
                 </div>
             </div>
