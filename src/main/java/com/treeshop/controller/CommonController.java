@@ -8,6 +8,7 @@ import com.treeshop.service.CartService;
 import com.treeshop.service.ProductsService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Controller
 @Getter
-public class CommonController {
+public class CommonController implements ErrorController {
 
     @Autowired
     private ProductsService productsService;
@@ -28,9 +29,10 @@ public class CommonController {
     private CartService cartService;
 
     @GetMapping("/error")
-    public String errorPage(){
+    public String handleError(){
         return "/views/error";
     }
+
 
     public int exists(String id, List<CartEntity> cart) {
         for (int i = 0; i < cart.size(); i++) {
