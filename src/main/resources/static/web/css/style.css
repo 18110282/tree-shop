@@ -33,7 +33,7 @@
 html,
 body {
 	height: 100%;
-	font-family: "Roboto","Arial",sans-serif;
+	font-family: "FontAwesome";
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 }
@@ -47,7 +47,7 @@ h6 {
 	margin: 0;
 	color: #111111;
 	font-weight: 400;
-	font-family: "Roboto","Arial", sans-serif;
+	font-family: "FontAwesome";
 }
 
 h1 {
@@ -76,7 +76,7 @@ h6 {
 
 p {
 	font-size: 16px;
-	font-family:"Roboto","Arial", sans-serif;
+	font-family: "FontAwesome", serif;
 	color: #6f6f6f;
 	font-weight: 400;
 	line-height: 26px;
@@ -169,6 +169,7 @@ ol {
 	font-weight: 700;
 	background: #7fad39;
 	letter-spacing: 2px;
+	font-family: "FontAwesome", serif;
 }
 
 .site-btn {
@@ -180,6 +181,7 @@ ol {
 	padding: 13px 30px 12px;
 	background: #7fad39;
 	border: none;
+	font-family: "FontAwesome", serif;
 }
 
 /* Preloder */

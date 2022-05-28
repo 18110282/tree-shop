@@ -18,6 +18,6 @@ public interface CategoryRepository extends PagingAndSortingRepository<CategoryE
     CategoryEntity findByCategoryId(String categoryId);
     boolean existsByCategoryId(String categoryId);
 
-    @Query("select listP from CategoryEntity c join c.productsEntityList listP where c.categoryId = :categoryId")
+    @Query("select listP from CategoryEntity c join c.productsEntityList listP where c.categoryId = :categoryId and listP.enabled = true")
     Page<ProductsEntity> findListProductInCategory(@Param("categoryId")String categoryId, Pageable pageable);
 }

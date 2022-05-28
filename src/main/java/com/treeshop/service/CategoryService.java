@@ -66,7 +66,7 @@ public class CategoryService {
     }
 
     public Page<ProductsEntity> findListProductInCategory(String categoryId, Integer pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, 3);
+        Pageable pageable = PageRequest.of(pageNumber - 1, 12);
         return categoryRepository.findListProductInCategory(categoryId, pageable);
     }
 }

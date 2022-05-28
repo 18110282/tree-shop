@@ -3,6 +3,7 @@ package com.treeshop.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -22,6 +23,10 @@ public class CommonService {
         } catch (IOException e) {
             throw new IOException("Could not save uploaded file: " + fileName);
         }
+    }
+    public String getSiteUrl(HttpServletRequest request){
+        String siteUrl = request.getRequestURL().toString();
+        return siteUrl.replace(request.getServletPath(), "");
     }
 }
 

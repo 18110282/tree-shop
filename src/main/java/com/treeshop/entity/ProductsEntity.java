@@ -57,7 +57,7 @@ public class ProductsEntity {
     }
 
     @Transient
-    public Integer discountPrice = 0;
+    public Integer discountPrice;
 
     @Transient
     public Integer getDiscountPrice(){

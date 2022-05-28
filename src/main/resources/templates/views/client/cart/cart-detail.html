@@ -82,7 +82,8 @@
                 <div class="col-lg-6">
                     <div class="shoping__continue">
                         <div class="shoping__discount" th:if="${session.client}">
-                            <h5>Mã Giảm Giá (Nếu Có) </h5>
+                            <h5 th:unless="${session.discountCode}">Mã Giảm Giá (Nếu Có) </h5>
+                            <h5 th:if="${session.discountCode}">Mã Giảm Giá </h5>
                             <div th:if="${session.discountCode}">
                             <span> Đã áp dụng mã <strong> [[${session.discountCode.getCodeId()}]]</strong> thành công,
                                 giảm <strong>[[${session.discountCode.getDiscountPercent()}]]% </strong>giá trị đơn hàng.</span>
@@ -104,12 +105,12 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
-                        <h5>Cộng Giỏ Hàng</h5>
+                        <h5>Tiền Giỏ Hàng</h5>
                         <ul>
-                            <li>Tổng Sản Phẩm <span id="sub-total"></span></li>
+                            <li>Tổng tiền hàng <span id="sub-total"></span></li>
                             <li th:if="${session.discountCode}">Giảm <span>[[${session.discountCode.getDiscountPercent()}]]%</span>
                             </li>
-                            <li>Tổng Tiền <span id="all-total"></span></li>
+                            <li>Thành tiền <span id="all-total"></span></li>
                         </ul>
                         <a th:if="${session.client}"
                            th:href="@{'/home/' + ${session.client.username} + '/cart/check-out'}" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>

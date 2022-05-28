@@ -111,7 +111,7 @@ public class ProductsService {
     }
 
     public Page<ProductsEntity> findAll(Integer pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, 6);
+        Pageable pageable = PageRequest.of(pageNumber - 1, 12);
         return productsRepository.findAllByEnabledIsTrue(pageable);
     }
 
