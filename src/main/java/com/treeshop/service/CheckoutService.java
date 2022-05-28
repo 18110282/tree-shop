@@ -22,13 +22,13 @@ public class CheckoutService {
         return total;
     }
 
-    public void checkMoneyInCart(List<CartEntity> cartEntityList, Integer discoutPercent){
+    public void checkMoneyInCart(List<CartEntity> cartEntityList, Integer discountPercent){
         int subTotal = 0;
         for (CartEntity cartEntity: cartEntityList) {
             subTotal = subTotal + cartEntity.getTotalPerProduct();
         }
         this.subTotal = subTotal;
-        this.total = subTotal * (100-discoutPercent)/100;
+        this.total = subTotal * (100-discountPercent)/100;
     }
 
     public boolean checkUserInCart(String username){

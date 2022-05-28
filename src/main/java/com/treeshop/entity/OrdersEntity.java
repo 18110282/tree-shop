@@ -38,6 +38,8 @@ public class OrdersEntity {
     private String codeId;
     @Column(name = "total_price")
     private Integer totalPrice;
+    @Column(name = "payment")
+    private String payment;
 
     @Transient
     private Integer subTotalPrice;

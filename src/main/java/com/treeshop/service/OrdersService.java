@@ -39,7 +39,7 @@ public class OrdersService {
     @Autowired
     private CheckoutService checkoutService;
     @Autowired
-    private CommonController commonController;
+    private CommonService commonService;
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -58,15 +58,10 @@ public class OrdersService {
         List<CartEntity> cartEntityList = cartRepository.findCartEntitiesByCartIdKey_Username(username);
         DiscountCodeEntity discountCode = (DiscountCodeEntity) session.getAttribute("discountCode");
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-        Integer discountPercent = 0;
         if (discountCode != null) {
-            discountPercent = discountCode.getDiscountPercent();
             ordersEntity.setCodeId(discountCode.getCodeId());
         }
-        checkoutService.checkMoneyInCart(cartEntityList, discountPercent);
-        Integer total = checkoutService.getTotal();
         ordersEntity.setOrderId(this.createOrderId());
-        ordersEntity.setTotalPrice(total);
         ordersEntity.setOrderDate(timestamp.toString());
         //add orderEntity
         ordersRepository.save(ordersEntity);
@@ -86,6 +81,7 @@ public class OrdersService {
         }
         //remove discountCode session
         session.removeAttribute("discountCode");
+        session.removeAttribute("discountPercent");
         //delete cart when add line-item success
         cartRepository.deleteByCartIdKey_Username(username);
     }
@@ -130,7 +126,7 @@ public class OrdersService {
         String subject = "Chi tiết đơn hàng #" + orderId;
         String senderName = "Tree Shop";
         //Get content of HTML source
-        URL url = new URL(commonController.getSiteUrl(request) + "/home/send-invoice/order/" + orderId);
+        URL url = new URL(commonService.getSiteUrl(request) + "/home/send-invoice/order/" + orderId);
         String content = this.copySourceHTMLCodeFromWebPage(url);
 
         MimeMessage message = javaMailSender.createMimeMessage();

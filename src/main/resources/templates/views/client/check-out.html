@@ -26,7 +26,7 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Địa Chỉ<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add" th:name="address" required>
+                                <input type="text" class="checkout__input__add" th:name="address" required>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -45,30 +45,34 @@
                             <div class="checkout__input">
                                 <p>Ghi Chú</p>
                                 <input type="text"
-                                       placeholder="Ghi chú đơn hàng của bạn. Ví dụ: Thời gian nhận hàng hay chỉ dẫn địa điểm nhận hàng chi tiết hơn, ..." th:name="note">
+                                       placeholder="Ghi chú đơn hàng của bạn. Ví dụ: Thời gian nhận hàng,..." th:name="note">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
                                 <h4>Đơn Hàng Của Bạn</h4>
-                                <div class="checkout__order__products">Sản Phẩm<span>Tổng Tiền</span></div>
+                                <div class="checkout__order__products">Sản phẩm<span>Giá</span></div>
                                 <ul th:each="item :${cartDetailList}">
                                     <li>[[${item.getProductsEntity.getProductName()}]] (x[[${item.quantity}]])<span>[[${item.getTotalPerProduct()}]]</span></li>
                                 </ul>
-                                <div class="checkout__order__total">Tổng Số Lượng <span>[[${subTotal}]]</span></div>
+                                <div class="checkout__order__total">Tổng tiền hàng <span>[[${subTotal}]]</span></div>
                                 <div th:if="${discountPercent != 0}" class="checkout__order__total">Giảm: <span>[[${discountPercent}]]%</span></div>
-                                <div class="checkout__order__total">Total <span th:name="totalPrice">[[${total}]]</span></div>
+                                <div class="checkout__order__total">Thành tiền <span>[[${total}]]</span></div>
+                                <div style="display:none;"><input th:name="subTotalPrice" th:value="${subTotal}"></div>
+                                <div th:if="${discountPercent != 0}" style="display:none;"><input th:name="discountPercent" th:value="${discountPercent}"></div>
+                                <div th:if="${discountPercent == 0}" style="display:none;"><input th:name="discountPercent" th:value="${0}"></div>
+                                <div style="display:none;"><input th:name="totalPrice" th:value="${total}"></div>
                                 <div class="checkout__input__checkbox">
                                     <label for="payment">
                                         Trả Tiền Khi Nhận (COD)
-                                        <input type="checkbox" id="payment">
+                                        <input type="radio" id="payment" th:name="payment" value="cod" checked>
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
                                 <div class="checkout__input__checkbox">
                                     <label for="paypal">
                                         Thanh Toán Qua Paypal
-                                        <input type="checkbox" id="paypal">
+                                        <input type="radio" id="paypal" th:name="payment" value="paypal">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>

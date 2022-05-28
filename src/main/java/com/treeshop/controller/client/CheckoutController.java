@@ -5,6 +5,7 @@ import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.service.CartService;
 import com.treeshop.service.CheckoutService;
 import com.treeshop.service.OrdersService;
+import com.treeshop.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +25,7 @@ public class CheckoutController {
     private CheckoutService checkoutService;
 
     @Autowired
-    private OrdersService ordersService;
+    private ProductsService productsService;
 
     @GetMapping("/{username}/cart/check-out")
     public String checkOut(@PathVariable(name="username") String username,
@@ -85,6 +86,7 @@ public class CheckoutController {
             model.addAttribute("subTotal", subTotal);
             model.addAttribute("total", total);
             model.addAttribute("cartDetailList", cartEntityList);
+            model.addAttribute("categoryList", productsService.findAllCategory());
             model.addAttribute("numberProductInCart", cartEntityList.size());
         }
         return "/views/client/check-out";
