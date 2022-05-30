@@ -1,9 +1,9 @@
 paypalProperties:
 # sandbox mode
-  clientID: ARLbAXKBmKbvBszAlHa9kytjiREPuJaGqMWgigYciF9QaWjl9xEyGA3a2R-i__XGgMSncDX_gTIGeMli
-  clientSecret: EOFIrd6x4Qljsspv0d4q2gAdHWS_viQol1VBqVbKz0ycBooTEwOtqhMNdEXkoZlJ_Jny5KqDRwzKFfR1
+  clientID: AYE81vi4Et_dFzzImf1k7XDsZeUdQ9cdR0L9ufHrnrGLmcNTqRGmEidDkhzVeY30bdYnsBYv-9ahbPka
+  clientSecret: EMaZL62-fRXfSvILPQSOlL-zi82qsZ8CnNPeg3ctu2zMF0ku6yqWvKBsUHNMKg7yEXnBMJyDWTOyQPBA
   mode: sandbox
 # live mode
-#  clientID: AVz6cvWws6-H_Q8ds7oZvx7cpcOqzBF0UY7yK_NgARLNzx8lA2iMZntp9hNl0O_jH61FzJoGlH4uL8Gz
-#  clientSecret: EKJ7KA6KwQnKchi4_QERxJJ8e9CxSorhZqgdIQCXA-Y5qRJWsI7DlBiKqRtfRBIVj0WfOYhgQiAHq_G9
+#  clientID: AcJpaxbHEWZKeBJiXtoyA6EpalyL-Xwg7vQQqH6ZB1Q68aKz4OAWbJecPMRWj1N8yOyYLFCVFYVhsD5i
+#  clientSecret: ELEXxC1FxhexPHXPYty0yEpclnnOYwvZys3QBe9PReh9qjEgszVeEZV1gsysRxscpWqJOvm1hsyaD96Q
 #  mode: live
