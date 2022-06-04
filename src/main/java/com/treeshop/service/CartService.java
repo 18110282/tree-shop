@@ -1,107 +1,36 @@
 package com.treeshop.service;
 
-
-import com.treeshop.dao.CartRepository;
-import com.treeshop.dao.OrdersRepository;
 import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.entity.cart.CartIdKey;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-@Transactional
-public class CartService {
-    @Autowired
-    private CartRepository cartRepository;
+public interface CartService {
 
-    @Autowired
-    private OrdersRepository ordersRepository;
+    void saveCart(CartEntity cartEntity);
 
+    void saveCartFromSessionToCartEntity(List<CartEntity> cartEntityList, String username);
 
-    public void saveCart(CartEntity cartEntity) {
-        cartRepository.save(cartEntity);
-    }
+    boolean checkExistUser(String username);
 
-    public void saveCartFromSessionToCartEntity(List<CartEntity> cartEntityList, String username){
-        for (CartEntity cartEntity : cartEntityList) {
-            cartEntity.getCartIdKey().setUsername(username);
-            cartRepository.save(cartEntity);
-        }
-    }
+    boolean checkQuantity(String username, Integer quantity);
 
-    public boolean checkExistUser(String username) {
-        return cartRepository.existsByCartIdKey_Username(username);
-    }
+    CartEntity findByUserAndProduct(String username, String productId);
 
-    public boolean checkQuantity(String username, Integer quantity) {
-        return cartRepository.existsByCartIdKey_UsernameAndQuantity(username, quantity);
-    }
+    Integer countByUser(String username);
 
-    public CartEntity findByUserAndProduct(String username, String productId) {
-        return cartRepository.findByCartIdKey_UsernameAndCartIdKey_ProductId(username, productId);
-    }
+    List<CartEntity> findListCartByUsername(String username);
 
-    public Integer countByUser(String username) {
-        return cartRepository.countByCartIdKey_Username(username);
-    }
+    List<CartEntity> findListCartByUsernameEmptyQuantity(String username);
 
-    public List<CartEntity> findListCartByUsername(String username) {
-        return cartRepository.findCartEntitiesByCartIdKey_Username(username);
-    }
+    void updateQuantityByUsernameAndProductId(Integer quantity, String username, String productId);
 
-    public List<CartEntity> findListCartByUsernameEmptyQuantity(String username) {
-        return cartRepository.getProductIdEmptyQuantity(username);
-    }
+    void deleteItem(String username, String productId);
 
-    public void updateQuantityByUsernameAndProductId(Integer quantity, String username, String productId) {
-        cartRepository.updateQuantity(quantity, username, productId);
-    }
+    void setCartEntityOfNoUserInCartSession(List<CartEntity> cartEntityList, CartEntity cartEntity, CartIdKey cartIdKey, String productId, Integer price, Integer quantityUrl);
 
-    public void deleteItem(String username, String productId) {
-        cartRepository.deleteCartEntityByCartIdKey_UsernameAndCartIdKey_ProductId(username, productId);
-    }
+    CartEntity setCartEntityOfUserInCartDB(CartEntity cartEntity, CartIdKey cartIdKey, String username, String productId, Integer price, Integer quantityUrl);
 
-    public void setCartEntityOfNoUserInCartSession(List<CartEntity> cartEntityList, CartEntity cartEntity, CartIdKey cartIdKey, String productId, Integer price, Integer quantityUrl){
-        cartIdKey.setProductId(productId);
-        cartIdKey.setUsername("");
-        cartEntity.setCartIdKey(cartIdKey);
-        cartEntity.setQuantity(quantityUrl);
-        cartEntity.setPrice(price);
-        cartEntityList.add(cartEntity);
-    }
-    public CartEntity setCartEntityOfUserInCartDB(CartEntity cartEntity, CartIdKey cartIdKey, String username, String productId, Integer price, Integer quantityUrl){
-        if (cartRepository.existsByCartIdKey_UsernameAndCartIdKey_ProductId(username, productId)) {
-            cartEntity = cartRepository.findByCartIdKey_UsernameAndCartIdKey_ProductId(username, productId);
-            cartEntity.setQuantity(cartEntity.getQuantity() + quantityUrl);
-        } else {
-            cartIdKey.setUsername(username);
-            cartIdKey.setProductId(productId);
-            cartEntity.setCartIdKey(cartIdKey);
-            cartEntity.setPrice(price);
-            cartEntity.setQuantity(quantityUrl);
-        }
-        return cartEntity;
-    }
+    CartEntity compareQuantityInStockVsCart(List<CartEntity> cartEntityList);
 
-    public CartEntity compareQuantityInStockVsCart(List<CartEntity> cartEntityList){
-        CartEntity cart = null;
-        int quantityInCart;
-        int quantityInStock;
-        for (CartEntity cartEntity: cartEntityList) {
-            quantityInStock = cartEntity.getProductsEntity().getUnitInStock();
-            quantityInCart = cartEntity.getQuantity();
-            if(quantityInCart > quantityInStock){
-                cart = cartEntity;
-                break;
-            }
-        }
-        return cart;
-    }
-
-    public boolean checkUsedCodeIdOfUser(String username, String codeId){
-        return ordersRepository.existsByUsernameAndCodeId(username, codeId);
-    }
+    boolean checkUsedCodeIdOfUser(String username, String codeId);
 }

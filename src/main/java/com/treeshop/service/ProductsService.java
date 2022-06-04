@@ -1,143 +1,43 @@
 package com.treeshop.service;
 
-import com.treeshop.dao.CategoryRepository;
-import com.treeshop.dao.LineItemRepository;
-import com.treeshop.dao.ProductsRepository;
 import com.treeshop.entity.CategoryEntity;
 import com.treeshop.entity.ProductsEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-@Service
-@Transactional
-public class ProductsService {
-    @Autowired
-    private ProductsRepository productsRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+public interface ProductsService {
+    List<ProductsEntity> findAllProductByQ();
 
-    @Autowired
-    private HomeService homeService;
+    List<ProductsEntity> findRelatedProduct(String categoryId);
 
-    @Autowired
-    private CommonService commonService;
-    public List<ProductsEntity> findAllProductByQ() {
-        return productsRepository.findAllQuery();
-    }
+    void saveProductWithDiscountPercent(ProductsEntity productsEntity);
 
-    public List<ProductsEntity> findRelatedProduct(String categoryId){
-        return productsRepository.findRandomProductInSameCategory(categoryId);
-    }
-    public void saveProductWithDiscountPercent(ProductsEntity productsEntity) {
-        productsRepository.save(productsEntity);
-    }
+    void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException;
 
-    public void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
-        productsEntity.setDiscountPercent(0);
-        productsEntity.setEnabled(true);
-        Integer visit = productsEntity.getVisit();
-        if(visit != null){
-            productsEntity.setVisit(visit);
-        }
-        else {
-            productsEntity.setVisit(0);
-        }
-        String productId = productsEntity.getProductId();
-        if (!fileName.equals("")) {
-//            String uploadDir = "./src/main/resources/static/product-imgs/" + savedProduct.getProductId();
-            String uploadDir = "./dynamic-resources/product-imgs/" + productId;
-            Path uploadPath = Paths.get(uploadDir);
-            commonService.processFile(uploadPath, multipartFile, fileName);
-//            if (!Files.exists(uploadPath)) {
-//                Files.createDirectories(uploadPath);
-//            }
-//            try (InputStream inputStream = multipartFile.getInputStream()) {
-//                Path filePath = uploadPath.resolve(fileName);
-//                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-//            } catch (IOException e) {
-//                throw new IOException("Could not save uploaded file: " + fileName);
-//            }
-        }
-        else {
-            ProductsEntity productsEntity1 = this.findByProductId(productId);
-            if(productsEntity1 != null) {
-                fileName = productsEntity1.getImageUrl();
-            }
-        }
-        productsEntity.setImageUrl(fileName);
-        productsRepository.save(productsEntity);
-    }
+    ProductsEntity findByProductId(String productId);
 
-    public ProductsEntity findByProductId(String productId) {
-        return productsRepository.findByProductId(productId);
-    }
-    public ProductsEntity findByProductIdInWeb(String productId) {
-        ProductsEntity productsEntity = productsRepository.findByProductId(productId);
-        productsEntity.setVisit(productsEntity.getVisit()+1);
-        productsRepository.save(productsEntity);
-        return productsRepository.findByProductId(productId);
-    }
+    ProductsEntity findByProductIdInWeb(String productId);
 
-    public boolean checkProductId(String productId) {
-        return productsRepository.existsByProductId(productId);
-    }
+    boolean checkProductId(String productId);
 
-    public void deleteProduct(String productId) {
-        ProductsEntity productsEntity = this.findByProductId(productId);
-        productsEntity.setEnabled(false);
-        productsRepository.save(productsEntity);
-    }
+    void deleteProduct(String productId);
 
-    public List<CategoryEntity> findAllCategory() {
-        return categoryRepository.findAll();
-    }
+    List<CategoryEntity> findAllCategory();
 
-    public Page<ProductsEntity> findAll(Integer pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, 12);
-        return productsRepository.findAllByEnabledIsTrue(pageable);
-    }
+    Page<ProductsEntity> findAll(Integer pageNumber);
 
-    public List<ProductsEntity> findListDiscountProduct() {
-        List<ProductsEntity> listDiscountProduct = productsRepository.findDiscountProduct();
-        for (ProductsEntity discountProduct : listDiscountProduct) {
-            discountProduct.setDiscountPrice(this.setDiscountPriceInDiscountList(discountProduct));
-        }
-        return productsRepository.findDiscountProduct();
-    }
+    List<ProductsEntity> findListDiscountProduct();
 
-    public List<ProductsEntity> findListLatestProduct(Integer slide){
-        List<ProductsEntity> productsEntityList = productsRepository.findTop6ByEnabledIsTrueOrderByCreateDateDesc();
-        return homeService.handleSlideOfTopSixProduct(slide, productsEntityList);
-    }
+    List<ProductsEntity> findListLatestProduct(Integer slide);
 
-    public Integer findDiscountPriceByProductId(String productId) {
-        return productsRepository.findPriceByProductId(productId) * (100 - productsRepository.findDiscountPercentByProductId(productId)) / 100;
-    }
+    Integer findDiscountPriceByProductId(String productId);
 
-    public Integer setDiscountPriceInDiscountList(ProductsEntity discountProduct){
-        return discountProduct.getPrice() * (100 - discountProduct.getDiscountPercent()) / 100;
-    }
+    Integer setDiscountPriceInDiscountList(ProductsEntity discountProduct);
 
-    public Integer findMaxPriceInAllProduct(){
-        return productsRepository.findMaxPrice();
-    }
+    Integer findMaxPriceInAllProduct();
 
 }
