@@ -4,7 +4,6 @@ package com.treeshop.controller.client;
 import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.service.CartService;
 import com.treeshop.service.CheckoutService;
-import com.treeshop.service.OrdersService;
 import com.treeshop.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,48 +15,47 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/home")
+@RequestMapping(path = "/home")
 public class CheckoutController {
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
+    private final CheckoutService checkoutService;
+    private final ProductsService productsService;
 
     @Autowired
-    private CheckoutService checkoutService;
-
-    @Autowired
-    private ProductsService productsService;
+    public CheckoutController(CartService cartService, CheckoutService checkoutService, ProductsService productsService) {
+        this.cartService = cartService;
+        this.checkoutService = checkoutService;
+        this.productsService = productsService;
+    }
 
     @GetMapping("/{username}/cart/check-out")
-    public String checkOut(@PathVariable(name="username") String username,
+    public String checkOut(@PathVariable(name = "username") String username,
                            Model model,
                            RedirectAttributes ra,
-                           HttpSession session){
+                           HttpSession session) {
         List<CartEntity> cartEntityList = cartService.findListCartByUsername(username);
         Object client = session.getAttribute("client");
         String url = "redirect:/home/" + username + "/cart/detail";
-        if(username.equals("no-user") || client == null ){
+        if (username.equals("no-user") || client == null) {
             ra.addFlashAttribute("alert", "Mời bạn đăng nhập tài khoản để tiến hành đặt đơn");
             return url;
-        }
-        else {
+        } else {
             boolean checkUnitInStock = false;
-            for (CartEntity cartEntity: cartEntityList) {
+            for (CartEntity cartEntity : cartEntityList) {
                 if (cartEntity.getProductsEntity().getUnitInStock() == 0) {
                     checkUnitInStock = true;
                     break;
                 }
             }
-            if(checkUnitInStock){
+            if (checkUnitInStock) {
                 ra.addFlashAttribute("alert", "Có sản phẩm đã hết hàng, mời bạn xóa sản phẩm khỏi giỏ hàng hoặc chờ hàng về trong thời gian tới, xin cảm ơn!");
                 return url;
-            }
-            else if(cartService.checkQuantity(username, 0)){
+            } else if (cartService.checkQuantity(username, 0)) {
                 List<CartEntity> cartEntityEmptyQuantityList = cartService.findListCartByUsernameEmptyQuantity(username);
                 String productName = cartEntityEmptyQuantityList.get(0).getProductsEntity().getProductName();
                 ra.addFlashAttribute("alert", "Sản phẩm " + productName + " chưa điền số lượng (>0)");
                 return url;
-            }
-            else if(cartService.compareQuantityInStockVsCart(cartService.findListCartByUsername(username)) != null){
+            } else if (cartService.compareQuantityInStockVsCart(cartService.findListCartByUsername(username)) != null) {
                 CartEntity cartEntity = cartService.compareQuantityInStockVsCart(cartService.findListCartByUsername(username));
                 StringBuilder alert = new StringBuilder("Sản phẩm ");
                 alert.append(cartEntity.getProductsEntity().getProductName());
@@ -69,11 +67,10 @@ public class CheckoutController {
 
             }
         }
-        if(!checkoutService.checkUserInCart(username)){
+        if (!checkoutService.checkUserInCart(username)) {
             ra.addFlashAttribute("alert", "Giỏ hàng trống, không thể đặt đơn!");
             return url;
-        }
-        else {
+        } else {
             Integer discountPercent = 0;
             Integer discount = (Integer) session.getAttribute("discountPercent");
             if (discount != null) {

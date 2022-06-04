@@ -17,11 +17,15 @@ import java.util.Objects;
 @Controller
 @RequestMapping(path = "/admin")
 public class UserController {
-    @Autowired
-    private UsersService userService;
+    private final UsersService userService;
+    private final CommonController commonController;
 
     @Autowired
-    private CommonController commonController;
+    public UserController(UsersService userService, CommonController commonController) {
+        this.userService = userService;
+        this.commonController = commonController;
+    }
+
 
     //Begin Admin Management
     @GetMapping(value = {"/login", "/logout"})
@@ -101,7 +105,7 @@ public class UserController {
     }
 
     @PostMapping("/check-login")
-    public String loginCheck(@RequestParam(value = "username", required = false) String username,
+    public String checkLogin(@RequestParam(value = "username", required = false) String username,
                              @RequestParam(value = "password", required = false) String password,
                              RedirectAttributes ra, HttpSession session) {
         if (userService.checkLogin(username, password)) {

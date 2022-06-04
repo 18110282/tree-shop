@@ -1,8 +1,7 @@
-package com.treeshop.service;
+package com.treeshop.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Authenticator;
@@ -29,10 +28,15 @@ public class MailService {
     @Value("${spring.mail.password}")
     private String password;
 
+    private final ThymeleafService thymeleafService;
+//    private final JavaMailSender javaMailSender;
+
     @Autowired
-    ThymeleafService thymeleafService;
-    @Autowired
-    private JavaMailSender javaMailSender;
+    public MailService(ThymeleafService thymeleafService) {
+        this.thymeleafService = thymeleafService;
+//        this.javaMailSender = javaMailSender;
+    }
+
 
     public void sendMail(HttpServletRequest request) {
         Properties props = new Properties();

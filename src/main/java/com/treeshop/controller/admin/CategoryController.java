@@ -1,6 +1,5 @@
 package com.treeshop.controller.admin;
 
-
 import com.treeshop.controller.CommonController;
 import com.treeshop.entity.CategoryEntity;
 import com.treeshop.service.CategoryService;
@@ -17,13 +16,18 @@ import java.io.IOException;
 @Controller
 @RequestMapping(path = "/admin/category")
 public class CategoryController {
+    private final CategoryService categoryService;
+    private final CommonController commonController;
+
     @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private CommonController commonController;
+    public CategoryController(CategoryService categoryService, CommonController commonController) {
+        this.categoryService = categoryService;
+        this.commonController = commonController;
+    }
+
 
     @GetMapping("/list")
-    public String showListCategory(Model model){
+    public String showListCategory(Model model) {
         model.addAttribute("listCategory", categoryService.findAll());
         return "/views/admin/category/list-category";
     }
@@ -37,7 +41,7 @@ public class CategoryController {
 
     @GetMapping("/edit/{categoryId}")
     public String showEditCategoryForm(@PathVariable("categoryId") String categoryId,
-                                      Model model) {
+                                       Model model) {
         CategoryEntity categoryEntity = categoryService.findCategoryById(categoryId);
         model.addAttribute("category", categoryEntity);
         model.addAttribute("titlePage", "Chỉnh sửa danh mục: " + categoryId);
@@ -47,7 +51,7 @@ public class CategoryController {
 
     @GetMapping("/delete/{categoryId}")
     public String deleteCategory(@PathVariable("categoryId") String categoryId,
-                                RedirectAttributes ra){
+                                 RedirectAttributes ra) {
         categoryService.deleteCategory(categoryId);
         ra.addFlashAttribute("successMessage", "Xóa danh mục: <strong> " + categoryId + "</strong> thành công.");
         return "redirect:/admin/category/list";
@@ -55,9 +59,9 @@ public class CategoryController {
 
     @PostMapping("/save")
     public String saveCategory(@ModelAttribute(name = "category") CategoryEntity categoryEntity,
-                              @RequestParam(value = "fileImg", required = false) MultipartFile multipartFile,
-                              HttpServletRequest request,
-                              RedirectAttributes ra) throws IOException {
+                               @RequestParam(value = "fileImg", required = false) MultipartFile multipartFile,
+                               HttpServletRequest request,
+                               RedirectAttributes ra) throws IOException {
         //get previousUrl
         String previousUrl = commonController.getHeaderURL(request);
         String url = previousUrl.substring((request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()).length());

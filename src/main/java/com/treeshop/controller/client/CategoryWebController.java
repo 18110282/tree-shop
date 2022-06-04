@@ -14,11 +14,15 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping(path = "/home")
 public class CategoryWebController {
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    private final CommonController commonController;
 
     @Autowired
-    private CommonController commonController;
+    public CategoryWebController(CategoryService categoryService, CommonController commonController) {
+        this.categoryService = categoryService;
+        this.commonController = commonController;
+    }
 
     @GetMapping("/list-web-product/category/{categoryId}")
     public String showListWebProductInCategory(@PathVariable(name = "categoryId") String categoryId,

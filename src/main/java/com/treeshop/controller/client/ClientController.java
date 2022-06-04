@@ -14,16 +14,18 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(path = "/home")
 public class ClientController {
-    @Autowired
-    private UsersService usersService;
+    private final UsersService usersService;
+    private final CommonController commonController;
 
     @Autowired
-    private CommonController commonController;
+    public ClientController(UsersService usersService, CommonController commonController) {
+        this.usersService = usersService;
+        this.commonController = commonController;
+    }
 
     @GetMapping("/user/logout")
     public String logClient(HttpServletRequest request) {
@@ -34,7 +36,7 @@ public class ClientController {
     }
 
     @PostMapping("/user/check-login")
-    public String loginClientCheck(@ModelAttribute("user") UserEntity user,
+    public String checkLoginClient(@ModelAttribute("user") UserEntity user,
                                    RedirectAttributes ra,
                                    HttpSession session, HttpServletRequest request) {
         String url = commonController.getHeaderURL(request);

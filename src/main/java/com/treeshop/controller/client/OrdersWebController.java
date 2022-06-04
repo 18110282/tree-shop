@@ -22,11 +22,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/home")
 public class OrdersWebController {
-    @Autowired
-    private OrdersService ordersService;
+    private final OrdersService ordersService;
+    private final PaymentService paymentService;
 
     @Autowired
-    private PaymentService paymentService;
+    public OrdersWebController(OrdersService ordersService, PaymentService paymentService) {
+        this.ordersService = ordersService;
+        this.paymentService = paymentService;
+    }
 
     @PostMapping("/{username}/create-order")
     public String createOrder(@ModelAttribute("order") OrdersEntity ordersEntity,

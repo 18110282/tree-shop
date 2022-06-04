@@ -12,20 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping(path = "/admin/discount")
 public class DiscountController {
-    @Autowired
-    private ProductsService productsService;
+
+    private final ProductsService productsService;
+
+    private final DiscountCodeService discountCodeService;
+
+    private final CommonController commonController;
 
     @Autowired
-    private DiscountCodeService discountCodeService;
-
-    @Autowired
-    private CommonController commonController;
+    public DiscountController(ProductsService productsService, DiscountCodeService discountCodeService, CommonController commonController) {
+        this.productsService = productsService;
+        this.discountCodeService = discountCodeService;
+        this.commonController = commonController;
+    }
 
     //Begin Discount By Product
     @GetMapping("/list-by-product")
@@ -114,7 +118,7 @@ public class DiscountController {
         else if(url.contains("/admin/discount/edit-by-code")){
             ra.addFlashAttribute("successMessage", "Chỉnh sửa mã <strong> " + codeId + "</strong> thành công!");
         }
-        discountCodeService.saveDiscoutCode(discountCodeEntity);
+        discountCodeService.saveDiscountCode(discountCodeEntity);
         return "redirect:/admin/discount/list-by-code";
     }
     //End Discount By Code

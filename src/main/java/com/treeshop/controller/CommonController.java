@@ -21,7 +21,6 @@ import java.util.List;
 @Controller
 @Getter
 public class CommonController implements ErrorController {
-
     @Autowired
     private ProductsService productsService;
 

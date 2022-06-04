@@ -22,14 +22,18 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/home")
 public class CartController {
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
+
+    private final ProductsService productsService;
+
+    private final DiscountCodeService discountCodeService;
 
     @Autowired
-    private ProductsService productsService;
-
-    @Autowired
-    DiscountCodeService discountCodeService;
+    public CartController(CartService cartService, ProductsService productsService, DiscountCodeService discountCodeService) {
+        this.cartService = cartService;
+        this.productsService = productsService;
+        this.discountCodeService = discountCodeService;
+    }
 
     @GetMapping("/{username}/cart/detail")
     public String viewDetailCart(@PathVariable(name = "username") String username,
@@ -70,7 +74,7 @@ public class CartController {
     public String deleteItemInCart(@PathVariable(name = "username") String username,
                                    @PathVariable(name = "productId") String productId,
                                    HttpSession session,
-                                   Model model, RedirectAttributes ra) {
+                                   RedirectAttributes ra) {
         CommonController commonController = new CommonController();
         List<CartEntity> cartEntityList;
         if (username.equals("no-user")) {

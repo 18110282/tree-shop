@@ -23,15 +23,18 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/home")
 public class ProductsWebController {
+    private final ProductsService productsService;
+
+    private final CartService cartService;
+
+    private final CommonController commonController;
 
     @Autowired
-    private ProductsService productsService;
-
-    @Autowired
-    private CartService cartService;
-
-    @Autowired
-    private CommonController commonController;
+    public ProductsWebController(ProductsService productsService, CartService cartService, CommonController commonController) {
+        this.productsService = productsService;
+        this.cartService = cartService;
+        this.commonController = commonController;
+    }
 
     @GetMapping("/list-web-product")
     public String showListWebProduct(Model model, HttpSession session) {

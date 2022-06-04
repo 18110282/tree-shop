@@ -11,16 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping(path = "/home")
 public class SearchController {
-    @Autowired
-    private SearchService searchService;
+    private final SearchService searchService;
+    private final CommonController commonController;
 
     @Autowired
-    private CommonController commonController;
+    public SearchController(SearchService searchService, CommonController commonController) {
+        this.searchService = searchService;
+        this.commonController = commonController;
+    }
+
 
     @GetMapping("/list-web-product/search/result")
     public String showListWebProductInCategory(@RequestParam(value = "keyword", required = false) String keyword,

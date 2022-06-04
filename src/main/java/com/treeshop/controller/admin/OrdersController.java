@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(path = "/admin/order")
 public class OrdersController {
+    private final OrdersService ordersService;
+
     @Autowired
-    private OrdersService ordersService;
+    public OrdersController(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
 
     @GetMapping("/list")
     public String showListOrder(Model model){

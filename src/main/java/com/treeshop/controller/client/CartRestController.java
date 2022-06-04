@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/home")
 public class CartRestController {
+    private final CartService cartService;
+
     @Autowired
-    private CartService cartService;
+    public CartRestController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
 
     @PostMapping("/cart/update/{productId}/{quantity}")

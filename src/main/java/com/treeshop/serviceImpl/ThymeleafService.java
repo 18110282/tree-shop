@@ -1,4 +1,4 @@
-package com.treeshop.service;
+package com.treeshop.serviceImpl;
 
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Service;

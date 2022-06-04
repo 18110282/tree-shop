@@ -7,19 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
-    @Autowired
-    private CommonController commonController;
+    private final CommonController commonController;
+    private final ProductsService productsService;
+    private final HomeService homeService;
 
     @Autowired
-    private ProductsService productsService;
-    @Autowired
-    private HomeService homeService;
+    public HomeController(CommonController commonController, ProductsService productsService, HomeService homeService) {
+        this.commonController = commonController;
+        this.productsService = productsService;
+        this.homeService = homeService;
+    }
 
     @GetMapping(value={"/", "/home"})
     public String getIndex(HttpSession session,

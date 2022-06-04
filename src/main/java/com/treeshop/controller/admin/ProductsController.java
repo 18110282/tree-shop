@@ -19,11 +19,15 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/admin/products")
 public class ProductsController {
-    @Autowired
-    private ProductsService productsService;
+    private final ProductsService productsService;
+
+    private final CommonController commonController;
 
     @Autowired
-    private CommonController commonController;
+    public ProductsController(ProductsService productsService, CommonController commonController) {
+        this.productsService = productsService;
+        this.commonController = commonController;
+    }
 
 
     @GetMapping("/add-product")
@@ -45,7 +49,7 @@ public class ProductsController {
 
     @GetMapping("/edit/{productId}")
     public String showEditProductForm(@PathVariable("productId") String productId,
-                                   Model model) {
+                                      Model model) {
         List<CategoryEntity> categoryEntityList = productsService.findAllCategory();
         ProductsEntity productsEntity = productsService.findByProductId(productId);
         model.addAttribute("listCategory", categoryEntityList);
@@ -54,9 +58,10 @@ public class ProductsController {
         model.addAttribute("edit", "");
         return "/views/admin/products/manage-products";
     }
+
     @GetMapping("/delete/{productId}")
     public String deleteProduct(@PathVariable("productId") String productId,
-                                RedirectAttributes ra){
+                                RedirectAttributes ra) {
         productsService.deleteProduct(productId);
         ra.addFlashAttribute("successMessage", "Xóa sản phẩm: <strong> " + productId + "</strong> thành công.");
         return "redirect:/admin/products/list";
@@ -74,11 +79,10 @@ public class ProductsController {
         String productId = productsEntity.getProductId();
         if (url.equals("/admin/products/add-product")) {
             if (productsService.checkProductId(productId)) {
-                if(productsService.findByProductId(productId).isEnabled()){
+                if (productsService.findByProductId(productId).isEnabled()) {
                     ra.addFlashAttribute("errorMessage", productId);
                     return "redirect:/admin/products/add-product";
-                }
-                else {
+                } else {
                     ra.addFlashAttribute("successMessage", "Thêm sản phẩm: <strong> " + productId + "</strong> thành công.");
                 }
             } else {
@@ -86,8 +90,8 @@ public class ProductsController {
             }
         } else if (url.contains("/admin/products/edit")) {
 
-                ra.addFlashAttribute("successMessage", "Chỉnh sửa sản phẩm: <strong> " + productId + "</strong> thành công.");
-            }
+            ra.addFlashAttribute("successMessage", "Chỉnh sửa sản phẩm: <strong> " + productId + "</strong> thành công.");
+        }
         productsService.saveProduct(productsEntity, multipartFile);
         return "redirect:/admin/products/list";
     }
