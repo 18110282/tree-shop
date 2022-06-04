@@ -12,18 +12,18 @@ import java.util.List;
 
 @Repository
 public class LineItemCustomRepositoryImpl implements LineItemCustomRepository {
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
+    private final EntityManagerFactory entityManagerFactory;
+    private final GetSessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() {
-        if (entityManagerFactory.unwrap(SessionFactory.class) == null) {
-            throw new NullPointerException("factory is not a hibernate factory");
-        }
-        return entityManagerFactory.unwrap(SessionFactory.class);
+    @Autowired
+    public LineItemCustomRepositoryImpl(EntityManagerFactory entityManagerFactory, GetSessionFactory sessionFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+        this.sessionFactory = sessionFactory;
     }
+
     @Override
     public List<ProductsEntity> findTopSellProduct(){
-        SessionFactory sessionFactory = this.getSessionFactory();
+        SessionFactory sessionFactory = this.sessionFactory.getSessionFactory(entityManagerFactory);
         Session session = sessionFactory.openSession();
         String hql = "select l.productsEntity from LineItemEntity l where l.productsEntity.enabled = true group by l.lineItemIdKey.productId order by sum(l.quantity) desc";
         return session.createQuery(hql, ProductsEntity.class).setMaxResults(8).list();

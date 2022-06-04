@@ -14,18 +14,18 @@ import java.util.Random;
 
 @Repository
 public class ProductsCustomRepositoryImpl implements ProductsCustomRepository {
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
+    private final EntityManagerFactory entityManagerFactory;
+    private final GetSessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() {
-        if (entityManagerFactory.unwrap(SessionFactory.class) == null) {
-            throw new NullPointerException("factory is not a hibernate factory");
-        }
-        return entityManagerFactory.unwrap(SessionFactory.class);
+    @Autowired
+    public ProductsCustomRepositoryImpl(EntityManagerFactory entityManagerFactory, GetSessionFactory sessionFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+        this.sessionFactory = sessionFactory;
     }
+
     @Override
     public List<ProductsEntity> findRandomProductInSameCategory(String categoryId) {
-        SessionFactory sessionFactory = this.getSessionFactory();
+        SessionFactory sessionFactory = this.sessionFactory.getSessionFactory(entityManagerFactory);
         Session session = sessionFactory.openSession();
         String hql1 = "select p from ProductsEntity p where p.categoryId = :categoryId and p.enabled = true";
         List<ProductsEntity> productsEntityList =  session.createQuery(hql1, ProductsEntity.class).setParameter("categoryId", categoryId).list();
