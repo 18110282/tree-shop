@@ -9,22 +9,6 @@
 <body>
 <div layout:fragment="~{content}">
 <!-- Breadcrumb Section Begin -->
-<!--<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">-->
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-12 text-center">-->
-<!--                <div class="breadcrumb__text">-->
-<!--                    <h2>Vegetable’s Package</h2>-->
-<!--                    <div class="breadcrumb__option">-->
-<!--                        <a href="./index.html">Home</a>-->
-<!--                        <a href="./index.html">Vegetables</a>-->
-<!--                        <span>Vegetable’s Package</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
 <!-- Breadcrumb Section End -->
 
 <!-- Product Details Section Begin -->
@@ -32,11 +16,12 @@
     <div class="container">
         <th:block th:object="${product}">
         <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-6 col-md-6" id="img-zoomer-box">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
                         <img class="product__details__pic__item--large"
-                             th:src="${product.photosImagePath}" th:title="${product.productName}" style="width: 540px; height: 500px">
+                             th:src="${product.photosImagePath}" th:title="${product.productName}" id="img-1">
+                        <div id="img-2" th:style="'background:' + 'url(\'' + ${product.photosImagePath} +'\')' + 'no-repeat #FFF'"> </div>
                     </div>
                 </div>
             </div>
@@ -190,6 +175,40 @@
                 window.location.assign(location.href);
             })
         }
+    </script>
+    <script type="text/javascript">
+        let zoomer = function (){
+            document.querySelector('#img-zoomer-box')
+                .addEventListener('mousemove', function(e) {
+
+                    let original = document.querySelector('#img-1'),
+                        magnified = document.querySelector('#img-2'),
+                        style = magnified.style,
+                        x = e.pageX - this.offsetLeft,
+                        y = e.pageY - this.offsetTop,
+                        imgWidth = original.offsetWidth,
+                        imgHeight = original.offsetHeight,
+                        xperc = ((x/imgWidth) * 100),
+                        yperc = ((y/imgHeight) * 100);
+
+                    //lets user scroll past right edge of image
+                    if(x > (.01 * imgWidth)) {
+                        xperc += (.15 * xperc);
+                    };
+
+                    //lets user scroll past bottom edge of image
+                    if(y >= (.01 * imgHeight)) {
+                        yperc += (.15 * yperc);
+                    };
+
+                    style.backgroundPositionX = (xperc - 9) + '%';
+                    style.backgroundPositionY = (yperc - 9) + '%';
+
+                    style.left = (x - 180) + 'px';
+                    style.top = (y - 180) + 'px';
+
+                }, false);
+        }();
     </script>
 <!-- Related Product Section End -->
 </div>
