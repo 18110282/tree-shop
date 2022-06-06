@@ -26,14 +26,14 @@ public class SearchController {
 
 
     @GetMapping("/list-web-product/search/result")
-    public String showListWebProductInCategory(@RequestParam(value = "keyword", required = false) String keyword,
+    public String showListWebProductByKeyword(@RequestParam(value = "keyword", required = false) String keyword,
                                                Model model,
                                                HttpSession session) {
-        return showListWebProductInCategoryByPage(keyword, model, session, 1);
+        return showListWebProductByKeywordByPage(keyword, model, session, 1);
     }
 
     @GetMapping("/list-web-product/search/result/{keyword}/{page}")
-    public String showListWebProductInCategoryByPage(@PathVariable(name = "keyword") String keyword, Model model, HttpSession session,
+    public String showListWebProductByKeywordByPage(@PathVariable(name = "keyword") String keyword, Model model, HttpSession session,
                                                      @PathVariable(name = "page") Integer currentPage) {
         Page<ProductsEntity> productsEntityPage = searchService.searchProduct(keyword, currentPage);
         Integer totalPages = productsEntityPage.getTotalPages();
