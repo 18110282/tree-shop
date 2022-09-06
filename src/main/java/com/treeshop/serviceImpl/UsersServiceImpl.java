@@ -59,7 +59,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void registerUser(UserEntity userEntity){
         String randomCode = RandomString.make(64);
-        userEntity.setRoleId("1");
+        userEntity.setRoleId("2");
         userEntity.setEnabled(false);
         userEntity.setVerificationCode(randomCode);
         userRepository.save(userEntity);

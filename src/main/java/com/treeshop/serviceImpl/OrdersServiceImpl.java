@@ -89,6 +89,7 @@ public class OrdersServiceImpl implements OrdersService {
         //remove discountCode session
         session.removeAttribute("discountCode");
         session.removeAttribute("discountPercent");
+        session.removeAttribute("cart");
         //delete cart when add line-item success
         cartRepository.deleteByCartIdKey_Username(username);
     }

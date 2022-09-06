@@ -135,5 +135,6 @@ public class PaymentServiceImpl implements PaymentService {
         ordersService.addOrder(ordersEntity, username, session);
         ordersService.sendMailInvoice(ordersEntity.getOrderId(), ordersEntity.getEmail(), request);
         session.removeAttribute("orderSessionForPayPal");
+        session.removeAttribute("cart");
     }
 }

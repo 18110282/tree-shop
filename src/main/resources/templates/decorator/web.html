@@ -17,7 +17,6 @@
 
     <!-- Css Styles -->
     <link rel="stylesheet" th:href="@{/web/css/bootstrap.min.css}" type="text/css">
-    <!--    <link rel="stylesheet" th:href="@{/admin/assets/css/bootstrap.min.css}"/>-->
     <link rel="stylesheet" th:href="@{/web/css/font-awesome.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/web/css/elegant-icons.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/web/css/nice-select.css}" type="text/css">
@@ -334,9 +333,9 @@
                             <form method="post" th:action="@{/home/user/check-login}" accept-charset="UTF-8"
                                   th:object="${user}">
                                 <input id="email" class="form-control" type="text" placeholder="Email"
-                                       th:name="username">
+                                       th:name="username" required>
                                 <input id="password" class="form-control" type="password" placeholder="Password"
-                                       th:name="password">
+                                       th:name="password" required>
                                 <div><b> <span style="color:#6dced5" th:text="${errorMessage}"></span></b></div>
                                 <input class="btn btn-default btn-login" type="submit" value="Đăng nhập">
                             </form>
@@ -349,13 +348,13 @@
                             <form method="post" html="{:multipart=>true}" data-remote="true"
                                   th:action="@{/home/user/register}" th:object="${user}" accept-charset="UTF-8">
                                 <input id="usernamee" class="form-control" type="text" placeholder="Username"
-                                       th:name="username">
+                                       th:name="username" required>
                                 <input id="passwordd" class="form-control" type="password" placeholder="Password"
-                                       th:name="password">
+                                       th:name="password" required>
                                 <input id="fullname" class="form-control" type="text" placeholder="Fullname"
-                                       th:name="fullname">
+                                       th:name="fullname" required>
                                 <input id="emaill" class="form-control" type="email" placeholder="Email"
-                                       th:name="email">
+                                       th:name="email" required>
                                 <div><b> <span style="color:#6dced5" th:text="${registerMessage}"></span></b></div>
                                 <br>
                                 <!--                                <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">-->
@@ -370,9 +369,9 @@
                                 <form method="post" html="{:multipart=>true}" data-remote="true"
                                       th:action="@{/home/verify}" accept-charset="UTF-8">
                                     <input class="form-control" type="text" placeholder="Username"
-                                           th:name="username">
+                                           th:name="username" required>
                                     <input class="form-control" type="email" placeholder="Email"
-                                           th:name="email">
+                                           th:name="email" required>
                                     <div><b> <span style="color:#6dced5" th:text="${verifyError}"></span></b></div>
                                     <br>
                                     <!--                                <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">-->

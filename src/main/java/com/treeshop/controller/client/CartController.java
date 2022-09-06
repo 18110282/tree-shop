@@ -67,6 +67,7 @@ public class CartController {
         }
         model.addAttribute("numberProductInCart", numberProductInCart);
         model.addAttribute("cartDetailList", cartEntityList);
+        model.addAttribute("categoryList", productsService.findAllCategory());
         return "views/client/cart/cart-detail";
     }
 
