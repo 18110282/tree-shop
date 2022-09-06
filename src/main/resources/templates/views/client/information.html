@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorator/web}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="~{content}">
+    <section class="user spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 pb-3">
+                    <ul class="nav nav-tabs flex-column" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                     class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                                    <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                </svg>
+                                <h7>Thông tin cá nhân</h7>
+
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-shield-lock"
+                                     viewBox="0 0 16 16">
+                                    <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                                    <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415z"/>
+                                </svg>
+                                <h7>Đổi mật khẩu</h7>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-receipt"
+                                     viewBox="0 0 16 16">
+                                    <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z"/>
+                                    <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                                <h7>Đơn hàng của tôi</h7>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                     class="bi bi-calendar2-heart" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5ZM1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3Zm2 .5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5H3Zm5 4.493c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
+                                </svg>
+                                <h7>Sản phẩm yêu thích</h7>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tabs-1" role="tabpanel">
+                            <div class="edit-user">
+                                <div class="p-1 py-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
+                                        <h4 class="text-right py-2 ">Thông tin cá nhân</h4>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label class="labels">Họ</label><input type="text"
+                                                                                                     class="form-control"
+                                                                                                     placeholder="Nguyễn"
+                                                                                                     value="Nguyễn">
+                                        </div>
+                                        <div class="col-md-6"><label class="labels">Tên</label><input type="text"
+                                                                                                      class="form-control"
+                                                                                                      value="Văn An"
+                                                                                                      placeholder="Văn An">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6"><label class="labels">Số điện thoại</label><input
+                                                type="text" class="form-control" placeholder="0327300035"
+                                                value="0327300035"></div>
+                                        <div class="col-md-6"><label class="labels">Email</label><input type="text"
+                                                                                                        class="form-control"
+                                                                                                        value="nhuanpx.spkt@gmail.com"
+                                                                                                        placeholder="nhuanpx.spkt@gmail.com">
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 text-center">
+                                        <button class="btn btn-primary profile-button" type="button">Lưu thông tin
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="tabs-2" role="tabpanel">
+                            <div class="change-password">
+                                <div class="p-1 py-4 al">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
+                                        <h4 class="text-right py-2 ">Cập nhật mật khẩu</h4>
+                                    </div>
+                                    <div class="form centered">
+                                        <div class="row mt-3">
+                                            <div class="col-md-12"><label class="labels">Mật khẩu cũ</label><input
+                                                    type="text" class="form-control" placeholder="Nguyễn"
+                                                    value="Nguyễn"></div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12"><label class="labels">Mật khẩu mới</label><input
+                                                    type="text" class="form-control" placeholder="0327300035"
+                                                    value="0327300035"></div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12"><label class="labels">Nhập lại mật khẩu
+                                                mới</label><input type="text" class="form-control"
+                                                                  placeholder="0327300035" value="0327300035"></div>
+                                        </div>
+                                        <div class="mt-5 text-center">
+                                            <button class="btn btn-primary profile-button" type="button">Cập nhật mật
+                                                khẩu
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="tabs-3" role="tabpanel">
+                            <div class="history-order py-4 pb-5">
+                                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
+                                    <h4 class="text-right py-2 ">Đơn hàng của tôi</h4>
+                                </div>
+                                <ul class="nav nav-tabs nav-justified py-10" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" data-toggle="tab" href="#tabs-5" role="tab"
+                                           aria-selected="true">Tất cả</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-9" role="tab"
+                                           aria-selected="false">Chờ xác nhận</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab"
+                                           aria-selected="false">Đang Giao</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab"
+                                           aria-selected="false">Đã Giao</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-8" role="tab"
+                                           aria-selected="false">Đã Hủy</a>
+                                    </li>
+                                </ul>
+                                <div class="history-order-details tab-content">
+                                    <div class="tab-pane fade show active" id="tabs-5" role="tabpanel">
+                                        <div class="all-order">
+                                            <div class="card mt-2 bg-light">
+                                                <div class="card-header">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <a class="id-status-order">#220828HGfde4w | Chờ xác nhận</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="history__order__table card-body">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="shoping__product">Sản phẩm</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tạm tính</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                     alt="">
+                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                            </td>
+                                                            <td>395.000₫</td>
+                                                            <td>1.185.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                                     alt="">
+                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            </td>
+                                                            <td>250.000₫</td>
+                                                            <td>250.000₫</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
+                                                            <td class="order-pay-fee">60.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
+                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-top">
+                                                                <button type="button"
+                                                                        class="btn-cancel_order btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#cancelModalCenter">Hủy đơn
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="card mt-2 bg-light">
+                                                <div class="card-header">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <a class="id-status-order">#220828HGfde4w | Đã giao</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="history__order__table card-body">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="shoping__product">Sản phẩm</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tạm tính</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                     alt="">
+                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                            </td>
+                                                            <td>395.000₫</td>
+                                                            <td>1.185.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                                     alt="">
+                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            </td>
+                                                            <td>250.000₫</td>
+                                                            <td>250.000₫</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
+                                                            <td class="order-pay-fee">60.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
+                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-top">
+                                                                <button type="button"
+                                                                        class="btn-reorder btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter">Mua lại
+                                                                </button>
+                                                                <button type="button"
+                                                                        class="btn-review btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#reviewModalCenter">Đánh giá
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="card mt-2 bg-light">
+                                                <div class="card-header">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <a class="id-status-order">#220828HGfde4w | Đã hủy</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="history__order__table card-body">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="shoping__product">Sản phẩm</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tạm tính</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                     alt="">
+                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                            </td>
+                                                            <td>395.000₫</td>
+                                                            <td>1.185.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                                     alt="">
+                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            </td>
+                                                            <td>250.000₫</td>
+                                                            <td>250.000₫</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
+                                                            <td class="order-pay-fee">60.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
+                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-top">
+                                                                <button type="button"
+                                                                        class="btn-reorder btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter">Mua lại
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="tabs-6" role="tabpanel">
+                                        <div class="delivering-order" style="display: none">
+                                            <div class="card mt-2 bg-light">
+                                                <div class="card-header">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <a class="id-status-order">#220828HGfde4w | Đang giao</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="history__order__table card-body">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="shoping__product">Sản phẩm</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tạm tính</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                     alt="">
+                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                            </td>
+                                                            <td>395.000₫</td>
+                                                            <td>1.185.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                                     alt="">
+                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            </td>
+                                                            <td>250.000₫</td>
+                                                            <td>250.000₫</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
+                                                            <td class="order-pay-fee">60.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
+                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="no-order">
+                                            <form class="centered">
+                                                <img th:src="@{/web/img/empty-deliver-removebg-preview.png}" class="img-fluid" alt="">
+                                                <p class="text-center">Chưa có đơn hàng</p>
+                                                <a class="btn btn-primary text-center" href="shop-grid.html">Tiếp tục
+                                                    mua hàng</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="tabs-7" role="tabpanel">
+                                        <div class="success-order">
+                                            <div class="card mt-2 bg-light">
+                                                <div class="card-header">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <a class="id-status-order">#220828HGfde4w | Đã giao</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="history__order__table card-body">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="shoping__product">Sản phẩm</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tạm tính</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                     alt="">
+                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                            </td>
+                                                            <td>395.000₫</td>
+                                                            <td>1.185.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                                     alt="">
+                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            </td>
+                                                            <td>250.000₫</td>
+                                                            <td>250.000₫</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
+                                                            <td class="order-pay-fee">60.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
+                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-top">
+                                                                <button type="button"
+                                                                        class="btn-reorder btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter">Mua lại
+                                                                </button>
+                                                                <button type="button"
+                                                                        class="btn-review btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#reviewModalCenter">Đánh giá
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="tabs-8" role="tabpanel">
+                                        <div class="cancel-order">
+                                            <div class="card mt-2 bg-light">
+                                                <div class="card-header">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <a class="id-status-order">#220828HGfde4w | Đã hủy</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="history__order__table card-body">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="shoping__product">Sản phẩm</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tạm tính</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                     alt="">
+                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                            </td>
+                                                            <td>395.000₫</td>
+                                                            <td>1.185.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                                     alt="">
+                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            </td>
+                                                            <td>250.000₫</td>
+                                                            <td>250.000₫</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
+                                                            <td class="order-pay-fee">60.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
+                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-top">
+                                                                <button type="button"
+                                                                        class="btn-reorder btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter">Mua lại
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="tabs-9" role="tabpanel">
+                                        <div class="waiting-order">
+                                            <div class="card mt-2 bg-light">
+                                                <div class="card-header">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <a class="id-status-order">#220828HGfde4w | Chờ xác nhận</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="history__order__table card-body">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="shoping__product">Sản phẩm</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tạm tính</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                     alt="">
+                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                            </td>
+                                                            <td>395.000₫</td>
+                                                            <td>1.185.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="shoping__cart__item">
+                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                                     alt="">
+                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            </td>
+                                                            <td>250.000₫</td>
+                                                            <td>250.000₫</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
+                                                            <td class="order-pay-fee">60.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
+                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-top">
+                                                                <button type="button"
+                                                                        class="btn-cancel_order btn btn-primary text-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#cancelModalCenter">Hủy đơn
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="tabs-4" role="tabpanel">
+                            <div class="favourite-product">
+                                <div class="p-1 py-4 al">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
+                                        <h4 class="text-right py-2 ">Sản phẩm yêu thích</h4>
+                                    </div>
+                                    <div class="favourite-product-list">
+                                        <div class="row">
+                                            <div class="favourite-product-item">
+                                                <div class="card centered">
+                                                    <div class="card-header">
+                                                        <div class="delete-favourite-product">
+                                                            <a href=""><i class="fa fa-times-circle"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-2 col-sm-3">
+                                                                <a href="shop-details.html">
+                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
+                                                                         alt="">
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-lg-10 col-sm-9">
+                                                                <span class="favourite-product-category">Cây văn phòng</span>
+                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
+                                                                </h5>
+                                                                <div class="favourite-product-price">695.000đ</div>
+                                                                <div class="buy-now-product"><a
+                                                                        href="shoping-cart.html"><i
+                                                                        class="fa fa-shopping-cart"></i></a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="favourite-product-item">
+                                                <div class="card centered">
+                                                    <div class="card-header">
+                                                        <div class="delete-favourite-product">
+                                                            <a href=""><i class="fa fa-times-circle"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-2 col-sm-3">
+                                                                <a href="shop-details.html">
+                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
+                                                                         alt="">
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-lg-10 col-sm-9">
+                                                                <span class="favourite-product-category">Cây văn phòng</span>
+                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
+                                                                </h5>
+                                                                <div class="favourite-product-price">695.000đ</div>
+                                                                <div class="buy-now-product"><a
+                                                                        href="shoping-cart.html"><i
+                                                                        class="fa fa-shopping-cart"></i></a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="favourite-product-item">
+                                                <div class="card centered">
+                                                    <div class="card-header">
+                                                        <div class="delete-favourite-product">
+                                                            <a href=""><i class="fa fa-times-circle"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-2 col-sm-3">
+                                                                <a href="shop-details.html">
+                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
+                                                                         alt="">
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-lg-10 col-sm-9">
+                                                                <span class="favourite-product-category">Cây văn phòng</span>
+                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
+                                                                </h5>
+                                                                <div class="favourite-product-price">695.000đ</div>
+                                                                <div class="buy-now-product"><a
+                                                                        href="shoping-cart.html"><i
+                                                                        class="fa fa-shopping-cart"></i></a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="favourite-product-item">
+                                                <div class="card centered">
+                                                    <div class="card-header">
+                                                        <div class="delete-favourite-product">
+                                                            <a href=""><i class="fa fa-times-circle"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-2 col-sm-3">
+                                                                <a href="shop-details.html">
+                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
+                                                                         alt="">
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-lg-10 col-sm-9">
+                                                                <span class="favourite-product-category">Cây văn phòng</span>
+                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
+                                                                </h5>
+                                                                <div class="favourite-product-price">695.000đ</div>
+                                                                <div class="buy-now-product"><a
+                                                                        href="shoping-cart.html"><i
+                                                                        class="fa fa-shopping-cart"></i></i></a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="cancel-notification modal fade" id="cancelModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="cancelModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Kết Qủa Hủy Đơn</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="centered">
+                            <img th:src="@{/web/img/cancel-order.png}" class="img-fluid" alt="">
+                            <div class="content-cancel-order">
+                                <p>Đơn hàng của bạn đã được hủy thành công:(</p>
+                                <p>Treeshop hy vọng có thể phục vụ bạn trong tương lai</p>
+                            </div>
+                            <a class="btn btn-primary text-center" href="shop-grid.html">Tiếp tục mua hàng</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="review-product-modal modal fade" id="reviewModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="reviewModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reviewModalLongTitle">Đánh Giá Sản Phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-product-review">
+                            <div class="item-product-review">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="infor-product-review row">
+                                            <div class="col-lg-2 col-sm-2 col-3">
+                                                <a href="shop-details.html"><img
+                                                        src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                        alt=""></a>
+                                            </div>
+                                            <div class="col-lg-10 col-sm-10 col-9">
+                                                <div class="product-name-review"><a href="shop-details.html"><h5>Hoa Dừa
+                                                    Cạn</h5></a></div>
+                                                <div class="product-category-review"><p>Cây Phong Thủy</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-outline">
+                                            <textarea class="form-control" rows="3"
+                                                      placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-product-review">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="infor-product-review row">
+                                            <div class="col-lg-2 col-sm-2 col-3">
+                                                <a href="shop-details.html"><img
+                                                        src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
+                                                        alt=""></a>
+                                            </div>
+                                            <div class="col-lg-10 col-sm-10 col-9">
+                                                <div class="product-name-review"><a href="shop-details.html"><h5>Cây
+                                                    Thiết Mộc Lan</h5></a></div>
+                                                <div class="product-category-review"><p>Cây Nội Thất</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-outline">
+                                            <textarea class="form-control" rows="3"
+                                                      placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-product-action text-right">
+                            <a class="btn btn-primary text-center">Hoàn Thành</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
