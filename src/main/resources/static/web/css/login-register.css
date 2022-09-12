@@ -158,8 +158,8 @@
     width: 100%;
 }
 .login .btn-login, .registerBox .btn-register, .sendVerifyBox .btn-verify{
-    background-color: #00BBFF;
-    border-color: #00BBFF;
+    background-color: #7fad39;
+    border-color: #7fad39;
     border-width: 0;
     color: #FFFFFF;
     display: block;
@@ -169,7 +169,7 @@
     width: 100%;
 }
 .login .btn-login:hover, .registerBox .btn-register:hover, .sendVerifyBox .btn-verify:hover{
-    background-color: #00A4E4;
+    background-color:#7fad39;
     color: #FFFFFF;
 }
 .login .form-control{
@@ -205,7 +205,7 @@
 }
 
 .big-login, .big-register{
-    background-color: #00bbff;
+    background-color: #1c1c1c;
     color: #FFFFFF;
     border-radius: 7px;
     border-width: 2px;
@@ -217,15 +217,18 @@
     transition: all 0.3s ease 0s;
 }
 .big-login:hover{
-    background-color: #00A4E4;
+    background-color: #1c1c1c;
     color: #FFFFFF;
 }
 .big-register{
     background-color: rgba(0,0,0,.0);
-    color: #00bbff;
-    border-color: #00bbff;
+    color: #1c1c1c;
+    border-color: #1c1c1c;
 }
 .big-register:hover{
-    border-color: #00A4E4;
-    color:  #00A4E4;
+    border-color: #1c1c1c;
+    color:  #1c1c1c;
+}
+.a-color{
+    color: #1c1c1c;
 }

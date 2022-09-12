@@ -251,18 +251,22 @@
         <script type="text/javascript" th:inline="javascript" th:if="${payingByPaypalSuccess}">
             alert([[${payingByPaypalSuccess}]])
         </script>
-        <script>
+        <script type="text/javascript">
             function checkPrice(){
-                let min= $("#minamount").val();
-                let max = $("#maxamount").val();
-                let search = $("#searchPrice");
+                let min= parseInt($("#minamount").val());
+                let max = parseInt($("#maxamount").val());
+                let search_btn = $("#searchPrice");
                 let errorInput = $("#errorInput");
                 if(min < 0 || max < 0){
-                    search.prop("disabled", true);
+                    search_btn.prop("disabled", true);
                     errorInput.html("Không thể tìm giá âm");
                 }
+                else if(min > max){
+                    search_btn.prop("disabled", true);
+                    errorInput.html("Giá trị bên trái phải nhỏ hơn bên phải");
+                }
                 else {
-                    search.prop("disabled", false);
+                    search_btn.prop("disabled", false);
                     errorInput.html("");
                 }
             }

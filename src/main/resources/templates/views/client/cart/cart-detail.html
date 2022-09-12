@@ -123,6 +123,9 @@
     <script th:if="${alert}" type="text/javascript" th:inline="javascript">
         alert([[${alert}]])
     </script>
+    <script th:unless="${session.client}" type="text/javascript" th:inline="javascript">
+        checkClientSession();
+    </script>
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
             updateTotal();
