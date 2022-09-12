@@ -17,6 +17,8 @@ public interface UsersService {
 
     void saveUser(UserEntity userEntity);
 
+    void saveUserInWeb(String username, UserEntity userEntity);
+
     void deleteUser(String username);
 
     boolean checkUsername(String username);

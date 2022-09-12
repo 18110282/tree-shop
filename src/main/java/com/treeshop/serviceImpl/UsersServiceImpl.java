@@ -48,6 +48,17 @@ public class UsersServiceImpl implements UsersService {
     public void saveUser(UserEntity userEntity) {
         userRepository.save(userEntity);
     }
+
+    @Override
+    public void saveUserInWeb(String username, UserEntity userEntity) {
+        UserEntity updateClient = userRepository.findByUsername(username);
+        updateClient.setFullname(userEntity.getFullname());
+        updateClient.setPhoneNumber(userEntity.getPhoneNumber());
+        updateClient.setAddress(userEntity.getAddress());
+        updateClient.setEmail(userEntity.getEmail());
+        userRepository.save(updateClient);
+    }
+
     @Override
     public void deleteUser(String username) {
         userRepository.deleteByUsername(username);

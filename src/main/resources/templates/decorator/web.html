@@ -3,8 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="description" content="TreeShop49 Template">
+    <meta name="keywords" content="TreeShop49, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
@@ -27,6 +27,11 @@
     <link rel="stylesheet" th:href="@{/web/css/img-detail-zoom.css}" type="text/css">
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"
             type="text/javascript"></script>
+    <script type="text/javascript">
+        function checkClientSession() {
+            window.location.assign("/home/list-web-product");
+        }
+    </script>
 </head>
 
 <body>
@@ -61,7 +66,8 @@
             <div>Chào, [[${session.client.username}]]</div>
             <span class="arrow_carrot-down"></span>
             <ul>
-                <li><a th:href="@{/home/logout}">Đăng xuất</a></li>
+                <li><a th:href="@{'/home/'+${session.client.username}+'/information'}">Thông tin cá nhân</a></li>
+                <li><a th:href="@{/home/user/logout}">Đăng xuất</a></li>
             </ul>
         </div>
     </div>
@@ -120,6 +126,7 @@
                             <div>Chào, [[${session.client.username}]]</div>
                             <span class="arrow_carrot-down"></span>
                             <ul>
+                                <li><a th:href="@{'/home/'+${session.client.username}+'/information'}">Thông tin cá nhân</a></li>
                                 <li><a th:href="@{/home/user/logout}">Đăng xuất</a></li>
                             </ul>
                         </div>
@@ -385,21 +392,21 @@
             </div>
             <div class="modal-footer">
                 <div class="forgot login-footer">
-                     <span><a href="javascript: showSendVerifyForm();">Xác thực tài khoản</a>
+                     <span><a href="javascript: showSendVerifyForm();" class="a-color">Xác thực tài khoản</a>
                             ?</span><br>
                     <span>
-                            <a href="javascript: showRegisterForm();">Đăng ký tài khoản</a>
+                            <a href="javascript: showRegisterForm();" class="a-color">Đăng ký tài khoản</a>
                             ?</span>
                 </div>
                 <div class="forgot register-footer" style="display:none">
                     <span>Đã có tài khoản?</span>
-                    <a href="javascript: showLoginForm();">Đăng nhập</a>
+                    <a href="javascript: showLoginForm();" class="a-color">Đăng nhập</a>
                 </div>
                 <div class="forgot verify-footer" style="display:none">
                     <span></span>
-                    <a href="javascript: showLoginForm();">Đăng nhập</a>
+                    <a href="javascript: showLoginForm();" class="a-color">Đăng nhập</a>
                     <span> --- </span>
-                    <a href="javascript: showRegisterForm();">Đăng ký</a>
+                    <a href="javascript: showRegisterForm();" class="a-color">Đăng ký</a>
                 </div>
             </div>
         </div>

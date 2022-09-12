@@ -30,6 +30,8 @@ public class UserEntity implements Serializable {
     private String verificationCode;
     @Column(name = "enabled")
     private boolean enabled;
+    @Column(name="address")
+    private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", insertable = false, updatable = false)
@@ -55,6 +57,11 @@ public class UserEntity implements Serializable {
                 ", fullname='" + fullname + '\'' +
                 ", verificationCode='" + verificationCode + '\'' +
                 ", enabled=" + enabled +
+                ", address='" + address + '\'' +
+                ", roleEntity=" + roleEntity +
+                ", ordersEntityList=" + ordersEntityList +
+                ", postsEntityList=" + postsEntityList +
+                ", cartEntityList=" + cartEntityList +
                 '}';
     }
 }
