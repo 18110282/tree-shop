@@ -32,7 +32,7 @@ public class ClientController {
         HttpSession session = request.getSession();
         session.removeAttribute("client");
         session.invalidate();
-        return "redirect:/home/list-web-product";
+        return "redirect:/";
     }
 
     @PostMapping("/user/check-login")

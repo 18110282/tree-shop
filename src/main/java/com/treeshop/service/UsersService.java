@@ -19,6 +19,8 @@ public interface UsersService {
 
     void saveUserInWeb(String username, UserEntity userEntity);
 
+    boolean savePasswordOfClient(String username, String oldPassword, String newPassword);
+
     void deleteUser(String username);
 
     boolean checkUsername(String username);

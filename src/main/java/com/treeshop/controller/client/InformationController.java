@@ -19,6 +19,7 @@ public class InformationController {
     private final ProductsService productsService;
     private final UsersService usersService;
 
+
     public InformationController(CommonController commonController, ProductsService productsService, UsersService usersService) {
         this.commonController = commonController;
         this.productsService = productsService;
@@ -40,6 +41,22 @@ public class InformationController {
                                           RedirectAttributes ra) {
         usersService.saveUserInWeb(username, client);
         ra.addFlashAttribute("alert", "Lưu thông tin thành công");
+        ra.addFlashAttribute("navItemHref", "#tabs-1");
         return "redirect:/home/" + username +"/information";
     }
+
+//    @PostMapping("/save/{username}/password")
+//    public String savePasswordOfClient(@PathVariable("username") String username,
+//                                       @RequestParam(value = "oldPassword", required = false) String oldPassword,
+//                                       @RequestParam(value = "newPassword", required = false) String newPassword,
+//                                       RedirectAttributes ra){
+//        if(usersService.savePasswordOfClient(username, oldPassword, newPassword)){
+//            ra.addFlashAttribute("alert", "Thay đổi mật khẩu thành công");
+//        }
+//        else {
+//            ra.addFlashAttribute("alert", "Mật khẩu cũ bạn nhập không đúng");
+//        }
+//        ra.addFlashAttribute("navItemHref", "#tabs-2");
+//        return "redirect:/home/" + username +"/information";
+//    }
 }

@@ -14,6 +14,7 @@ import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -57,6 +58,17 @@ public class UsersServiceImpl implements UsersService {
         updateClient.setAddress(userEntity.getAddress());
         updateClient.setEmail(userEntity.getEmail());
         userRepository.save(updateClient);
+    }
+
+    @Override
+    public boolean savePasswordOfClient(String username, String oldPassword, String newPassword) {
+        UserEntity client = userRepository.findByUsername(username);
+        if(client.getPassword().equals(oldPassword)){
+            client.setPassword(newPassword);
+            userRepository.save(client);
+            return true;
+        }
+        return false;
     }
 
     @Override

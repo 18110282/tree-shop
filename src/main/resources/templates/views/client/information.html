@@ -60,7 +60,8 @@
                         <div class="tab-pane fade show active" id="tabs-1" role="tabpanel">
                             <div class="edit-user">
                                 <div class="p-1 py-4" th:if="${session.client}">
-                                    <form th:action="@{'/home/save/' + ${session.client.username}+'/information'}" method="post"
+                                    <form th:action="@{'/home/save/' + ${session.client.username}+'/information'}"
+                                          method="post"
                                           th:object="${informationOfClient}">
                                         <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
                                             <h4 class="text-right py-2 ">Thông tin cá nhân: </h4>
@@ -69,13 +70,16 @@
                                             <div class="col-md-6"><label class="labels">Họ và tên</label><input
                                                     type="text"
                                                     class="form-control"
-                                                    pattern="[a-zA-ZàáạảãâầấậẩẫăằắặẳẵÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴèéẹẻẽêềếệểễÈÉẸẺẼÊỀẾỆỂỄìíịỉĩÌÍỊỈĨòóọỏõôồốộổỗơờớợởỡÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠùúụủũưừứựửữÙÚỤỦŨƯỪỨỰỬỮỳýỵỷỹỲÝỴỶỸđĐ ]{0,100}" title="Chỉ bao gồm chữ, tối đa 100 kí tự!"
+                                                    pattern="[a-zA-ZàáạảãâầấậẩẫăằắặẳẵÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴèéẹẻẽêềếệểễÈÉẸẺẼÊỀẾỆỂỄìíịỉĩÌÍỊỈĨòóọỏõôồốộổỗơờớợởỡÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠùúụủũưừứựửữÙÚỤỦŨƯỪỨỰỬỮỳýỵỷỹỲÝỴỶỸđĐ ]{0,100}"
+                                                    title="Chỉ bao gồm chữ, tối đa 100 kí tự!"
                                                     th:field="*{fullname}">
                                             </div>
                                             <div class="col-md-6"><label class="labels">Số điện thoại</label><input
                                                     type="text"
                                                     class="form-control"
-                                                    pattern="[0-9]{8,10}" title="Chỉ bao gồm số, giới hạn từ 8 đến 10 số!" placeholder="Số điện thoại"
+                                                    pattern="[0-9]{8,10}"
+                                                    title="Chỉ bao gồm số, giới hạn từ 8 đến 10 số!"
+                                                    placeholder="Số điện thoại"
                                                     th:field="*{phoneNumber}">
                                             </div>
                                         </div>
@@ -102,27 +106,32 @@
                                     <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
                                         <h4 class="text-right py-2 ">Cập nhật mật khẩu</h4>
                                     </div>
-                                    <div class="form centered">
-                                        <div class="row mt-3">
-                                            <div class="col-md-12"><label class="labels">Mật khẩu cũ</label><input
-                                                    type="text" class="form-control" placeholder="Nguyễn"
-                                                    value="Nguyễn"></div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-12"><label class="labels">Mật khẩu mới</label><input
-                                                    type="text" class="form-control" placeholder="0327300035"
-                                                    value="0327300035"></div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-12"><label class="labels">Nhập lại mật khẩu
-                                                mới</label><input type="text" class="form-control"
-                                                                  placeholder="0327300035" value="0327300035"></div>
-                                        </div>
-                                        <div class="mt-5 text-center">
-                                            <button class="btn btn-primary profile-button" type="button">Cập nhật mật
-                                                khẩu
-                                            </button>
-                                        </div>
+                                    <div class="form centered" th:if="${session.client}">
+                                        <form>
+                                            <div class="row mt-3">
+                                                <div class="col-md-12"><label class="labels">Mật khẩu cũ</label><input
+                                                        id="oldPassword" type="password" class="form-control"
+                                                        required></div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-md-12"><label class="labels">Mật khẩu mới</label><input
+                                                        type="password" class="form-control" id="newPass"
+                                                        onkeyup="checkPass()" required></div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-md-12"><label class="labels">Nhập lại mật khẩu
+                                                    mới</label><input id="conFPass" type="password" class="form-control"
+                                                                      onkeyup="checkPass()" required>
+                                                </div>
+                                                <div class="col-md-12"><span id='message'></span></div>
+                                            </div>
+                                            <div class="mt-5 text-center">
+                                                <button class="btn btn-primary profile-button" type="button"
+                                                        id="submit-password" onclick="changePassword()">Cập nhật mật
+                                                    khẩu
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -891,6 +900,51 @@
     </script>
     <script th:if="${alert}" type="text/javascript" th:inline="javascript">
         alert([[${alert}]]);
+    </script>
+    <script th:if="${session.client}" type="text/javascript" th:inline="javascript">
+        function checkPass() {
+            let newPassword = $('#newPass').val();
+            let conFPassword = $('#conFPass').val();
+            let message = $('#message');
+            let submitPassword = $('#submit-password');
+            if (newPassword === conFPassword) {
+                message.html("");
+                submitPassword.prop("disabled", false);
+            } else {
+                message.html("Mật khẩu không trùng khớp");
+                message.css({'color': 'red', 'font': 'Times'});
+                submitPassword.prop("disabled", true);
+            }
+        }
+        function changePassword() {
+            let oldPassword = $('#oldPassword').val();
+            let newPassword = $('#newPass').val();
+            let conFPassword = $('#conFPass').val();
+            let message = $('#message');
+            if (oldPassword === "" || newPassword === "" || conFPassword === "") {
+                message.html("Thông tin nhập còn trống");
+                message.css({'color': 'red', 'font': 'Times'});
+            } else {
+                let url = "/home/save/" + [[${session.client.username}]] + "/password/" + oldPassword + "/" + newPassword;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                }).done(function (check) {
+                    if (check) {
+                        $('#oldPassword').val("");
+                        $('#newPass').val("");
+                        $('#conFPass').val("");
+                        message.html("");
+                        alert("Thay đổi mật khẩu thành công, mời bạn đăng nhập lại với mật khẩu mới!");
+                        window.location.assign("/home/user/logout");
+                    } else {
+                        message.html("");
+                        alert("Bạn đã nhập sai mật khẩu cũ");
+                    }
+                })
+            }
+
+        }
     </script>
 </div>
 
