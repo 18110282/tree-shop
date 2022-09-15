@@ -23,7 +23,8 @@ public class OrdersEntity {
     @Column(name = "address", length = 200)
     private String address;
     @Column(name = "status", length = 100)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusOfOrder status;
     @Column(name = "phone_number", length = 10)
     private String phoneNumber;
     @Column(name = "email", length = 100)

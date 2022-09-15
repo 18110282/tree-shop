@@ -13,11 +13,15 @@ import java.util.List;
 public interface OrdersService {
     List<OrdersEntity> findAll();
 
+    List<OrdersEntity> findByStatus(String status);
+
     OrdersEntity findOrderEntityById(String orderId);
 
     List<LineItemEntity> findLineItemOfOrderId(String orderId);
 
     void addOrder(OrdersEntity ordersEntity, String username, HttpSession session) throws MessagingException, IOException;
+
+    void updateStatusOfOrder(StatusOfOrder status, String orderId);
 
     //random orderId
     String createOrderId();

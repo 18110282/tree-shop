@@ -6,6 +6,7 @@ import com.treeshop.dao.OrdersRepository;
 import com.treeshop.entity.DiscountCodeEntity;
 import com.treeshop.entity.OrdersEntity;
 import com.treeshop.entity.ProductsEntity;
+import com.treeshop.entity.StatusOfOrder;
 import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.entity.lineitem.LineItemEntity;
 import com.treeshop.entity.lineitem.LineItemIdKey;
@@ -29,7 +30,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 @Service
@@ -48,16 +51,29 @@ public class OrdersServiceImpl implements OrdersService {
         this.cartRepository = cartRepository;
         this.commonService = commonService;
         this.javaMailSender = javaMailSender;
+
+
     }
 
-    public List<OrdersEntity> findAll(){
+    public List<OrdersEntity> findAll() {
         return ordersRepository.findAll();
     }
-    public OrdersEntity findOrderEntityById(String orderId){
+
+    @Override
+    public List<OrdersEntity> findByStatus(String status) {
+        Map<String, StatusOfOrder> statusMap = new HashMap<>();
+        statusMap.put("Chờ xác nhận", StatusOfOrder.WAIT_CONFIRM);
+        statusMap.put("Đang giao", StatusOfOrder.DELIVERY);
+        statusMap.put("Đã giao", StatusOfOrder.DELIVERED);
+        statusMap.put("Đã hủy", StatusOfOrder.CANCELLED);
+        return ordersRepository.findByStatus(statusMap.get(status));
+    }
+
+    public OrdersEntity findOrderEntityById(String orderId) {
         return ordersRepository.findByOrderId(orderId);
     }
 
-    public List<LineItemEntity> findLineItemOfOrderId(String orderId){
+    public List<LineItemEntity> findLineItemOfOrderId(String orderId) {
         return lineItemRepository.findByLineItemIdKey_OrderId(orderId);
     }
 
@@ -70,6 +86,12 @@ public class OrdersServiceImpl implements OrdersService {
         }
         ordersEntity.setOrderId(this.createOrderId());
         ordersEntity.setOrderDate(timestamp.toString());
+        if (ordersEntity.getPayment().equals("cod")) {
+            ordersEntity.setStatus(StatusOfOrder.WAIT_CONFIRM);
+        } else {
+            ordersEntity.setStatus(StatusOfOrder.DELIVERY);
+        }
+
         //add orderEntity
         ordersRepository.save(ordersEntity);
         //add line-item from cart of user
@@ -92,6 +114,11 @@ public class OrdersServiceImpl implements OrdersService {
         session.removeAttribute("cart");
         //delete cart when add line-item success
         cartRepository.deleteByCartIdKey_Username(username);
+    }
+
+    @Override
+    public void updateStatusOfOrder(StatusOfOrder status, String orderId) {
+        ordersRepository.updateStatusOfOrder(status, orderId);
     }
 
     //random orderId
@@ -147,21 +174,21 @@ public class OrdersServiceImpl implements OrdersService {
         javaMailSender.send(message);
     }
 
-    public Integer getSubToTalOfOrder(String orderId){
+    public Integer getSubToTalOfOrder(String orderId) {
         List<LineItemEntity> lineItemEntityList = lineItemRepository.findByLineItemIdKey_OrderId(orderId);
         int subTotal = 0;
-        for (LineItemEntity lineItemEntity :lineItemEntityList){
+        for (LineItemEntity lineItemEntity : lineItemEntityList) {
             subTotal = subTotal + lineItemEntity.getTotalPerProduct();
         }
         return subTotal;
     }
-    public void setTransientOfOrder(String orderId){
+
+    public void setTransientOfOrder(String orderId) {
         OrdersEntity ordersEntity = this.findOrderEntityById(orderId);
         ordersEntity.setSubTotalPrice(this.getSubToTalOfOrder(orderId));
-        if(ordersEntity.getDiscountCodeEntity() != null) {
+        if (ordersEntity.getDiscountCodeEntity() != null) {
             ordersEntity.setDiscountPercent(ordersEntity.getDiscountCodeEntity().getDiscountPercent());
-        }
-        else {
+        } else {
             ordersEntity.setDiscountPercent(0);
         }
         ordersRepository.save(ordersEntity);

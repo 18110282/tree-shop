@@ -64,6 +64,12 @@
                         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </th>
                                 <th>Mã đơn</th>
                                 <th>Tên khách hàng</th>
                                 <th class="hidden-480">Địa chỉ</th>
@@ -78,6 +84,12 @@
                             <tbody>
                             <th:block th:each="order :${listOrder}">
                                 <tr>
+                                    <td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace"/>
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
                                     <td>
                                         [[${order.orderId}]]
                                     </td>
@@ -99,22 +111,8 @@
                                     <td>
                                         [[${order.totalPrice}]]
                                     </td>
-                                    <td th:switch="${order.status}">
-                                        <span th:case="null">
-                                            Rỗng
-                                        </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).WAIT_CONFIRM}">
-                                            Chờ xác nhận
-                                        </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERY}">
-                                            Đang giao hàng
-                                        </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERED}">
-                                            Đã giao hàng
-                                        </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
-                                            Đã hủy
-                                        </span>
+                                    <td>
+                                        Chờ xác nhận
                                     </td>
 
                                     <td>
@@ -122,6 +120,10 @@
                                             <a title="Xem chi tiết" class="green view-order-detail" data-toggle="modal"
                                                data-target="#exampleModalCenter" th:id="${order.orderId}">
                                                 <i class="ace-icon fa fa-eye bigger-130"></i>
+                                            </a>
+                                            <a title="Xác nhận đơn" class="red"
+                                               th:href="@{'/admin/order/' + ${order.orderId} + '/confirm'}">
+                                                <i class="ace-icon fa fa-check green bigger-130"></i>
                                             </a>
                                             <a title="Xóa" class="red"
                                                th:href="@{'/admin/order/' + ${order.orderId}}">
@@ -160,7 +162,7 @@
                                                                         <span class="red"
                                                                               id="orderId">#20220424OhhrOf</span>
                                                                         <span>||</span>
-                                                                        <span id="status">Chờ xác nhận</span>
+                                                                        <b><i><span id="status">Chờ xác nhận</span></i></b>
                                                                         <br>
                                                                         <span class="invoice-info-label">Date:</span>
                                                                         <span class="blue"
@@ -314,14 +316,7 @@
                                 dataType: 'json'
                             }).done(function (orderEntity) {
                                 let dataInTable = "";
-                                const statusOfOrder={
-                                    "WAIT_CONFIRM" : "Chờ xác nhận",
-                                    "DELIVERY" : "Đang giao hàng",
-                                    "DELIVERED" : "Đã giao",
-                                    "CANCELLED" : "Đã hủy"
-                                }
                                 $('#orderId').html("<strong>#" + orderEntity.orderId + "</strong>");
-                                $('#status').html("<strong><i>" + statusOfOrder[orderEntity.status] + "</i></strong>");
                                 $('#orderDate').html(orderEntity.orderDate);
                                 $('#username').html("<i class=\"ace-icon fa fa-caret-right green\"></i>Tài khoản đặt hàng: " + orderEntity.username);
                                 $('#contactName').html("<i class=\"ace-icon fa fa-caret-right green\"></i>Tên người nhận: " + orderEntity.contactName);
@@ -353,11 +348,77 @@
                         })
                         jQuery(function ($) {
                             //initiate dataTables plugin
-                            var table = $('#dynamic-table').DataTable({
-                                responsive: true,
-                                pageLength: 10,
-                                lengthMenu: [10, 20, 50],
-                                bAutoWidth: false
+                            var oTable1 =
+                                $('#dynamic-table')
+                                    .dataTable({
+                                        responsive: true,
+                                        pageLength: 10,
+                                        lengthMenu: [10, 20, 50],
+                                        bAutoWidth: false
+                                    });
+                            var tableTools_obj = new $.fn.dataTable.TableTools(oTable1, {
+                                "sSwfPath": "assets/swf/copy_csv_xls_pdf.swf",
+
+                                "sRowSelector": "td:not(:last-child)",
+                                "sRowSelect": "multi",
+                                "fnRowSelected": function (row) {
+                                    //check checkbox when row is selected
+                                    try {
+                                        $(row).find('input[type=checkbox]').get(0).checked = true
+                                    } catch (e) {
+                                    }
+                                },
+                                "fnRowDeselected": function (row) {
+                                    //uncheck checkbox
+                                    try {
+                                        $(row).find('input[type=checkbox]').get(0).checked = false
+                                    } catch (e) {
+                                    }
+                                },
+
+                                "sSelectedClass": "success",
+                                "aButtons": [
+                                    {
+                                        "sExtends": "copy",
+                                        "sToolTip": "Copy to clipboard",
+                                        "sButtonClass": "btn btn-white btn-primary btn-bold",
+                                        "sButtonText": "<i class='fa fa-copy bigger-110 pink'></i>",
+                                        "fnComplete": function () {
+                                            this.fnInfo('<h3 class="no-margin-top smaller">Table copied</h3>\
+									<p>Copied ' + (oTable1.fnSettings().fnRecordsTotal()) + ' row(s) to the clipboard.</p>',
+                                                1500
+                                            );
+                                        }
+                                    },
+
+                                    {
+                                        "sExtends": "csv",
+                                        "sToolTip": "Export to CSV",
+                                        "sButtonClass": "btn btn-white btn-primary  btn-bold",
+                                        "sButtonText": "<i class='fa fa-file-excel-o bigger-110 green'></i>"
+                                    },
+
+                                    {
+                                        "sExtends": "pdf",
+                                        "sToolTip": "Export to PDF",
+                                        "sButtonClass": "btn btn-white btn-primary  btn-bold",
+                                        "sButtonText": "<i class='fa fa-file-pdf-o bigger-110 red'></i>"
+                                    },
+
+                                    {
+                                        "sExtends": "print",
+                                        "sToolTip": "Print view",
+                                        "sButtonClass": "btn btn-white btn-primary  btn-bold",
+                                        "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
+
+                                        "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
+
+                                        "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
+									  <p>Please use your browser's print function to\
+									  print this table.\
+									  <br />Press <b>escape</b> when finished.</p>",
+                                    }
+                                ]
                             });
 
                             //tooltip placement on right or left
@@ -374,7 +435,29 @@
                                 return 'left';
                             }
 
+                            $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+
+                            //select/deselect all rows according to table header checkbox
+                            $('#dynamic-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
+                                var th_checked = this.checked;//checkbox inside "TH" table header
+
+                                $(this).closest('table').find('tbody > tr').each(function () {
+                                    var row = this;
+                                    if (th_checked) tableTools_obj.fnSelect(row);
+                                    else tableTools_obj.fnDeselect(row);
+                                });
+                            });
+
+                            //select/deselect a row when the checkbox is checked/unchecked
+                            $('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
+                                var row = $(this).closest('tr').get(0);
+                                if (!this.checked) tableTools_obj.fnSelect(row);
+                                else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
+                            });
+                            // var a = document.getElementById('manage-order');
+                            // a.classList.toggle('active');
                             $('#manage-order').toggleClass('active');
+
                         })
                     </script>
                 </div>
