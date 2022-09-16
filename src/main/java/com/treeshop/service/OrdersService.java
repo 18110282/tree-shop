@@ -23,6 +23,8 @@ public interface OrdersService {
 
     void updateStatusOfOrder(StatusOfOrder status, String orderId);
 
+    void updateStatusOfListOrder(StatusOfOrder status, List<String> listOrder);
+
     //random orderId
     String createOrderId();
 

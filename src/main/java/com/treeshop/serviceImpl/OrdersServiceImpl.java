@@ -121,6 +121,13 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.updateStatusOfOrder(status, orderId);
     }
 
+    @Override
+    public void updateStatusOfListOrder(StatusOfOrder status, List<String> listOrder) {
+        for (String orderId: listOrder) {
+            ordersRepository.updateStatusOfOrder(status, orderId);
+        }
+    }
+
     //random orderId
     public String createOrderId() {
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());

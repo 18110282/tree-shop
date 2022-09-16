@@ -43,18 +43,13 @@
         <div class="page-content">
             <div class="row">
                 <div class="col-xs-12">
-                    <!--                    <div class="alert alert-block alert-success" th:if="${successMessage}">-->
-                    <!--                        <button type="button" class="close" data-dismiss="alert">-->
-                    <!--                            <i class="ace-icon fa fa-times"></i>-->
-                    <!--                        </button>-->
-                    <!--                        <i class="ace-icon fa fa-check green"></i>-->
-                    <!--                        <span th:utext="${successMessage}"></span>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="alert alert-block alert-success" th:if="${errorMessage}">-->
-                    <!--                        <script type="text/javascript" th:inline="javascript">-->
-                    <!--                            alert([[${errorMessage}]]);-->
-                    <!--                        </script>-->
-                    <!--                    </div>-->
+                    <div class="clearfix">
+                        <div class="pull-right tableTools-container">
+                            <button class="btn btn-success" onclick="confirmList()"><i
+                                    class='fa fa-check-square-o bigger-110 white'></i> Xác nhận nhiều đơn
+                            </button>
+                        </div>
+                    </div>
                     <div class="table-header">
                         Bảng kết quả
                     </div>
@@ -86,13 +81,11 @@
                                 <tr>
                                     <td class="center">
                                         <label class="pos-rel">
-                                            <input type="checkbox" class="ace"/>
+                                            <input type="checkbox" class="ace" th:value="${order.orderId}"/>
                                             <span class="lbl"></span>
                                         </label>
                                     </td>
-                                    <td>
-                                        [[${order.orderId}]]
-                                    </td>
+                                    <td>[[${order.orderId}]]</td>
                                     <td>
                                         [[${order.contactName}]]
                                     </td>
@@ -345,7 +338,15 @@
                                     $('#discount').addClass("hidden");
                                 }
                             })
-                        })
+                        });
+                        let arrOfOrderId = [];
+
+                        function addUniqueElementInArr(arr, x) {
+                            if (arr.indexOf(x) === -1) {
+                                arr.push(x);
+                            }
+                        }
+
                         jQuery(function ($) {
                             //initiate dataTables plugin
                             var oTable1 =
@@ -364,101 +365,83 @@
                                 "fnRowSelected": function (row) {
                                     //check checkbox when row is selected
                                     try {
-                                        $(row).find('input[type=checkbox]').get(0).checked = true
+                                        var row = $(row).find('input[type=checkbox]').get(0);
+                                        row.checked = true;
+                                        addUniqueElementInArr(arrOfOrderId, row.value);
                                     } catch (e) {
                                     }
                                 },
                                 "fnRowDeselected": function (row) {
                                     //uncheck checkbox
                                     try {
-                                        $(row).find('input[type=checkbox]').get(0).checked = false
+                                        var row = $(row).find('input[type=checkbox]').get(0);
+                                        row.checked = false;
+                                        arrOfOrderId = arrOfOrderId.filter(x => x !== row.value);
                                     } catch (e) {
                                     }
                                 },
+                                "sSelectedClass": "success"
 
-                                "sSelectedClass": "success",
-                                "aButtons": [
-                                    {
-                                        "sExtends": "copy",
-                                        "sToolTip": "Copy to clipboard",
-                                        "sButtonClass": "btn btn-white btn-primary btn-bold",
-                                        "sButtonText": "<i class='fa fa-copy bigger-110 pink'></i>",
-                                        "fnComplete": function () {
-                                            this.fnInfo('<h3 class="no-margin-top smaller">Table copied</h3>\
-									<p>Copied ' + (oTable1.fnSettings().fnRecordsTotal()) + ' row(s) to the clipboard.</p>',
-                                                1500
-                                            );
-                                        }
-                                    },
-
-                                    {
-                                        "sExtends": "csv",
-                                        "sToolTip": "Export to CSV",
-                                        "sButtonClass": "btn btn-white btn-primary  btn-bold",
-                                        "sButtonText": "<i class='fa fa-file-excel-o bigger-110 green'></i>"
-                                    },
-
-                                    {
-                                        "sExtends": "pdf",
-                                        "sToolTip": "Export to PDF",
-                                        "sButtonClass": "btn btn-white btn-primary  btn-bold",
-                                        "sButtonText": "<i class='fa fa-file-pdf-o bigger-110 red'></i>"
-                                    },
-
-                                    {
-                                        "sExtends": "print",
-                                        "sToolTip": "Print view",
-                                        "sButtonClass": "btn btn-white btn-primary  btn-bold",
-                                        "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
-
-                                        "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
-
-                                        "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
-									  <p>Please use your browser's print function to\
-									  print this table.\
-									  <br />Press <b>escape</b> when finished.</p>",
-                                    }
-                                ]
                             });
 
-                            //tooltip placement on right or left
-                            function tooltip_placement(context, source) {
-                                var $source = $(source);
-                                var $parent = $source.closest('table')
-                                var off1 = $parent.offset();
-                                var w1 = $parent.width();
+                            //we put a container before our table and append TableTools element to it
 
-                                var off2 = $source.offset();
-                                //var w2 = $source.width();
-
-                                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 3)) return 'right';
-                                return 'left';
-                            }
 
                             $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
-
                             //select/deselect all rows according to table header checkbox
                             $('#dynamic-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
                                 var th_checked = this.checked;//checkbox inside "TH" table header
 
                                 $(this).closest('table').find('tbody > tr').each(function () {
                                     var row = this;
-                                    if (th_checked) tableTools_obj.fnSelect(row);
-                                    else tableTools_obj.fnDeselect(row);
+                                    if (th_checked) {
+                                        tableTools_obj.fnSelect(row);
+                                        addUniqueElementInArr(arrOfOrderId, $(row).find('td:eq(1)').text());
+                                    } else {
+                                        tableTools_obj.fnDeselect(row);
+                                        arrOfOrderId.pop($(row).find('td:eq(1)').text());
+                                    }
                                 });
                             });
 
                             //select/deselect a row when the checkbox is checked/unchecked
                             $('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
                                 var row = $(this).closest('tr').get(0);
-                                if (!this.checked) tableTools_obj.fnSelect(row);
-                                else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
+                                if (!this.checked) {
+                                    tableTools_obj.fnSelect(row);
+                                    addUniqueElementInArr(arrOfOrderId, $(row).find('td:eq(1)').text());
+                                } else {
+                                    tableTools_obj.fnDeselect($(this).closest('tr').get(0));
+                                    arrOfOrderId = arrOfOrderId.filter(x => x !== $(row).find('td:eq(1)').text());
+                                }
                             });
                             // var a = document.getElementById('manage-order');
                             // a.classList.toggle('active');
                             $('#manage-order').toggleClass('active');
 
-                        })
+                        });
+
+                        function confirmList() {
+                            if (arrOfOrderId.length === 0) {
+                                alert("Bạn chưa chọn đơn nào cả");
+                            } else {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/admin/order/confirm/list",
+                                    data: {"arrOfOrderId": arrOfOrderId},
+                                    success: function () {
+                                        alert("Xác nhận thành công các đơn đã chọn");
+                                        window.location.assign("/admin/order/list/confirm");
+                                    },
+                                    error: function () {
+                                        alert("Thất bại");
+                                    }
+                                })
+                            }
+                        }
+                    </script>
+                    <script th:if="${alert}" type="text/javascript" th:inline="javascript">
+                        alert([[${alert}]]);
                     </script>
                 </div>
             </div>
