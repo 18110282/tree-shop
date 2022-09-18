@@ -249,6 +249,35 @@
                     </li>
                 </ul>
             </li>
+            <li id="manage-shipment">
+                <a th:href="@{/admin/}" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-car"></i>
+                    <span class="menu-text">Quản lí giao hàng </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a th:href="@{/admin/shipment/list}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Danh sách đơn hàng
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a th:href="@{/admin/shipment/assign}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Phân công giao hàng
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
         </ul>
         </div>
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
