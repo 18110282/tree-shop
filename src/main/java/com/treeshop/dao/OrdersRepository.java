@@ -16,7 +16,15 @@ public interface OrdersRepository extends JpaRepository<OrdersEntity, String> {
     OrdersEntity findByOrderId(String orderId);
     List<OrdersEntity> findByStatus(StatusOfOrder status);
 
+    @Query("select o from OrdersEntity o where o.status = 'DELIVERY' or o.status = 'DELIVERED' or o.status = 'CONFIRMED'")
+    List<OrdersEntity> findShipmentOrderList();
+
+
     @Query("update OrdersEntity o set o.status = :status where o.orderId = :orderId")
     @Modifying
     void updateStatusOfOrder(@Param("status")StatusOfOrder status, @Param("orderId")String orderId);
+
+    @Query("update OrdersEntity o set o.shipperId = :shipperId where o.orderId = :orderId")
+    @Modifying
+    void assignShipperForOrder(@Param("shipperId")Integer shipperId, @Param("orderId")String orderId);
 }

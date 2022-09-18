@@ -63,10 +63,24 @@ public class OrdersServiceImpl implements OrdersService {
     public List<OrdersEntity> findByStatus(String status) {
         Map<String, StatusOfOrder> statusMap = new HashMap<>();
         statusMap.put("Chờ xác nhận", StatusOfOrder.WAIT_CONFIRM);
+        statusMap.put("Đã xác nhận", StatusOfOrder.CONFIRMED);
         statusMap.put("Đang giao", StatusOfOrder.DELIVERY);
         statusMap.put("Đã giao", StatusOfOrder.DELIVERED);
         statusMap.put("Đã hủy", StatusOfOrder.CANCELLED);
         return ordersRepository.findByStatus(statusMap.get(status));
+    }
+
+    @Override
+    public void assignShipperForOrder(Integer shipperId, List<String> listOrderId) {
+        for (String orderId: listOrderId) {
+            ordersRepository.assignShipperForOrder(shipperId, orderId);
+            ordersRepository.updateStatusOfOrder(StatusOfOrder.DELIVERY, orderId);
+        }
+    }
+
+    @Override
+    public List<OrdersEntity> findShipmentOrderList() {
+        return ordersRepository.findShipmentOrderList();
     }
 
     public OrdersEntity findOrderEntityById(String orderId) {

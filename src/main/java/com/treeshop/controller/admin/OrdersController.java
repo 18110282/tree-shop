@@ -39,7 +39,7 @@ public class OrdersController {
     public String confirmOrder(@PathVariable("orderId") String orderId,
                                RedirectAttributes ra) {
 
-        ordersService.updateStatusOfOrder(StatusOfOrder.DELIVERY, orderId);
+        ordersService.updateStatusOfOrder(StatusOfOrder.CONFIRMED, orderId);
         ra.addFlashAttribute("alert", "Xác nhận thành công đơn đã chọn");
         return "redirect:/admin/order/list/confirm";
 
@@ -48,6 +48,6 @@ public class OrdersController {
     @PostMapping("/confirm/list")
     @ResponseBody
     public void confirmListOrder(@RequestParam(value = "arrOfOrderId[]", required = false) List<String> listWaitConfirm) {
-       ordersService.updateStatusOfListOrder(StatusOfOrder.DELIVERY, listWaitConfirm);
+       ordersService.updateStatusOfListOrder(StatusOfOrder.CONFIRMED, listWaitConfirm);
     }
 }

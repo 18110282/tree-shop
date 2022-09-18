@@ -15,6 +15,8 @@ public interface OrdersService {
 
     List<OrdersEntity> findByStatus(String status);
 
+    List<OrdersEntity> findShipmentOrderList();
+
     OrdersEntity findOrderEntityById(String orderId);
 
     List<LineItemEntity> findLineItemOfOrderId(String orderId);
@@ -23,7 +25,9 @@ public interface OrdersService {
 
     void updateStatusOfOrder(StatusOfOrder status, String orderId);
 
-    void updateStatusOfListOrder(StatusOfOrder status, List<String> listOrder);
+    void updateStatusOfListOrder(StatusOfOrder status, List<String> listOrderId);
+
+    void assignShipperForOrder(Integer shipperId, List<String> listOrderId);
 
     //random orderId
     String createOrderId();

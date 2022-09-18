@@ -41,6 +41,8 @@ public class OrdersEntity {
     private Integer totalPrice;
     @Column(name = "payment")
     private String payment;
+    @Column(name = "shipper_id")
+    private Integer shipperId;
 
     @Transient
     private Integer subTotalPrice;
@@ -70,4 +72,9 @@ public class OrdersEntity {
 //    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ordersEntity")
     private List<LineItemEntity> lineItemEntityList;
+
+    @JsonIgnore
+    @ManyToOne(fetch =FetchType.LAZY)
+    @JoinColumn(name = "shipper_id", insertable = false, updatable = false)
+    private ShipperEntity shipperEntity;
 }
