@@ -66,7 +66,7 @@
                                     </label>
                                 </th>
                                 <th>Mã đơn</th>
-                                <th>Tên khách hàng</th>
+                                <th class="hidden-480">Tên khách hàng</th>
                                 <th class="hidden-480">Địa chỉ</th>
                                 <th class="hidden-480">Số điện thoại</th>
                                 <th class="hidden-480">Email</th>
@@ -86,7 +86,7 @@
                                         </label>
                                     </td>
                                     <td>[[${order.orderId}]]</td>
-                                    <td>
+                                    <td class="hidden-480">
                                         [[${order.contactName}]]
                                     </td>
                                     <td class="hidden-480">
@@ -105,7 +105,7 @@
                                         [[${order.totalPrice}]]
                                     </td>
                                     <td>
-                                        Chờ xác nhận
+                                        <span  class="label label-grey">Chờ xác nhận</span>
                                     </td>
 
                                     <td>

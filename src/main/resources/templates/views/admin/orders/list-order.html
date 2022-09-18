@@ -65,7 +65,7 @@
                             <thead>
                             <tr>
                                 <th>Mã đơn</th>
-                                <th>Tên khách hàng</th>
+                                <th class="hidden-480">Tên khách hàng</th>
                                 <th class="hidden-480">Địa chỉ</th>
                                 <th class="hidden-480">Số điện thoại</th>
                                 <th class="hidden-480">Email</th>
@@ -81,7 +81,7 @@
                                     <td>
                                         [[${order.orderId}]]
                                     </td>
-                                    <td>
+                                    <td class="hidden-480">
                                         [[${order.contactName}]]
                                     </td>
                                     <td class="hidden-480">
@@ -103,16 +103,19 @@
                                         <span th:case="null">
                                             Rỗng
                                         </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).WAIT_CONFIRM}">
+                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).WAIT_CONFIRM}" class="label label-grey">
                                             Chờ xác nhận
                                         </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERY}">
+                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).CONFIRMED}" class="label label-success arrowed-in arrowed-in-right">
+                                            Đã xác nhận
+                                        </span>
+                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERY}" class="label label-warning">
                                             Đang giao hàng
                                         </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERED}">
+                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERED}" class="label label-sm label-info arrowed arrowed-righ">
                                             Đã giao hàng
                                         </span>
-                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
+                                        <span th:case="${T(com.treeshop.entity.StatusOfOrder).CANCELLED}" class="label label-sm label-inverse arrowed-in">
                                             Đã hủy
                                         </span>
                                     </td>
@@ -316,8 +319,9 @@
                                 let dataInTable = "";
                                 const statusOfOrder={
                                     "WAIT_CONFIRM" : "Chờ xác nhận",
+                                    "CONFIRMED" : "Đã xác nhận",
                                     "DELIVERY" : "Đang giao hàng",
-                                    "DELIVERED" : "Đã giao",
+                                    "DELIVERED" : "Đã giao hàng",
                                     "CANCELLED" : "Đã hủy"
                                 }
                                 $('#orderId').html("<strong>#" + orderEntity.orderId + "</strong>");
@@ -359,20 +363,6 @@
                                 lengthMenu: [10, 20, 50],
                                 bAutoWidth: false
                             });
-
-                            //tooltip placement on right or left
-                            function tooltip_placement(context, source) {
-                                var $source = $(source);
-                                var $parent = $source.closest('table')
-                                var off1 = $parent.offset();
-                                var w1 = $parent.width();
-
-                                var off2 = $source.offset();
-                                //var w2 = $source.width();
-
-                                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 3)) return 'right';
-                                return 'left';
-                            }
 
                             $('#manage-order').toggleClass('active');
                         })
