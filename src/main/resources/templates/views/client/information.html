@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{decorator/web}">
+      layout:decorate="~{decorator/web}" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -166,11 +166,37 @@
                                 <div class="history-order-details tab-content">
                                     <div class="tab-pane fade show active" id="tabs-5" role="tabpanel">
                                         <div class="all-order">
-                                            <div class="card mt-2 bg-light">
+                                            <div class="card mt-2 bg-light" th:each="order : ${listOrderOfClient}">
                                                 <div class="card-header">
                                                     <div class="row">
                                                         <div class="col-lg-6">
-                                                            <a class="id-status-order">#220828HGfde4w | Chờ xác nhận</a>
+                                                            <a class="id-status-order">[[${order.orderId}]] |
+                                                                <span th:switch="${order.status}">
+                                                                    <span th:case="null">
+                                                                        Rỗng
+                                                                    </span>
+                                                                    <span th:case="${T(com.treeshop.entity.StatusOfOrder).WAIT_CONFIRM}"
+                                                                          class="label label-grey">
+                                                                        Chờ xác nhận
+                                                                    </span>
+                                                                    <span th:case="${T(com.treeshop.entity.StatusOfOrder).CONFIRMED}"
+                                                                          class="label label-grey">
+                                                                        Đã xác nhận
+                                                                    </span>
+                                                                    <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERY}"
+                                                                          class="label label-warning">
+                                                                        Đang giao hàng
+                                                                    </span>
+                                                                    <span th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERED}"
+                                                                          class="label label-sm label-info arrowed arrowed-righ">
+                                                                        Đã giao hàng
+                                                                    </span>
+                                                                    <span th:case="${T(com.treeshop.entity.StatusOfOrder).CANCELLED}"
+                                                                          class="label label-sm label-inverse arrowed-in">
+                                                                        Đã hủy
+                                                                    </span>
+                                                                </span>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -184,111 +210,59 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr>
+                                                        <tr th:each="item : ${order.lineItemEntityList}">
                                                             <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
+                                                                <img th:src="@{${item.productsEntity.getPhotosImagePath()}}"
                                                                      alt="">
-                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
+                                                                <h5 class="align-middle"><span
+                                                                        th:text="${item.getProductName()}"></span>
+                                                                    (x[[${item.quantity}]])</h5>
                                                             </td>
-                                                            <td>395.000₫</td>
-                                                            <td>1.185.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
-                                                                     alt="">
-                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
+                                                            <td><span
+                                                                    th:text="${#numbers.formatDecimal(item.price  , 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                             </td>
-                                                            <td>250.000₫</td>
-                                                            <td>250.000₫</td>
+                                                            <td>
+                                                                <span th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                         <tfoot>
                                                         <tr>
                                                             <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                            <td class="order-pay-fee">1.435.000₫</td>
+                                                            <td th:if="${order.codeId != null}" class="order-pay-fee">
+                                                                <span th:text="${#numbers.formatDecimal((order.totalPrice / order.discountCodeEntity.discountPercent * 100), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                            </td>
+                                                            <td th:if="${order.codeId == null}" class="order-pay-fee">
+                                                                <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                            </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
-                                                            <td class="order-pay-fee">60.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
-                                                            <td class="order-pay-fee">-70.000₫</td>
+                                                        <!--                                                        <tr>-->
+                                                        <!--                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>-->
+                                                        <!--                                                            <td class="order-pay-fee">60.000₫</td>-->
+                                                        <!--                                                        </tr>-->
+                                                        <tr th:if="${order.codeId != null}">
+                                                            <td class="order-pay-infor" colspan="2">Giảm giá</td>
+                                                            <td class="order-pay-fee">
+                                                                [[${order.discountCodeEntity.discountPercent}]] %
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
-                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
+                                                            <td class="order-pay-fee">
+                                                                <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                            </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td colspan="3" class="border-top">
+                                                        <tr th:switch="${order.status}">
+                                                            <td colspan="3" class="border-top"
+                                                                th:case="${T(com.treeshop.entity.StatusOfOrder).WAIT_CONFIRM}">
                                                                 <button type="button"
                                                                         class="btn-cancel_order btn btn-primary text-right"
                                                                         data-toggle="modal"
                                                                         data-target="#cancelModalCenter">Hủy đơn
                                                                 </button>
                                                             </td>
-                                                        </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card mt-2 bg-light">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <a class="id-status-order">#220828HGfde4w | Đã giao</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="history__order__table card-body">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="shoping__product">Sản phẩm</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Tạm tính</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
-                                                                     alt="">
-                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
-                                                            </td>
-                                                            <td>395.000₫</td>
-                                                            <td>1.185.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
-                                                                     alt="">
-                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
-                                                            </td>
-                                                            <td>250.000₫</td>
-                                                            <td>250.000₫</td>
-                                                        </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                            <td class="order-pay-fee">1.435.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
-                                                            <td class="order-pay-fee">60.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
-                                                            <td class="order-pay-fee">-70.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
-                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3" class="border-top">
+                                                            <td colspan="3" class="border-top"
+                                                                th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERED}">
                                                                 <button type="button"
                                                                         class="btn-reorder btn btn-primary text-right"
                                                                         data-toggle="modal"
@@ -300,285 +274,8 @@
                                                                         data-target="#reviewModalCenter">Đánh giá
                                                                 </button>
                                                             </td>
-                                                        </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card mt-2 bg-light">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <a class="id-status-order">#220828HGfde4w | Đã hủy</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="history__order__table card-body">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="shoping__product">Sản phẩm</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Tạm tính</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
-                                                                     alt="">
-                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
-                                                            </td>
-                                                            <td>395.000₫</td>
-                                                            <td>1.185.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
-                                                                     alt="">
-                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
-                                                            </td>
-                                                            <td>250.000₫</td>
-                                                            <td>250.000₫</td>
-                                                        </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                            <td class="order-pay-fee">1.435.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
-                                                            <td class="order-pay-fee">60.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
-                                                            <td class="order-pay-fee">-70.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
-                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3" class="border-top">
-                                                                <button type="button"
-                                                                        class="btn-reorder btn btn-primary text-right"
-                                                                        data-toggle="modal"
-                                                                        data-target="#exampleModalCenter">Mua lại
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade show" id="tabs-6" role="tabpanel">
-                                        <div class="delivering-order" style="display: none">
-                                            <div class="card mt-2 bg-light">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <a class="id-status-order">#220828HGfde4w | Đang giao</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="history__order__table card-body">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="shoping__product">Sản phẩm</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Tạm tính</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
-                                                                     alt="">
-                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
-                                                            </td>
-                                                            <td>395.000₫</td>
-                                                            <td>1.185.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
-                                                                     alt="">
-                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
-                                                            </td>
-                                                            <td>250.000₫</td>
-                                                            <td>250.000₫</td>
-                                                        </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                            <td class="order-pay-fee">1.435.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
-                                                            <td class="order-pay-fee">60.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
-                                                            <td class="order-pay-fee">-70.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
-                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
-                                                        </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="no-order">
-                                            <form class="centered">
-                                                <img th:src="@{/web/img/empty-deliver-removebg-preview.png}"
-                                                     class="img-fluid" alt="">
-                                                <p class="text-center">Chưa có đơn hàng</p>
-                                                <a class="btn btn-primary text-center" href="shop-grid.html">Tiếp tục
-                                                    mua hàng</a>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade show" id="tabs-7" role="tabpanel">
-                                        <div class="success-order">
-                                            <div class="card mt-2 bg-light">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <a class="id-status-order">#220828HGfde4w | Đã giao</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="history__order__table card-body">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="shoping__product">Sản phẩm</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Tạm tính</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
-                                                                     alt="">
-                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
-                                                            </td>
-                                                            <td>395.000₫</td>
-                                                            <td>1.185.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
-                                                                     alt="">
-                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
-                                                            </td>
-                                                            <td>250.000₫</td>
-                                                            <td>250.000₫</td>
-                                                        </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                            <td class="order-pay-fee">1.435.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
-                                                            <td class="order-pay-fee">60.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
-                                                            <td class="order-pay-fee">-70.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
-                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3" class="border-top">
-                                                                <button type="button"
-                                                                        class="btn-reorder btn btn-primary text-right"
-                                                                        data-toggle="modal"
-                                                                        data-target="#exampleModalCenter">Mua lại
-                                                                </button>
-                                                                <button type="button"
-                                                                        class="btn-review btn btn-primary text-right"
-                                                                        data-toggle="modal"
-                                                                        data-target="#reviewModalCenter">Đánh giá
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade show" id="tabs-8" role="tabpanel">
-                                        <div class="cancel-order">
-                                            <div class="card mt-2 bg-light">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <a class="id-status-order">#220828HGfde4w | Đã hủy</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="history__order__table card-body">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="shoping__product">Sản phẩm</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Tạm tính</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
-                                                                     alt="">
-                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
-                                                            </td>
-                                                            <td>395.000₫</td>
-                                                            <td>1.185.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
-                                                                     alt="">
-                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
-                                                            </td>
-                                                            <td>250.000₫</td>
-                                                            <td>250.000₫</td>
-                                                        </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                            <td class="order-pay-fee">1.435.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
-                                                            <td class="order-pay-fee">60.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
-                                                            <td class="order-pay-fee">-70.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
-                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3" class="border-top">
+                                                            <td colspan="3" class="border-top"
+                                                                th:case="${T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
                                                                 <button type="button"
                                                                         class="btn-reorder btn btn-primary text-right"
                                                                         data-toggle="modal"
@@ -594,73 +291,337 @@
                                     </div>
                                     <div class="tab-pane fade show" id="tabs-9" role="tabpanel">
                                         <div class="waiting-order">
-                                            <div class="card mt-2 bg-light">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <a class="id-status-order">#220828HGfde4w | Chờ xác nhận</a>
+                                            <th:block th:each="order : ${listOrderOfClient}">
+                                                <div class="card mt-2 bg-light"
+                                                     th:if="${order.status == T(com.treeshop.entity.StatusOfOrder).WAIT_CONFIRM}">
+                                                    <div>
+                                                        <div class="card-header">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <a class="id-status-order">[[${order.orderId}]] |
+                                                                        Chờ xác nhận</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="history__order__table card-body">
+                                                            <table>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="shoping__product">Sản phẩm</th>
+                                                                    <th>Đơn giá</th>
+                                                                    <th>Tạm tính</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr th:each="item : ${order.lineItemEntityList}">
+                                                                    <td class="shoping__cart__item">
+                                                                        <img th:src="@{${item.productsEntity.getPhotosImagePath()}}"
+                                                                             alt="">
+                                                                        <h5 class="align-middle"><span
+                                                                                th:text="${item.getProductName()}"></span>
+                                                                            (x[[${item.quantity}]])</h5>
+                                                                    </td>
+                                                                    <td><span
+                                                                            th:text="${#numbers.formatDecimal(item.price  , 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng tiền
+                                                                        hàng
+                                                                    </td>
+                                                                    <td th:if="${order.codeId != null}"
+                                                                        class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal((order.totalPrice / order.discountCodeEntity.discountPercent * 100), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td th:if="${order.codeId == null}"
+                                                                        class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Giảm giá
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        [[${order.discountCodeEntity.discountPercent}]]
+                                                                        %
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng số
+                                                                        tiền
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3" class="border-top">
+                                                                        <button type="button"
+                                                                                class="btn-cancel_order btn btn-primary text-right"
+                                                                                data-toggle="modal"
+                                                                                data-target="#cancelModalCenter">Hủy đơn
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="history__order__table card-body">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="shoping__product">Sản phẩm</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Tạm tính</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
-                                                                     alt="">
-                                                                <h5 class="align-middle">Hoa Dừa Cạn (x3)</h5>
-                                                            </td>
-                                                            <td>395.000₫</td>
-                                                            <td>1.185.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="shoping__cart__item">
-                                                                <img src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"
-                                                                     alt="">
-                                                                <h5>Cây Thiết Mộc Lan (x1)</h5>
-                                                            </td>
-                                                            <td>250.000₫</td>
-                                                            <td>250.000₫</td>
-                                                        </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                            <td class="order-pay-fee">1.435.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển</td>
-                                                            <td class="order-pay-fee">60.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Voucher</td>
-                                                            <td class="order-pay-fee">-70.000₫</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
-                                                            <td class="order-pay-fee"><span>1.425.000₫</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3" class="border-top">
-                                                                <button type="button"
-                                                                        class="btn-cancel_order btn btn-primary text-right"
-                                                                        data-toggle="modal"
-                                                                        data-target="#cancelModalCenter">Hủy đơn
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        </tfoot>
-                                                    </table>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="tabs-6" role="tabpanel">
+                                        <div class="delivering-order">
+                                            <th:block th:each="order : ${listOrderOfClient}">
+                                                <div class="card mt-2 bg-light"
+                                                     th:if="${order.status == T(com.treeshop.entity.StatusOfOrder).DELIVERY}">
+                                                    <div>
+                                                        <div class="card-header">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <a class="id-status-order">[[${order.orderId}]] |
+                                                                        Đang giao hàng</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="history__order__table card-body">
+                                                            <table>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="shoping__product">Sản phẩm</th>
+                                                                    <th>Đơn giá</th>
+                                                                    <th>Tạm tính</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr th:each="item : ${order.lineItemEntityList}">
+                                                                    <td class="shoping__cart__item">
+                                                                        <img th:src="@{${item.productsEntity.getPhotosImagePath()}}"
+                                                                             alt="">
+                                                                        <h5 class="align-middle"><span
+                                                                                th:text="${item.getProductName()}"></span>
+                                                                            (x[[${item.quantity}]])</h5>
+                                                                    </td>
+                                                                    <td><span
+                                                                            th:text="${#numbers.formatDecimal(item.price  , 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng tiền
+                                                                        hàng
+                                                                    </td>
+                                                                    <td th:if="${order.codeId != null}"
+                                                                        class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal((order.totalPrice / order.discountCodeEntity.discountPercent * 100), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td th:if="${order.codeId == null}"
+                                                                        class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Giảm giá
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        [[${order.discountCodeEntity.discountPercent}]]
+                                                                        %
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng số
+                                                                        tiền
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="tabs-7" role="tabpanel">
+                                        <div class="success-order">
+                                            <th:block th:each="order : ${listOrderOfClient}">
+                                                <div class="card mt-2 bg-light"
+                                                     th:if="${order.status == T(com.treeshop.entity.StatusOfOrder).DELIVERED}">
+                                                    <div>
+                                                        <div class="card-header">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <a class="id-status-order">[[${order.orderId}]] | Đã
+                                                                        giao hàng</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="history__order__table card-body">
+                                                            <table>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="shoping__product">Sản phẩm</th>
+                                                                    <th>Đơn giá</th>
+                                                                    <th>Tạm tính</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr th:each="item : ${order.lineItemEntityList}">
+                                                                    <td class="shoping__cart__item">
+                                                                        <img th:src="@{${item.productsEntity.getPhotosImagePath()}}"
+                                                                             alt="">
+                                                                        <h5 class="align-middle"><span
+                                                                                th:text="${item.getProductName()}"></span>
+                                                                            (x[[${item.quantity}]])</h5>
+                                                                    </td>
+                                                                    <td><span
+                                                                            th:text="${#numbers.formatDecimal(item.price  , 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng tiền
+                                                                        hàng
+                                                                    </td>
+                                                                    <td th:if="${order.codeId != null}"
+                                                                        class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal((order.totalPrice / order.discountCodeEntity.discountPercent * 100), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td th:if="${order.codeId == null}"
+                                                                        class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Giảm giá
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        [[${order.discountCodeEntity.discountPercent}]]
+                                                                        %
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng số
+                                                                        tiền
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3" class="border-top">
+                                                                        <button type="button"
+                                                                                class="btn-reorder btn btn-primary text-right"
+                                                                                data-toggle="modal"
+                                                                                data-target="#exampleModalCenter">Mua lại
+                                                                        </button>
+                                                                        <button type="button"
+                                                                                class="btn-review btn btn-primary text-right"
+                                                                                data-toggle="modal"
+                                                                                data-target="#reviewModalCenter">Đánh giá
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="tabs-8" role="tabpanel">
+                                        <div class="cancel-order">
+                                            <th:block th:each="order : ${listOrderOfClient}">
+                                                <div class="card mt-2 bg-light" th:if="${order.status == T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
+                                                    <div>
+                                                        <div class="card-header">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <a class="id-status-order">[[${order.orderId}]] | Đã hủy</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="history__order__table card-body">
+                                                            <table>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="shoping__product">Sản phẩm</th>
+                                                                    <th>Đơn giá</th>
+                                                                    <th>Tạm tính</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr th:each="item : ${order.lineItemEntityList}">
+                                                                    <td class="shoping__cart__item">
+                                                                        <img th:src="@{${item.productsEntity.getPhotosImagePath()}}"
+                                                                             alt="">
+                                                                        <h5 class="align-middle"><span
+                                                                                th:text="${item.getProductName()}"></span>
+                                                                            (x[[${item.quantity}]])</h5>
+                                                                    </td>
+                                                                    <td><span
+                                                                            th:text="${#numbers.formatDecimal(item.price  , 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
+                                                                    <td th:if="${order.codeId != null}" class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal((order.totalPrice / order.discountCodeEntity.discountPercent * 100), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                    <td th:if="${order.codeId == null}" class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Giảm giá</td>
+                                                                    <td class="order-pay-fee">
+                                                                        [[${order.discountCodeEntity.discountPercent}]] %
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3" class="border-top">
+                                                                        <button type="button"
+                                                                                class="btn-reorder btn btn-primary text-right"
+                                                                                data-toggle="modal"
+                                                                                data-target="#exampleModalCenter">Mua
+                                                                            lại
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </th:block>
                                         </div>
                                     </div>
                                 </div>
@@ -916,6 +877,7 @@
                 submitPassword.prop("disabled", true);
             }
         }
+
         function changePassword() {
             let oldPassword = $('#oldPassword').val();
             let newPassword = $('#newPass').val();
@@ -925,10 +887,15 @@
                 message.html("Thông tin nhập còn trống");
                 message.css({'color': 'red', 'font': 'Times'});
             } else {
-                let url = "/home/save/" + [[${session.client.username}]] + "/password/" + oldPassword + "/" + newPassword;
+                let url = "/home/save/" + [[${session.client.username}]] + "/password";
+                let password = {
+                    "oldP": oldPassword,
+                    "newP": newPassword
+                }
                 $.ajax({
-                    type: "POST",
+                    type: "post",
                     url: url,
+                    data: password
                 }).done(function (check) {
                     if (check) {
                         $('#oldPassword').val("");
@@ -945,6 +912,23 @@
             }
 
         }
+    </script>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            const arr = ['.delivering-order', '.waiting-order', '.all-order', '.cancel-order', '.success-order'];
+            arr.forEach(function (item) {
+                if ($(item).find('.card').length === 0) {
+                    $(item).append("<div class=\"no-order\">\n" +
+                        "                                            <form class=\"centered\">\n" +
+                        "                                                <img src=\"/web/img/empty-deliver-removebg-preview.png\"\n" +
+                        "                                                     class=\"img-fluid\" alt=\"\">\n" +
+                        "                                                <p class=\"text-center\">Chưa có đơn hàng</p>\n" +
+                        "                                                <a class=\"btn btn-primary text-center\" href=\"/home/list-web-product\">Tiếp tục mua hàng</a>\n" +
+                        "                                            </form>\n" +
+                        "                                        </div>")
+                }
+            })
+        })
     </script>
 </div>
 

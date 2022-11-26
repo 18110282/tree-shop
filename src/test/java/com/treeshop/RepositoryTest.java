@@ -1,24 +1,28 @@
-//package com.treeshop;
-//
-//import com.treeshop.dao.*;
-//import com.treeshop.entity.*;
-//import com.treeshop.service.OrdersService;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.test.annotation.Rollback;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@DataJpaTest
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@Rollback(false)
-//public class RepositoryTest {
+package com.treeshop;
+
+import com.treeshop.dao.OrdersRepository;
+import com.treeshop.dao.UserRepository;
+import com.treeshop.entity.*;
+import com.treeshop.entity.lineitem.LineItemEntity;
+import com.treeshop.service.OrdersService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.Rollback;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ComponentScan({"com.treeshop.daoImpl"})
+@Rollback(false)
+public class RepositoryTest {
 //    @Autowired
 //    private UserRepository userRepository;
 //
@@ -33,6 +37,14 @@
 //
 //    @Autowired
 //    private LineItemRepository lineItemRepository;
+
+    @Autowired
+    private OrdersRepository ordersRepository;
+//
+    @Test
+    public void findListOrderByStatus(){
+        List<OrdersEntity> ordersEntityList = ordersRepository.findByUsername("taiz");
+    }
 //    @Test
 //    public void insert(){
 //        UserEntity userEntity = new UserEntity();
@@ -213,4 +225,4 @@
 ////        String order = ordersEntity.getContactName();
 //
 //    }
-//}
+}

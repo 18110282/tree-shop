@@ -15,10 +15,10 @@ public class InformationRestController {
         this.usersService = usersService;
     }
 
-    @PostMapping("/save/{username}/password/{oldPassword}/{newPassword}")
+    @PostMapping("/save/{username}/password")
     public boolean savePasswordOfClient(@PathVariable("username") String username,
-                                       @PathVariable("oldPassword") String oldPassword,
-                                       @PathVariable("newPassword") String newPassword){
+                                       @RequestParam(value = "oldP") String oldPassword,
+                                        @RequestParam(value = "newP") String newPassword){
         return usersService.savePasswordOfClient(username, oldPassword, newPassword);
     }
 }

@@ -21,6 +21,8 @@ public interface OrdersService {
 
     List<LineItemEntity> findLineItemOfOrderId(String orderId);
 
+    List<OrdersEntity> findListOrderOfClient(String username);
+
     void addOrder(OrdersEntity ordersEntity, String username, HttpSession session) throws MessagingException, IOException;
 
     void updateStatusOfOrder(StatusOfOrder status, String orderId);

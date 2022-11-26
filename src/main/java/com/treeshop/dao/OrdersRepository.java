@@ -16,6 +16,8 @@ public interface OrdersRepository extends JpaRepository<OrdersEntity, String> {
     OrdersEntity findByOrderId(String orderId);
     List<OrdersEntity> findByStatus(StatusOfOrder status);
 
+    List<OrdersEntity> findByUsername(String username);
+
     @Query("select o from OrdersEntity o where o.status = 'DELIVERY' or o.status = 'DELIVERED' or o.status = 'CONFIRMED'")
     List<OrdersEntity> findShipmentOrderList();
 

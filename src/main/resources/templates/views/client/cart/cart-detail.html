@@ -123,9 +123,9 @@
     <script th:if="${alert}" type="text/javascript" th:inline="javascript">
         alert([[${alert}]])
     </script>
-    <script th:unless="${session.client}" type="text/javascript" th:inline="javascript">
-        checkClientSession();
-    </script>
+<!--    <script th:unless="${session.client}" type="text/javascript" th:inline="javascript">-->
+<!--        checkClientSession();-->
+<!--    </script>-->
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
             updateTotal();
@@ -162,7 +162,7 @@
             $button.parent().find('input').val(newVal);
             var url = "/home/cart/update/" + productId + "/" + newVal;
             $.ajax({
-                type: "POST",
+                type: "post",
                 url: url,
             }).done(function (newSubtotal) {
                 updateSubTotal(newSubtotal, productId);
@@ -194,7 +194,7 @@
             $button.parent().find('input').val(newVal);
             var url = "/home/cart/update/" + productId + "/" + newVal;
             $.ajax({
-                type: "POST",
+                type: "post",
                 url: url,
             }).done(function (newSubtotal) {
                 updateSubTotal(newSubtotal, productId);

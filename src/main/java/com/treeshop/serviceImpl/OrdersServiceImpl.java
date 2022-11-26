@@ -91,6 +91,11 @@ public class OrdersServiceImpl implements OrdersService {
         return lineItemRepository.findByLineItemIdKey_OrderId(orderId);
     }
 
+    @Override
+    public List<OrdersEntity> findListOrderOfClient(String username) {
+        return ordersRepository.findByUsername(username);
+    }
+
     public void addOrder(OrdersEntity ordersEntity, String username, HttpSession session) throws MessagingException, IOException {
         List<CartEntity> cartEntityList = cartRepository.findCartEntitiesByCartIdKey_Username(username);
         DiscountCodeEntity discountCode = (DiscountCodeEntity) session.getAttribute("discountCode");
