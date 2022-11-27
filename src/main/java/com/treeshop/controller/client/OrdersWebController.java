@@ -40,7 +40,7 @@ public class OrdersWebController {
         if(payment.equals("cod")){
             ordersService.addOrder(ordersEntity, username, session);
             ordersService.sendMailInvoice(ordersEntity.getOrderId(), ordersEntity.getEmail(), request);
-            ra.addFlashAttribute("payingByPaypalSuccess", "Đặt hàng thành công");
+            ra.addFlashAttribute("orderSuccess", "Đặt hàng thành công");
             url = "/home/list-web-product";
         }
         else if(payment.equals("paypal")){
@@ -63,7 +63,7 @@ public class OrdersWebController {
                             RedirectAttributes ra) throws PayPalRESTException, MessagingException, IOException {
         OrdersEntity ordersEntity = (OrdersEntity) session.getAttribute("orderSessionForPayPal");
         paymentService.executePayment(paymentId, PayerID, ordersEntity, username, session, request);
-        ra.addFlashAttribute("payingByPaypalSuccess", "Đặt hàng thành công");
+        ra.addFlashAttribute("orderSuccess", "Đặt hàng thành công");
         return "redirect:/home/list-web-product";
     }
 

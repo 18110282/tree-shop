@@ -248,8 +248,8 @@
                 });
             });
         </script>
-        <script type="text/javascript" th:inline="javascript" th:if="${payingByPaypalSuccess}">
-            alert([[${payingByPaypalSuccess}]])
+        <script type="text/javascript" th:inline="javascript" th:if="${orderSuccess}">
+            alert([[${orderSuccess}]])
         </script>
         <script type="text/javascript">
             function checkPrice(){
