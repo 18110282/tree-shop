@@ -256,9 +256,10 @@
                                                             <td colspan="3" class="border-top"
                                                                 th:case="${T(com.treeshop.entity.StatusOfOrder).WAIT_CONFIRM}">
                                                                 <button type="button"
-                                                                        class="btn-cancel_order btn btn-primary text-right"
+                                                                        class="btn-cancel_order btn btn-primary text-right cancel-order"
                                                                         data-toggle="modal"
-                                                                        data-target="#cancelModalCenter">Hủy đơn
+                                                                        data-target="#cancelModalCenter"
+                                                                        th:id="${order.orderId}">Hủy đơn
                                                                 </button>
                                                             </td>
                                                             <td colspan="3" class="border-top"
@@ -361,9 +362,10 @@
                                                                 <tr>
                                                                     <td colspan="3" class="border-top">
                                                                         <button type="button"
-                                                                                class="btn-cancel_order btn btn-primary text-right"
+                                                                                class="btn-cancel_order btn btn-primary text-right cancel-order"
                                                                                 data-toggle="modal"
-                                                                                data-target="#cancelModalCenter">Hủy đơn
+                                                                                data-target="#cancelModalCenter"
+                                                                                th:id="${order.orderId}">Hủy đơn
                                                                         </button>
                                                                     </td>
                                                                 </tr>
@@ -761,23 +763,23 @@
 
         <!-- Modal -->
         <div class="cancel-notification modal fade" id="cancelModalCenter" tabindex="-1" role="dialog"
-             aria-labelledby="cancelModalCenterTitle" aria-hidden="true">
+             aria-labelledby="cancelModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Kết Quả Hủy Đơn</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"><a th:href="@{'/home/' + ${session.client.username} + '/information'}">&times;</a></span>
-                        </button>
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
                     </div>
                     <div class="modal-body">
                         <form class="centered">
                             <img th:src="@{/web/img/cancel-order.png}" class="img-fluid" alt="">
-                            <div class="content-cancel-order">
-                                <p>Đơn hàng của bạn đã được hủy thành công</p>
-                                <p>Treeshop hy vọng có thể phục vụ bạn trong tương lai</p>
+                            <div class="content-cancel-order" id="content-cancel-order">
+                                <p>Đơn hàng của bạn đã được hủy thành công.</p>
+                                <p>Treeshop hy vọng có thể phục vụ bạn trong tương lai.</p>
                             </div>
-                            <a class="btn btn-primary text-center" href="/home/list-web-product">Tiếp tục mua hàng</a>
+                            <a class="btn btn-primary text-center" id="continue-buy-btn" href="/home/list-web-product">Tiếp tục mua hàng</a>
                         </form>
                     </div>
                 </div>
@@ -953,6 +955,24 @@
                 }
             })
         }
+
+        $('.cancel-order').on('click', function () {
+            let orderId = $(this)[0].id;
+            let url = "/home/information/cancel-order/" + orderId;
+
+            $.ajax({
+                type: "post",
+                url: url
+            }).done(function (isSuccess){
+                if (isSuccess) {
+                    $('#content-cancel-order').html('<p>Đơn hàng của bạn đã được hủy thành công.</p>\n' +
+                                                    '<p>Treeshop hy vọng có thể phục vụ bạn trong tương lai.</p>')
+                } else {
+                    $('#content-cancel-order').html('<p style="color: red">Không thể hủy đơn hàng vì đã được xác nhận này!</p>\n' +
+                                                    '<p>Hãy liên hệ admin để được hỗ trợ!</p>')
+                }
+            })
+        });
     </script>
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {

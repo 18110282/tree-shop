@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.treeshop.entity.OrdersEntity;
 import com.treeshop.entity.ProductsEntity;
+import com.treeshop.entity.StatusOfOrder;
 import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.entity.cart.CartIdKey;
 import com.treeshop.entity.lineitem.LineItemEntity;
@@ -76,6 +77,20 @@ public class InformationRestController {
                 cartService.saveCart(cartEntity);
             }
             isSuccess = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isSuccess;
+    }
+
+    @PostMapping("/information/cancel-order/{orderId}")
+    public boolean cancelOrderForClient(@PathVariable("orderId") String orderId) {
+        boolean isSuccess = false;
+        try {
+            if (!ordersService.existsByStatusAndOrderId(StatusOfOrder.CONFIRMED, orderId)) {
+                ordersService.updateStatusOfOrder(StatusOfOrder.CANCELLED, orderId);
+                isSuccess = true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

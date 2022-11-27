@@ -219,4 +219,9 @@ public class OrdersServiceImpl implements OrdersService {
         }
         ordersRepository.save(ordersEntity);
     }
+
+    @Override
+    public boolean existsByStatusAndOrderId(StatusOfOrder status, String orderId) {
+        return ordersRepository.existsByStatusAndOrderId(status, orderId);
+    }
 }

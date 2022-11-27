@@ -43,4 +43,7 @@ public interface OrdersService {
     Integer getSubToTalOfOrder(String orderId);
 
     void setTransientOfOrder(String orderId);
+
+    //Check orderId and status with requirement
+    boolean  existsByStatusAndOrderId(StatusOfOrder status, String orderId);
 }

@@ -29,4 +29,6 @@ public interface OrdersRepository extends JpaRepository<OrdersEntity, String> {
     @Query("update OrdersEntity o set o.shipperId = :shipperId where o.orderId = :orderId")
     @Modifying
     void assignShipperForOrder(@Param("shipperId")Integer shipperId, @Param("orderId")String orderId);
+
+    boolean existsByStatusAndOrderId(StatusOfOrder status, String orderId);
 }
