@@ -52,15 +52,23 @@ public class ProductServiceImpl implements ProductsService {
     public void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
-        productsEntity.setDiscountPercent(0);
         productsEntity.setEnabled(true);
         Integer visit = productsEntity.getVisit();
+        Integer discountPercent = productsEntity.getDiscountPercent();
+
+        if(discountPercent != null){
+            productsEntity.setDiscountPercent(discountPercent);
+        }
+        else {
+            productsEntity.setDiscountPercent(0);
+        }
         if(visit != null){
             productsEntity.setVisit(visit);
         }
         else {
             productsEntity.setVisit(0);
         }
+
         String productId = productsEntity.getProductId();
         if (!fileName.equals("")) {
 //            String uploadDir = "./src/main/resources/static/product-imgs/" + savedProduct.getProductId();
