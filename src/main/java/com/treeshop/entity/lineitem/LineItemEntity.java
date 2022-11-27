@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.treeshop.entity.OrdersEntity;
 import com.treeshop.entity.ProductsEntity;
 import com.treeshop.entity.lineitem.LineItemIdKey;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 @Table(name = "lineitem")
 public class LineItemEntity implements Serializable {
     @EmbeddedId
@@ -41,6 +43,15 @@ public class LineItemEntity implements Serializable {
     @Transient
     public String getProductName(){
         return productsEntity.getProductName();
+    }
+
+    @Override
+    public boolean equals(Object anObject) {
+        if (!(anObject instanceof LineItemEntity)) {
+            return false;
+        }
+        LineItemEntity otherMember = (LineItemEntity)anObject;
+        return otherMember.getLineItemIdKey().equals(getLineItemIdKey());
     }
 
 }

@@ -92,6 +92,12 @@ public class ProductServiceImpl implements ProductsService {
         return productsRepository.existsByProductId(productId);
     }
 
+    @Override
+    public boolean checkProductIsDelete(String productId) {
+        // Enabled true means product is deleted
+        return productsRepository.existsByProductIdAndEnabled(productId, false);
+    }
+
     public void deleteProduct(String productId) {
         ProductsEntity productsEntity = this.findByProductId(productId);
         productsEntity.setEnabled(false);

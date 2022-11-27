@@ -24,6 +24,8 @@ public interface ProductsService {
 
     boolean checkProductId(String productId);
 
+    boolean checkProductIsDelete(String productId);
+
     void deleteProduct(String productId);
 
     List<CategoryEntity> findAllCategory();

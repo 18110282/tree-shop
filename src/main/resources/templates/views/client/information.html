@@ -263,10 +263,10 @@
                                                             </td>
                                                             <td colspan="3" class="border-top"
                                                                 th:case="${T(com.treeshop.entity.StatusOfOrder).DELIVERED}">
-                                                                <button type="button"
+                                                                <button
+                                                                        type="button"
                                                                         class="btn-reorder btn btn-primary text-right"
-                                                                        data-toggle="modal"
-                                                                        data-target="#exampleModalCenter">Mua lại
+                                                                        th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
                                                                 </button>
                                                                 <button type="button"
                                                                         class="btn-review btn btn-primary text-right"
@@ -278,8 +278,7 @@
                                                                 th:case="${T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
                                                                 <button type="button"
                                                                         class="btn-reorder btn btn-primary text-right"
-                                                                        data-toggle="modal"
-                                                                        data-target="#exampleModalCenter">Mua lại
+                                                                        th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -769,19 +768,19 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Kết Qủa Hủy Đơn</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Kết Quả Hủy Đơn</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true"><a th:href="@{'/home/' + ${session.client.username} + '/information'}">&times;</a></span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form class="centered">
                             <img th:src="@{/web/img/cancel-order.png}" class="img-fluid" alt="">
                             <div class="content-cancel-order">
-                                <p>Đơn hàng của bạn đã được hủy thành công:(</p>
+                                <p>Đơn hàng của bạn đã được hủy thành công</p>
                                 <p>Treeshop hy vọng có thể phục vụ bạn trong tương lai</p>
                             </div>
-                            <a class="btn btn-primary text-center" href="shop-grid.html">Tiếp tục mua hàng</a>
+                            <a class="btn btn-primary text-center" href="/home/list-web-product">Tiếp tục mua hàng</a>
                         </form>
                     </div>
                 </div>
@@ -863,6 +862,7 @@
         alert([[${alert}]]);
     </script>
     <script th:if="${session.client}" type="text/javascript" th:inline="javascript">
+        let username = [[${session.client.username}]];
         function checkPass() {
             let newPassword = $('#newPass').val();
             let conFPassword = $('#conFPass').val();
@@ -887,7 +887,7 @@
                 message.html("Thông tin nhập còn trống");
                 message.css({'color': 'red', 'font': 'Times'});
             } else {
-                let url = "/home/save/" + [[${session.client.username}]] + "/password";
+                let url = "/home/save/" + username + "/password";
                 let password = {
                     "oldP": oldPassword,
                     "newP": newPassword
@@ -910,7 +910,51 @@
                     }
                 })
             }
+        }
 
+        function buyOrderAgain(orderId, button) {
+            let url = "/home/buy-again/" + username + "/" + orderId;
+            $.ajax({
+                type: "post",
+                url: url
+            }).done(function (list) {
+                let quantityOfProduct = $(button).parents('table:first').find('tbody >tr').length;
+                let listSize = list.length;
+
+                function addItemToCart(){
+                    let url = "/home/" + username + "/add-item-to-cart/" + orderId;
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify(list)
+                    }).done(function (isSuccess){
+                        if (isSuccess) {
+                            alert("Thành công!");
+                            url = "/home/"+ username + "/cart/detail";
+                            window.location.assign(url);
+                        } else {
+                            alert("Có lỗi xảy ra, thất bại!");
+                        }
+                    })
+                }
+
+                if (listSize === quantityOfProduct) {
+                    alert("Tất cả sản phẩm hiện không còn bán nữa!");
+                } else if (listSize === 0) {
+                    addItemToCart();
+                } else {
+                    let listStr = "";
+                    list.forEach(function (element){
+                        listStr += element.productName + " ";
+                    });
+                    let message = "Sản phẩm " + listStr + "hiện không còn bán nữa!\n Bạn có muốn mua lại số sản phẩm còn lại không? ^^";
+                    let confirmAction = confirm(message);
+                    if (confirmAction) {
+                        addItemToCart();
+                    }
+                }
+            })
         }
     </script>
     <script type="text/javascript" th:inline="javascript">

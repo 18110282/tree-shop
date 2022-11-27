@@ -50,6 +50,14 @@ public class InformationController {
         return "redirect:/home/" + username +"/information";
     }
 
+//    @GetMapping("/buy-again/{username}/{orderId}")
+//    @ResponseBody
+//    public String buyOrderAgain(@PathVariable("username") String username,
+//                                @PathVariable("orderId") String orderId,
+//                                RedirectAttributes ra) {
+//        return username + orderId;
+//    }
+
 //    @PostMapping("/save/{username}/password")
 //    public String savePasswordOfClient(@PathVariable("username") String username,
 //                                       @RequestParam(value = "oldPassword", required = false) String oldPassword,

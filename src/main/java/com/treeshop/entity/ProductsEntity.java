@@ -4,6 +4,7 @@ import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.entity.lineitem.LineItemEntity;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "products")
 public class ProductsEntity {
     @Id
@@ -40,12 +42,15 @@ public class ProductsEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    @ToString.Exclude
     private CategoryEntity categoryEntity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productsEntity")
+    @ToString.Exclude
     private List<LineItemEntity> lineItemEntityList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productsEntity")
+    @ToString.Exclude
     private List<CartEntity> cartEntityList;
 
     @Transient
@@ -63,4 +68,5 @@ public class ProductsEntity {
     public Integer getDiscountPrice(){
         return price * (100 - discountPercent) / 100;
     }
+
 }
