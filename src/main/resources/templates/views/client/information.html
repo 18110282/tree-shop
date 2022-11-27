@@ -3,7 +3,7 @@
       layout:decorate="~{decorator/web}" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tree Shop - Client</title>
 </head>
 <body>
 <div layout:fragment="~{content}">
@@ -527,8 +527,7 @@
                                                                     <td colspan="3" class="border-top">
                                                                         <button type="button"
                                                                                 class="btn-reorder btn btn-primary text-right"
-                                                                                data-toggle="modal"
-                                                                                data-target="#exampleModalCenter">Mua lại
+                                                                                th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
                                                                         </button>
                                                                         <button type="button"
                                                                                 class="btn-review btn btn-primary text-right"
@@ -609,9 +608,7 @@
                                                                     <td colspan="3" class="border-top">
                                                                         <button type="button"
                                                                                 class="btn-reorder btn btn-primary text-right"
-                                                                                data-toggle="modal"
-                                                                                data-target="#exampleModalCenter">Mua
-                                                                            lại
+                                                                                th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
                                                                         </button>
                                                                     </td>
                                                                 </tr>

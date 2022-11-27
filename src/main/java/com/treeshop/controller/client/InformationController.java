@@ -50,26 +50,4 @@ public class InformationController {
         return "redirect:/home/" + username +"/information";
     }
 
-//    @GetMapping("/buy-again/{username}/{orderId}")
-//    @ResponseBody
-//    public String buyOrderAgain(@PathVariable("username") String username,
-//                                @PathVariable("orderId") String orderId,
-//                                RedirectAttributes ra) {
-//        return username + orderId;
-//    }
-
-//    @PostMapping("/save/{username}/password")
-//    public String savePasswordOfClient(@PathVariable("username") String username,
-//                                       @RequestParam(value = "oldPassword", required = false) String oldPassword,
-//                                       @RequestParam(value = "newPassword", required = false) String newPassword,
-//                                       RedirectAttributes ra){
-//        if(usersService.savePasswordOfClient(username, oldPassword, newPassword)){
-//            ra.addFlashAttribute("alert", "Thay đổi mật khẩu thành công");
-//        }
-//        else {
-//            ra.addFlashAttribute("alert", "Mật khẩu cũ bạn nhập không đúng");
-//        }
-//        ra.addFlashAttribute("navItemHref", "#tabs-2");
-//        return "redirect:/home/" + username +"/information";
-//    }
 }
