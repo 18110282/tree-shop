@@ -53,11 +53,11 @@
                                 <h4>Đơn Hàng Của Bạn</h4>
                                 <div class="checkout__order__products">Sản phẩm<span>Giá</span></div>
                                 <ul th:each="item :${cartDetailList}">
-                                    <li>[[${item.getProductsEntity.getProductName()}]] (x[[${item.quantity}]])<span>[[${item.getTotalPerProduct()}]]</span></li>
+                                    <li>[[${item.getProductsEntity.getProductName()}]] (x[[${item.quantity}]])<span th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span></li>
                                 </ul>
-                                <div class="checkout__order__total">Tổng tiền hàng <span>[[${subTotal}]]</span></div>
+                                <div class="checkout__order__total">Tổng tiền hàng <span th:text="${#numbers.formatDecimal(subTotal, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
                                 <div th:if="${discountPercent != 0}" class="checkout__order__total">Giảm: <span>[[${discountPercent}]]%</span></div>
-                                <div class="checkout__order__total">Thành tiền <span>[[${total}]]</span></div>
+                                <div class="checkout__order__total">Thành tiền <span th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
                                 <div style="display:none;"><input th:name="subTotalPrice" th:value="${subTotal}"></div>
                                 <div th:if="${discountPercent != 0}" style="display:none;"><input th:name="discountPercent" th:value="${discountPercent}"></div>
                                 <div th:if="${discountPercent == 0}" style="display:none;"><input th:name="discountPercent" th:value="${0}"></div>

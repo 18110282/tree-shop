@@ -4009,3 +4009,17 @@ ol {
 .review-product-modal .modal-body p{
 	font-size: 13px;
 }
+.reviews-members .media .mr-3 {
+	width: 56px;
+	height: 56px;
+	object-fit: cover;
+	border-color: #7fad39;
+}
+
+.rounded-pill {
+	border-radius: 50rem!important;
+}
+
+/*.product__details__pic__slider.owl-carousel .owl-item {*/
+/*	width: 20%!important;*/
+/*}*/

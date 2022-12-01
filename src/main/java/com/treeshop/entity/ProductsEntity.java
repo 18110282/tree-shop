@@ -21,8 +21,10 @@ public class ProductsEntity {
     private String productId;
     @Column(name = "product_name", length = 200)
     private String productName;
-    @Column(name = "image_url", length = 100)
+    @Column(name = "image_url", length = 300)
     private String imageUrl;
+    @Column(name = "video_url", length = 300)
+    private String videoUrl;
     @Column(name = "description")
     private String description;
     @Column(name = "unit_stock")

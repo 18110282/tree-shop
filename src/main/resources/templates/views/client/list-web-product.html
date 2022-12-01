@@ -67,7 +67,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>[[${item.productName}]]</h6>
-                                                    <span>[[${item.price}]]VND</span>
+                                                    <span th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                 </div>
                                             </a>
                                         </th:block>
@@ -83,7 +83,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>[[${item.productName}]]</h6>
-                                                    <span>[[${item.price}]]VND</span>
+                                                    <span th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                 </div>
                                             </a>
                                         </th:block>
@@ -126,7 +126,7 @@
                                                     <a th:href="@{'/home/product/' + ${discountProduct.productId} + '/detail'}">[[${discountProduct.productName}]]</a>
                                                 </h5>
                                                 <div class="product__item__price">
-                                                    [[${discountProduct.discountPrice}]]VND <span>[[${discountProduct.price}]]VND</span>
+                                                    <span th:remove="tag" th:text="${#numbers.formatDecimal(discountProduct.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span th:text="${#numbers.formatDecimal(discountProduct.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -196,9 +196,9 @@
                                         <h5><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}">[[${product.productName}]]</a>
                                         </h5>
                                         <div th:if="${product.discountPercent != 0}" class="product__item__price">
-                                            [[${product.discountPrice}]]VND <span>[[${product.price}]]VND</span></div>
+                                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
                                         <div th:if="${product.discountPercent == 0}" class="product__item__price">
-                                            [[${product.price}]]VND
+                                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                         </div>
                                     </div>
                                     <br><br>

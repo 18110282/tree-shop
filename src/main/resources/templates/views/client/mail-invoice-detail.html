@@ -303,12 +303,12 @@
                                                         <th:block th:each="item: ${lineItemList}">
                                                         <tr>
                                                             <td>[[${item.productsEntity.productName}]](x[[${item.quantity}]])</td>
-                                                            <td class="alignright">[[${item.quantity * item.price}]]VND</td>
+                                                            <td class="alignright"><span th:remove="tag" th:text="${#numbers.formatDecimal(item.quantity*item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
                                                         </tr>
                                                         </th:block>
                                                         <tr>
                                                             <td class="alignright" width="80%">Tổng tiền hàng:</td>
-                                                            <td class="alignright">[[${subTotal}]]VND</td>
+                                                            <td class="alignright"><span th:remove="tag" th:text="${#numbers.formatDecimal(subTotal, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
                                                         </tr>
                                                         <tr th:if="${discountPercent}">
                                                             <td class="alignright" width="80%">Giảm giá:</td>
@@ -316,7 +316,7 @@
                                                         </tr>
                                                         <tr class="total">
                                                             <td class="alignright" width="80%">Thành tiền: </td>
-                                                            <td class="alignright" style="color:red;">[[${order.totalPrice}]]VND</td>
+                                                            <td class="alignright" style="color:red;"><span th:remove="tag" th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
                                                         </tr>
                                                         </tbody></table>
                                                 </td>

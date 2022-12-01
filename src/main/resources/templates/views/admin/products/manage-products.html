@@ -124,13 +124,22 @@
                                 Hình ảnh
                                  </label>
                             <div class="col-sm-3">
-                                <input type="file" name="fileImg" id="id-input-file-2" accept="image/*"/>
+                                <input type="file" name="fileImg" id="id-input-file-2" class="input-file" accept="image/*"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label no-padding-right" for="id-input-file-2"></label>
                             <div class="col-sm-3">
                                 <img th:src="@{*{photosImagePath}}" style="width: 290px; height: 220px " id="thumbnail" alt="IMG Preview" accept="image/*"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="id-input-file-3">
+                                Video
+                            </label>
+                            <div class="col-sm-3">
+                                <input type="file"  id="id-input-file-3" class="input-file" name="fileVideo" accept="video/*,.mkv">
                             </div>
                         </div>
                         <input class="hidden" type="text" th:field="*{visit}">
@@ -185,7 +194,7 @@
                                 showImageThumnail(this);
                             })
                         });
-                        $('#id-input-file-2').ace_file_input({
+                        $('.input-file').ace_file_input({
                             no_file: 'No File ...',
                             btn_choose: 'Choose',
                             btn_change: 'Change',

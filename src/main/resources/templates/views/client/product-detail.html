@@ -16,20 +16,59 @@
     <div class="container">
         <th:block th:object="${product}">
         <div class="row">
-            <div class="col-lg-6 col-md-6" id="img-zoomer-box">
+<!--            <div class="col-lg-6 col-md-6">-->
+<!--                <div class="product__details__pic">-->
+<!--                    <div class="product__details__pic__item">-->
+<!--                        <img class="product__details__pic__item&#45;&#45;large"-->
+<!--                             src="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <div class="product__details__pic__slider owl-carousel" >-->
+<!--                        <img data-imgbigurl="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" style = "width: 120px; height: 120px"-->
+<!--                             src="img/video/play-video.png" alt="" data-toggle="modal" data-target="#playVideoProduct">-->
+<!--                        <img data-imgbigurl="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" style = "width: 120px; height: 120px"-->
+<!--                             src="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" alt="">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="play-video-modal modal fade" id="playVideoProduct" tabindex="-1" role="dialog" aria-labelledby="playVideoProduct" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="height: 100%; width: 50%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe id="cartoonVideo" class="embed-responsive-item" width="100%" height="450px" th:src="@{/web/caythebai.mp4}" allowfullscreen="true"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6"  id="img-zoomer-box">
                 <div class="product__details__pic">
+<!--                    <div id="img-zoomer-box">-->
                     <div class="product__details__pic__item">
                         <img class="product__details__pic__item--large"
                              th:src="${product.photosImagePath}" th:title="${product.productName}" id="img-1">
                         <div id="img-2" th:style="'background:' + 'url(\'' + ${product.photosImagePath} +'\')' + 'no-repeat #FFF'"> </div>
+<!--                    </div>-->
+                </div>
+                    <div class="product__details__pic__slider owl-carousel" >
+<!--                        <img th:data-imgbigurl="${product.photosImagePath}" style = "width: 120px; height: 120px"-->
+<!--                             th:src="@{/web/play-video.png}" alt="" data-toggle="modal" data-target="#playVideoProduct">-->
+<!--                        <img th:data-imgbigurl="${product.photosImagePath}" style = "width: 120px; height: 120px"-->
+<!--                             th:src="${product.photosImagePath}" alt="">-->
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
                     <h3 style="font-family: Arial">[[${product.productName}]]</h3>
-                    <div class="product__details__price" th:if="${product.discountPercent != 0}"> <del>[[${product.price}]]VND </del>&nbsp; [[${product.getDiscountPrice()}]]VND</span></div>
-                    <div class="product__details__price" th:if="${product.discountPercent == 0}"> [[${product.price}]]VND</div>
+                    <div class="product__details__price" th:if="${product.discountPercent != 0}"> <del th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></del>&nbsp; <span th:text="${#numbers.formatDecimal(product.getDiscountPrice(), 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
+                    <div class="product__details__price" th:if="${product.discountPercent == 0}"><span th:remove="tag" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
+                    <p>Cây bàng Singapore là loại cây trồng trong nhà được rất nhiều người ưa chuộng bởi chúng vừa có khả năng thanh lọc
+                        không khí cực tốt vừa mang ý nghĩa phong thủy tốt lành. Trong những năm gần đây, việc sử dụng Bàng Singapore để
+                        trang trí nội thất đang dần trở thành xu thế được rất nhiều người lựa chọn. </p>
                     <div style="font-family: Arial" class="product__details__price" th:if="${product.unitInStock == 0}"> Hết hàng</div>
                     <div class="product__details__quantity" th:if="${product.unitInStock != 0}">
                         <div class="quantity">
@@ -43,7 +82,13 @@
                     <div class="product__details__text" id="error" style="color: red"> </div>
                     <ul>
                         <li><b>Số lượng</b> <span>[[${product.unitInStock}]] sản phẩm có sẵn.</span></li>
-                        <li><b>Vận Chuyển</b> <span>1 ngày vận chuyển.</span></li>
+                        <li><b>Khối lượng</b> <span>0.5 kg</span></li>
+                        <li><b>XEM VIDEO</b>
+                            <div class="share">
+                                <a data-toggle="modal" data-target="#playVideoProduct"><i class="fa fa-video-camera"></i></a>
+                            </div>
+                        </li>
+<!--                        <li><b>Vận Chuyển</b> <span>1 ngày vận chuyển.</span></li>-->
                     </ul>
                 </div>
             </div>
@@ -54,11 +99,75 @@
                             <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
                                aria-selected="true">Mô Tả Sản Phẩm</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                               aria-selected="false">Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                               aria-selected="false">Reviews <span>(2)</span></a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 <p style="white-space: pre-line">[[${product.description}]]</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Products Infomation</h6>
+                                <p> Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
+                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
+                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
+                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
+                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
+                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
+                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
+                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                                    Proin eget tortor risus.</p>
+                                <p> Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
+                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
+                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
+                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
+                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Đánh giá nhận xét về sản phẩm</h6>
+                                <div class="reviews-members pt-4 pb-1">
+                                    <div class="media">
+                                        <a href="#"><img alt="Generic placeholder image" src="https://i.imgur.com/Mcd6HIg.jpg" class="mr-3 rounded-pill"></a>
+                                        <div class="media-body">
+                                            <div class="reviews-members-header">
+                                                <h6 class="mb-1">hieungu</h6>
+                                                <p class="text-gray" style="font-size: 14px">22:15 , 25-09-2022</p>
+                                            </div>
+                                            <div class="reviews-members-body">
+                                                <p> Sản phẩm đúng mô tả. Chất lượng tuyệt vời</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="reviews-members pt-4 pb-1">
+                                    <div class="media">
+                                        <a href="#"><img alt="Generic placeholder image" src="https://i.imgur.com/Mcd6HIg.jpg" class="mr-3 rounded-pill"></a>
+                                        <div class="media-body">
+                                            <div class="reviews-members-header">
+                                                <h6 class="mb-1">nhuanit18</h6>
+                                                <p class="text-gray" style="font-size: 14px">22:15 , 25-09-2022</p>
+                                            </div>
+                                            <div class="reviews-members-body">
+                                                <span id="rateMe4"  class="invalid-feedback"></span>
+                                                <p> Sản phẩm đúng mô tả. Chất lượng tuyệt vời</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,9 +207,9 @@
                     <div class="product__discount__item__text">
                         <a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><h6>[[${product.productName}]]</h6></a>
                         <h5 th:if="${product.discountPercent != 0}" class="product__item__price">
-                            [[${product.discountPrice}]]VND <span>[[${product.price}]]VND</span></h5>
+                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></h5>
                         <h5 th:if="${product.discountPercent == 0}" class="product__item__price">
-                            [[${product.price}]]VND
+                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                         </h5>
                     </div>
                 </div>
@@ -109,6 +218,25 @@
         </div>
     </div>
 </section>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function(){
+            /* Get iframe src attribute value i.e. YouTube video url
+            and store it in a variable */
+            var url = $("#cartoonVideo").attr('src');
+
+            /* Assign empty url value to the iframe src attribute when
+            modal hide, which stop the video playing */
+            $("#playVideoProduct").on('hide.bs.modal', function(){
+                $("#cartoonVideo").attr('src', '');
+            });
+
+            /* Assign the initially stored url back to the iframe src
+            attribute when modal is displayed again */
+            $("#playVideoProduct").on('show.bs.modal', function(){
+                $("#cartoonVideo").attr('src', url);
+            });
+        });
+    </script>
     <script type="text/javascript" th:inline="javascript">
         let newVal = 1;
         let url;
