@@ -87,7 +87,8 @@
                                         </div>
                                         <div class="latest-product__item__text">
                                             <h6>[[${item.productName}]]</h6>
-                                            <span th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                         </div>
                                     </a>
                                 </th:block>
@@ -103,7 +104,8 @@
                                         </div>
                                         <div class="latest-product__item__text">
                                             <h6>[[${item.productName}]]</h6>
-                                            <span th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                         </div>
                                     </a>
                                 </th:block>
@@ -126,7 +128,8 @@
                                         </div>
                                         <div class="latest-product__item__text">
                                             <h6>[[${item.productName}]]</h6>
-                                            <span th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                         </div>
                                     </a>
                                 </th:block>
@@ -142,7 +145,8 @@
                                         </div>
                                         <div class="latest-product__item__text">
                                             <h6>[[${item.productName}]]</h6>
-                                            <span th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                         </div>
                                     </a>
                                 </th:block>

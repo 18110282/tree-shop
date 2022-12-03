@@ -111,7 +111,8 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="product__details__tab__desc">
-                                <p style="white-space: pre-line">[[${product.description}]]</p>
+                                <h6>Mô tả sản phẩm</h6>
+                                <p style="white-space: break-spaces;" th:utext="${product.description}"></p>
                             </div>
                         </div>
                         <div class="tab-pane" id="tabs-2" role="tabpanel">

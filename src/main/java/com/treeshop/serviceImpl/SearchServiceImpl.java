@@ -19,12 +19,12 @@ public class SearchServiceImpl implements SearchService {
     }
 
     public Page<ProductsEntity> searchProduct(String keyword, Integer number) {
-        Pageable pageable = PageRequest.of(number - 1, 12);
+        Pageable pageable = PageRequest.of(number - 1, 9);
         return productsRepository.searchProducts(keyword, pageable);
     }
 
     public Page<ProductsEntity> searchProductByPrice(Integer minPrice, Integer maxPrice, Integer number) {
-        Pageable pageable = PageRequest.of(number - 1, 12);
+        Pageable pageable = PageRequest.of(number - 1, 9);
         return productsRepository.findAllByPriceBetweenAndEnabledIsTrue(minPrice, maxPrice, pageable);
     }
 }
