@@ -16,10 +16,10 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class CartIdKey implements Serializable {
     @Column(name="user_name")
-    String username;
+    private String username;
 
     @Column(name="product_id")
-    String productId;
+    private String productId;
 
 
 
