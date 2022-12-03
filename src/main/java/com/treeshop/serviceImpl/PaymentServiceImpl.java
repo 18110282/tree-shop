@@ -1,5 +1,8 @@
 package com.treeshop.serviceImpl;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -15,6 +18,11 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +67,24 @@ public class PaymentServiceImpl implements PaymentService {
         return payer;
     }
 
-    public List<Transaction> getTransactionInformation(OrdersEntity ordersEntity) {
+    public List<Transaction> getTransactionInformation(OrdersEntity ordersEntity) throws IOException {
         Details details = new Details();
 //        details.setSubtotal("90.00");
+        // URL
+        String URL = "https://v6.exchangerate-api.com/v6/cdd8f9308843227942ec4fd7/latest/USD";
+        // Making request to get exchangerate
+        java.net.URL url = new URL(URL);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+        // Using json to read result
+        JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
+        JsonObject jsonObject = root.getAsJsonObject();
+        // Get conversion_rates from VND to USD
+        float conversion_rate = jsonObject.getAsJsonObject("conversion_rates").get("VND").getAsFloat();
+
         Amount amount = new Amount();
-        Float total = ordersEntity.getTotalPrice().floatValue() / 23100;
+        Float total = ordersEntity.getTotalPrice().floatValue() / conversion_rate;
+
         DecimalFormat df = new DecimalFormat("0.00");
         amount.setCurrency("USD");
         amount.setTotal(df.format(total));
@@ -105,7 +126,7 @@ public class PaymentServiceImpl implements PaymentService {
         return approvalLink;
     }
 
-    public String authorizePayment(OrdersEntity ordersEntity, HttpServletRequest request) throws PayPalRESTException {
+    public String authorizePayment(OrdersEntity ordersEntity, HttpServletRequest request) throws PayPalRESTException, IOException {
         Payer payer = this.getPayerInformation(ordersEntity);
         RedirectUrls redirectUrls = this.getRedirectUrls(request, ordersEntity);
         List<Transaction> transactionList = this.getTransactionInformation(ordersEntity);

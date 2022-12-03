@@ -12,6 +12,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,11 @@ public interface PaymentService {
 
     Payer getPayerInformation(OrdersEntity ordersEntity);
 
-    List<Transaction> getTransactionInformation(OrdersEntity ordersEntity);
+    List<Transaction> getTransactionInformation(OrdersEntity ordersEntity) throws IOException;
 
     String getApprovalLink(Payment approvedPayment);
 
-    String authorizePayment(OrdersEntity ordersEntity, HttpServletRequest request) throws PayPalRESTException;
+    String authorizePayment(OrdersEntity ordersEntity, HttpServletRequest request) throws PayPalRESTException, IOException;
 
     void executePayment(String paymentId, String payerId, OrdersEntity ordersEntity, String username, HttpSession session, HttpServletRequest request)
             throws PayPalRESTException, MessagingException, IOException;
