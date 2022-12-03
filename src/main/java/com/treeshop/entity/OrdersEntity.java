@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.treeshop.entity.lineitem.CustomListLineItemSerializer;
 import com.treeshop.entity.lineitem.LineItemEntity;
+import com.treeshop.entity.review.ReviewsEntity;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -72,6 +74,10 @@ public class OrdersEntity {
 //    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ordersEntity")
     private List<LineItemEntity> lineItemEntityList;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ordersEntity")
+    private List<ReviewsEntity> reviewsEntityList;
 
     @JsonIgnore
     @ManyToOne(fetch =FetchType.LAZY)
