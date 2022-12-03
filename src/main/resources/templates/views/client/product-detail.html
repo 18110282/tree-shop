@@ -39,7 +39,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <iframe id="cartoonVideo" class="embed-responsive-item" width="100%" height="450px" th:src="@{/web/caythebai.mp4}" allowfullscreen="true"></iframe>
+                            <iframe id="cartoonVideo" class="embed-responsive-item" width="100%" height="450px" th:src="${product.videoPath}" allowfullscreen="true"></iframe>
                         </div>
                     </div>
                 </div>
@@ -83,9 +83,9 @@
                     <ul>
                         <li><b>Số lượng</b> <span>[[${product.unitInStock}]] sản phẩm có sẵn.</span></li>
                         <li><b>Khối lượng</b> <span>0.5 kg</span></li>
-                        <li><b>XEM VIDEO</b>
+                        <li><b style="color: red; font-size: large">XEM VIDEO</b>
                             <div class="share">
-                                <a data-toggle="modal" data-target="#playVideoProduct"><i class="fa fa-video-camera"></i></a>
+                                <a data-toggle="modal" data-target="#playVideoProduct"><i class="fa fa-file-video-o"></i></a>
                             </div>
                         </li>
 <!--                        <li><b>Vận Chuyển</b> <span>1 ngày vận chuyển.</span></li>-->

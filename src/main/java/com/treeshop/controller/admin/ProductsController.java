@@ -69,7 +69,8 @@ public class ProductsController {
 
     @PostMapping("/save")
     public String saveProduct(@ModelAttribute(name = "product") ProductsEntity productsEntity,
-                              @RequestParam(value = "fileImg", required = false) MultipartFile multipartFile,
+                              @RequestParam(value = "fileImg", required = false) MultipartFile multipartFileImg,
+                              @RequestParam(value = "fileVideo", required = false) MultipartFile multipartFileVideo,
                               HttpServletRequest request,
                               RedirectAttributes ra) throws IOException {
         //get previousUrl
@@ -92,7 +93,7 @@ public class ProductsController {
 
             ra.addFlashAttribute("successMessage", "Chỉnh sửa sản phẩm: <strong> " + productId + "</strong> thành công.");
         }
-        productsService.saveProduct(productsEntity, multipartFile);
+        productsService.saveProduct(productsEntity, multipartFileImg, multipartFileVideo);
         return "redirect:/admin/products/list";
     }
 }

@@ -49,8 +49,9 @@ public class ProductServiceImpl implements ProductsService {
         productsRepository.save(productsEntity);
     }
 
-    public void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+    public void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFileImg, MultipartFile multipartFileVideo) throws IOException {
+        String fileNameImg = StringUtils.cleanPath(Objects.requireNonNull(multipartFileImg.getOriginalFilename()));
+        String fileNameVideo = StringUtils.cleanPath(Objects.requireNonNull(multipartFileVideo.getOriginalFilename()));
         productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
         productsEntity.setEnabled(true);
         Integer visit = productsEntity.getVisit();
@@ -70,19 +71,40 @@ public class ProductServiceImpl implements ProductsService {
         }
 
         String productId = productsEntity.getProductId();
-        if (!fileName.equals("")) {
+
+        String uploadDir = "./dynamic-resources/product-source/" + productId;
+        Path uploadPath = Paths.get(uploadDir);
+        // For image
+        if (!fileNameImg.equals("")) {
 //            String uploadDir = "./src/main/resources/static/product-imgs/" + savedProduct.getProductId();
-            String uploadDir = "./dynamic-resources/product-imgs/" + productId;
-            Path uploadPath = Paths.get(uploadDir);
-            commonService.processFile(uploadPath, multipartFile, fileName);
+//            String uploadDir = "./dynamic-resources/product-source/" + productId;
+//            Path uploadPath = Paths.get(uploadDir);
+            commonService.processFile(uploadPath, multipartFileImg, fileNameImg);
         }
         else {
             ProductsEntity productsEntity1 = this.findByProductId(productId);
             if(productsEntity1 != null) {
-                fileName = productsEntity1.getImageUrl();
+                fileNameImg = productsEntity1.getImageUrl();
             }
         }
-        productsEntity.setImageUrl(fileName);
+        productsEntity.setImageUrl(fileNameImg);
+
+        // For video
+        if (!fileNameVideo.equals("")) {
+//            String uploadDir = "./src/main/resources/static/product-imgs/" + savedProduct.getProductId();
+//            String uploadDir = "./dynamic-resources/product-source/" + productId;
+//            Path uploadPath = Paths.get(uploadDir);
+            commonService.processFile(uploadPath, multipartFileVideo, fileNameVideo);
+        }
+        else {
+            ProductsEntity productsEntity1 = this.findByProductId(productId);
+            if(productsEntity1 != null) {
+                fileNameVideo = productsEntity1.getVideoUrl();
+            }
+        }
+
+        productsEntity.setVideoUrl(fileNameVideo);
+
         productsRepository.save(productsEntity);
     }
 

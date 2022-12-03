@@ -60,7 +60,15 @@ public class ProductsEntity {
         if (imageUrl == null || productId == null) {
             return null;
         }
-        return "/dynamic-resources/product-imgs/" + productId + "/" + imageUrl;
+        return "/dynamic-resources/product-source/" + productId + "/" + imageUrl;
+    }
+
+    @Transient
+    public String getVideoPath() {
+        if (videoUrl == null || productId == null) {
+            return null;
+        }
+        return "/dynamic-resources/product-source/" + productId + "/" + videoUrl;
     }
 
     @Transient

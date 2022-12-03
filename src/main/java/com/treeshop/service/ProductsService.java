@@ -16,7 +16,7 @@ public interface ProductsService {
 
     void saveProductWithDiscountPercent(ProductsEntity productsEntity);
 
-    void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFile) throws IOException;
+    void saveProduct(ProductsEntity productsEntity, MultipartFile multipartFileImg, MultipartFile multipartFileVideo) throws IOException;
 
     ProductsEntity findByProductId(String productId);
 
