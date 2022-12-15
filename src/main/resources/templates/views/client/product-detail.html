@@ -105,7 +105,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                               aria-selected="false">Reviews <span>(2)</span></a>
+                               aria-selected="false">Reviews <span>([[${product.reviewsEntityList.size()}]])</span></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -139,36 +139,23 @@
                         <div class="tab-pane" id="tabs-3" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 <h6>Đánh giá nhận xét về sản phẩm</h6>
+                                <th:block th:each="review: ${product.reviewsEntityList}">
                                 <div class="reviews-members pt-4 pb-1">
                                     <div class="media">
                                         <a href="#"><img alt="Generic placeholder image" src="https://i.imgur.com/Mcd6HIg.jpg" class="mr-3 rounded-pill"></a>
                                         <div class="media-body">
                                             <div class="reviews-members-header">
-                                                <h6 class="mb-1">hieungu</h6>
-                                                <p class="text-gray" style="font-size: 14px">22:15 , 25-09-2022</p>
+                                                <h6 class="mb-1">[[${review.userReview}]]</h6>
+                                                <p class="text-gray" style="font-size: 14px">[[${review.created}]]</p>
                                             </div>
                                             <div class="reviews-members-body">
-                                                <p> Sản phẩm đúng mô tả. Chất lượng tuyệt vời</p>
+                                                <p>[[${review.content}]]</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="reviews-members pt-4 pb-1">
-                                    <div class="media">
-                                        <a href="#"><img alt="Generic placeholder image" src="https://i.imgur.com/Mcd6HIg.jpg" class="mr-3 rounded-pill"></a>
-                                        <div class="media-body">
-                                            <div class="reviews-members-header">
-                                                <h6 class="mb-1">nhuanit18</h6>
-                                                <p class="text-gray" style="font-size: 14px">22:15 , 25-09-2022</p>
-                                            </div>
-                                            <div class="reviews-members-body">
-                                                <span id="rateMe4"  class="invalid-feedback"></span>
-                                                <p> Sản phẩm đúng mô tả. Chất lượng tuyệt vời</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </th:block>
                             </div>
                         </div>
                     </div>

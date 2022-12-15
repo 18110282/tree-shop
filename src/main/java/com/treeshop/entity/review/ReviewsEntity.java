@@ -58,5 +58,10 @@ public class ReviewsEntity implements Serializable {
         return "/dynamic-resources/product-source/" + productsEntity.getProductId() + "/" + productsEntity.getImageUrl();
     }
 
+    @Transient
+    public String getUserReview() {
+        return ordersEntity.getUsername();
+    }
+
 
 }
