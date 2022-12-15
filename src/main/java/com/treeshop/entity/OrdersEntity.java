@@ -45,6 +45,8 @@ public class OrdersEntity {
     private String payment;
     @Column(name = "shipper_id")
     private Integer shipperId;
+    @Column(name = "review_flg")
+    private boolean review_flg;
 
     @Transient
     private Integer subTotalPrice;

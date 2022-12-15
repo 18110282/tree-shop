@@ -267,19 +267,30 @@
                                                                 <button
                                                                         type="button"
                                                                         class="btn-reorder btn btn-primary text-right"
-                                                                        th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
+                                                                        th:onclick="buyOrderAgain([[${order.orderId}]], this)">
+                                                                    Mua lại
                                                                 </button>
-                                                                <button type="button"
-                                                                        class="btn-review btn btn-primary text-right"
+                                                                <button th:if="${order.review_flg == false}"
+                                                                        type="button"
+                                                                        class="btn-review btn btn-primary text-right review-btn"
                                                                         data-toggle="modal"
-                                                                        data-target="#reviewModalCenter">Đánh giá
+                                                                        data-target="#reviewModalCenter"
+                                                                        th:name="${order.orderId}">Đánh giá
+                                                                </button>
+                                                                <button th:if="${order.review_flg == true}"
+                                                                        type="button"
+                                                                        class="btn-review btn btn-primary text-right read-reviewed-btn"
+                                                                        data-toggle="modal"
+                                                                        data-target="#readReviewModalCenter"
+                                                                        th:name="${order.orderId}">Xem đánh giá
                                                                 </button>
                                                             </td>
                                                             <td colspan="3" class="border-top"
                                                                 th:case="${T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
                                                                 <button type="button"
                                                                         class="btn-reorder btn btn-primary text-right"
-                                                                        th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
+                                                                        th:onclick="buyOrderAgain([[${order.orderId}]], this)">
+                                                                    Mua lại
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -529,12 +540,22 @@
                                                                     <td colspan="3" class="border-top">
                                                                         <button type="button"
                                                                                 class="btn-reorder btn btn-primary text-right"
-                                                                                th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
+                                                                                th:onclick="buyOrderAgain([[${order.orderId}]], this)">
+                                                                            Mua lại
                                                                         </button>
-                                                                        <button type="button"
-                                                                                class="btn-review btn btn-primary text-right"
+                                                                        <button th:if="${order.review_flg == false}"
+                                                                                type="button"
+                                                                                class="btn-review btn btn-primary text-right review-btn"
                                                                                 data-toggle="modal"
-                                                                                data-target="#reviewModalCenter">Đánh giá
+                                                                                data-target="#reviewModalCenter"
+                                                                                th:name="${order.orderId}">Đánh giá
+                                                                        </button>
+                                                                        <button th:if="${order.review_flg == true}"
+                                                                                type="button"
+                                                                                class="btn-review btn btn-primary text-right read-reviewed-btn"
+                                                                                data-toggle="modal"
+                                                                                data-target="#readReviewModalCenter"
+                                                                                th:name="${order.orderId}">Xem đánh giá
                                                                         </button>
                                                                     </td>
                                                                 </tr>
@@ -549,12 +570,14 @@
                                     <div class="tab-pane fade show" id="tabs-8" role="tabpanel">
                                         <div class="cancel-order">
                                             <th:block th:each="order : ${listOrderOfClient}">
-                                                <div class="card mt-2 bg-light" th:if="${order.status == T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
+                                                <div class="card mt-2 bg-light"
+                                                     th:if="${order.status == T(com.treeshop.entity.StatusOfOrder).CANCELLED}">
                                                     <div>
                                                         <div class="card-header">
                                                             <div class="row">
                                                                 <div class="col-lg-6">
-                                                                    <a class="id-status-order">[[${order.orderId}]] | Đã hủy</a>
+                                                                    <a class="id-status-order">[[${order.orderId}]] | Đã
+                                                                        hủy</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -586,22 +609,30 @@
                                                                 </tbody>
                                                                 <tfoot>
                                                                 <tr>
-                                                                    <td class="order-pay-infor" colspan="2">Tổng tiền hàng</td>
-                                                                    <td th:if="${order.codeId != null}" class="order-pay-fee">
+                                                                    <td class="order-pay-infor" colspan="2">Tổng tiền
+                                                                        hàng
+                                                                    </td>
+                                                                    <td th:if="${order.codeId != null}"
+                                                                        class="order-pay-fee">
                                                                         <span th:text="${#numbers.formatDecimal((order.totalPrice / order.discountCodeEntity.discountPercent * 100), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
-                                                                    <td th:if="${order.codeId == null}" class="order-pay-fee">
+                                                                    <td th:if="${order.codeId == null}"
+                                                                        class="order-pay-fee">
                                                                         <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                 </tr>
                                                                 <tr th:if="${order.codeId != null}">
-                                                                    <td class="order-pay-infor" colspan="2">Giảm giá</td>
+                                                                    <td class="order-pay-infor" colspan="2">Giảm giá
+                                                                    </td>
                                                                     <td class="order-pay-fee">
-                                                                        [[${order.discountCodeEntity.discountPercent}]] %
+                                                                        [[${order.discountCodeEntity.discountPercent}]]
+                                                                        %
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                                    <td class="order-pay-infor" colspan="2">Tổng số
+                                                                        tiền
+                                                                    </td>
                                                                     <td class="order-pay-fee">
                                                                         <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
@@ -610,7 +641,8 @@
                                                                     <td colspan="3" class="border-top">
                                                                         <button type="button"
                                                                                 class="btn-reorder btn btn-primary text-right"
-                                                                                th:onclick="buyOrderAgain([[${order.orderId}]], this)">Mua lại
+                                                                                th:onclick="buyOrderAgain([[${order.orderId}]], this)">
+                                                                            Mua lại
                                                                         </button>
                                                                     </td>
                                                                 </tr>
@@ -768,9 +800,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Kết Quả Hủy Đơn</h5>
-<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                            <span aria-hidden="true">&times;</span>-->
-<!--                        </button>-->
+                        <!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                        <!--                            <span aria-hidden="true">&times;</span>-->
+                        <!--                        </button>-->
                     </div>
                     <div class="modal-body">
                         <form class="centered">
@@ -779,48 +811,75 @@
                                 <p>Đơn hàng của bạn đã được hủy thành công.</p>
                                 <p>Treeshop hy vọng có thể phục vụ bạn trong tương lai.</p>
                             </div>
-                            <a class="btn btn-primary text-center" id="continue-buy-btn" href="/home/list-web-product">Tiếp tục mua hàng</a>
+                            <a class="btn btn-primary text-center" id="continue-buy-btn" href="/home/list-web-product">Tiếp
+                                tục mua hàng</a>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="review-product-modal modal fade" id="reviewModalCenter" tabindex="-1" role="dialog"
-             aria-labelledby="reviewModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+             aria-labelledby="reviewModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="false">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="overflow-y: initial !important">
+                <div class="modal-content review-modal">
                     <div class="modal-header">
                         <h5 class="modal-title" id="reviewModalLongTitle">Đánh Giá Sản Phẩm</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="list-product-review">
-                            <div class="item-product-review">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="infor-product-review row">
-                                            <div class="col-lg-2 col-sm-2 col-3">
-                                                <a href="shop-details.html"><img
-                                                        src="https://cayxinh.vn/wp-content/uploads/2020/06/hoa-dua-can-0-768x768.jpg"
-                                                        alt=""></a>
-                                            </div>
-                                            <div class="col-lg-10 col-sm-10 col-9">
-                                                <div class="product-name-review"><a href="shop-details.html"><h5>Hoa Dừa
-                                                    Cạn</h5></a></div>
-                                                <div class="product-category-review"><p>Cây Phong Thủy</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-outline">
-                                            <textarea class="form-control" rows="3"
-                                                      placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+                        <!--                        <form>-->
+                        <div class="list-product-review" id="list-product-review">
+                            <!--                                <div class="item-product-review">-->
+                            <!--                                    <div class="card">-->
+                            <!--                                        <div class="card-header">-->
+                            <!--                                            <div class="infor-product-review row">-->
+                            <!--                                                <div class="col-lg-2 col-sm-2 col-3">-->
+                            <!--                                                    <a href="shop-details.html"><img-->
+                            <!--                                                            src="https://cayxinh.vn/wp-content/uploads/2019/11/thiet-moc-lan-131119.jpg"-->
+                            <!--                                                            alt=""></a>-->
+                            <!--                                                </div>-->
+                            <!--                                                <div class="col-lg-10 col-sm-10 col-9">-->
+                            <!--                                                    <div class="product-name-review"><a href="shop-details.html"><h5>Cây-->
+                            <!--                                                        Thiết Mộc Lan</h5></a></div>-->
+                            <!--                                                    <div class="product-category-review"><p>Cây Nội Thất</p></div>-->
+                            <!--                                                </div>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="card-body">-->
+                            <!--                                            <div class="form-outline">-->
+                            <!--                                            <textarea class="form-control" rows="3"-->
+                            <!--                                                      placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này"></textarea>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="review-product-action text-right">-->
+                            <!--                                    <button type="submit" class="btn btn-primary text-center"-->
+                            <!--                                            style="background: #7fad39;color: #ffffff; border-width: 1px;border-color: #7fad39;font-size: 14px;">-->
+                            <!--                                        Hoàn Thành-->
+                            <!--                                    </button>-->
+                            <!--                                </div>-->
+                        </div>
+                        <!--                        </form>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="review-product-modal modal fade" id="readReviewModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="reviewModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="overflow-y: initial !important">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="readReviewModalLongTitle">Xem Đánh Giá Sản Phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+                        <div class="list-product-review" id="list-product-reviewed">
                             <div class="item-product-review">
                                 <div class="card">
                                     <div class="card-header">
@@ -839,20 +898,23 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-outline">
-                                            <textarea class="form-control" rows="3"
-                                                      placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này"></textarea>
+                                                                        <textarea class="form-control" rows="3"
+                                                                                  placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="review-product-action text-right">
-                            <a class="btn btn-primary text-center">Hoàn Thành</a>
+                            <!--                                <div class="review-product-action text-right">-->
+                            <!--                                    <button type="submit" class="btn btn-primary text-center"-->
+                            <!--                                            style="background: #7fad39;color: #ffffff; border-width: 1px;border-color: #7fad39;font-size: 14px;">-->
+                            <!--                                        Hoàn Thành-->
+                            <!--                                    </button>-->
+                            <!--                                </div>-->
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <script th:unless="${session.client}" type="text/javascript" th:inline="javascript">
         checkClientSession();
@@ -862,6 +924,7 @@
     </script>
     <script th:if="${session.client}" type="text/javascript" th:inline="javascript">
         let username = [[${session.client.username}]];
+
         function checkPass() {
             let newPassword = $('#newPass').val();
             let conFPassword = $('#conFPass').val();
@@ -920,17 +983,17 @@
                 let quantityOfProduct = $(button).parents('table:first').find('tbody >tr').length;
                 let listSize = list.length;
 
-                function addItemToCart(){
+                function addItemToCart() {
                     let url = "/home/" + username + "/add-item-to-cart/" + orderId;
                     $.ajax({
                         type: "post",
                         url: url,
                         contentType: "application/json",
                         data: JSON.stringify(list)
-                    }).done(function (isSuccess){
+                    }).done(function (isSuccess) {
                         if (isSuccess) {
                             alert("Thành công!");
-                            url = "/home/"+ username + "/cart/detail";
+                            url = "/home/" + username + "/cart/detail";
                             window.location.assign(url);
                         } else {
                             alert("Có lỗi xảy ra, thất bại!");
@@ -944,7 +1007,7 @@
                     addItemToCart();
                 } else {
                     let listStr = "";
-                    list.forEach(function (element){
+                    list.forEach(function (element) {
                         listStr += element.productName + " ";
                     });
                     let message = "Sản phẩm " + listStr + "hiện không còn bán nữa!\n Bạn có muốn mua lại số sản phẩm còn lại không? ^^";
@@ -956,6 +1019,118 @@
             })
         }
 
+        let reviewBtn;
+        // Review product
+        $('.review-btn').on('click', function () {
+            let orderId = $(this)[0].name;
+            let url = "/home/" + orderId + "/line-item/detail";
+            reviewBtn = $(this);
+            $.ajax({
+                type: "get",
+                url: url
+            }).done(function (list) {
+                $('#list-product-review').html("");
+                let urlOrigin = window.location.origin;
+                list.forEach(function (element) {
+                    let productHref = "/home/product/" + element.productId + "/detail";
+                    let srcImage = urlOrigin + element.photosImagePath;
+                    let productName = element.productName;
+                    let productId = element.productId;
+                    let categoryName = element.categoryName;
+                    $('#list-product-review').append("<div class=\"item-product-review\" id=" + productId + ">\n" +
+                        "                                    <div class=\"card\">\n" +
+                        "                                        <div class=\"card-header\">\n" +
+                        "                                            <div class=\"infor-product-review row\">\n" +
+                        "                                                <div class=\"col-lg-2 col-sm-2 col-3\">\n" +
+                        "                                                    <a href=" + productHref + "><img\n" +
+                        "                                                            src=" + srcImage + "\n" +
+                        "                                                            alt=\"\"></a>\n" +
+                        "                                                </div>\n" +
+                        "                                                <div class=\"col-lg-10 col-sm-10 col-9\">\n" +
+                        "                                                    <div class=\"product-name-review\"><a href=" + productHref + "><h5>" + productName + "</h5></a></div>\n" +
+                        "                                                    <div class=\"product-category-review\"><p>" + categoryName + "</p></div>\n" +
+                        "                                                </div>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"card-body\">\n" +
+                        "                                            <div class=\"form-outline\">\n" +
+                        "                                            <textarea class=\"form-control comment-content\" rows=\"3\"\n" +
+                        "                                                      placeholder=\"Hãy chia sẻ những điều bạn thích về sản phẩm này\"></textarea>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>");
+                });
+                let submitFunction = "submitReviews(this, '" + orderId + "')";
+                //console.log(orderId);
+                //console.log(submitFunction);
+                $('#list-product-review').append(" <div class=\"review-product-action text-right\">\n" +
+                    "                                    <button type=\"button\" class=\"btn btn-primary text-center\" onclick=" + "submitReviews(this,'" + orderId + "')" +
+                    "                                            style=\"background: #7fad39;color: #ffffff; border-width: 1px;border-color: #7fad39;font-size: 14px;\">\n" +
+                    "                                        Hoàn Thành\n" +
+                    "                                    </button>\n" +
+                    "                                </div>");
+            })
+        });
+
+        //Submit reviews
+        function submitReviews(submitBtn, orderId) {
+            let id;
+            let data;
+            let dataList = [];
+            let checkNoContent = false;
+
+            let itemProductObject = $(submitBtn).parents('#list-product-review').children('.item-product-review');
+            delete itemProductObject.length;
+            delete itemProductObject.prevObject;
+
+            let itemProductArr = Object.entries(itemProductObject);
+            itemProductArr.forEach(function (element) {
+                let div = element[1];
+                let productId = div.id;
+                let content = $(div).find(".comment-content")[0].value;
+                if (content === "") {
+                    checkNoContent = true;
+                    return;
+                }
+                id = {productId: productId, orderId: orderId};
+                data = {reviewsIdKey: id, content: content};
+                dataList.push(data);
+                // console.log(data);
+            });
+            if (checkNoContent) {
+                alert("Có sản phẩm chưa nhập nội dung review, mời bạn kiểm tra lại");
+            } else {
+                let url = "/home/" + orderId + "/review";
+                $.ajax({
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "post",
+                    url: url,
+                    data: JSON.stringify(dataList)
+                }).done(function (isSuccess) {
+                    if (isSuccess) {
+                        alert("Đánh giá thành công, cảm ơn bạn đã ủng hộ ^^");
+                        $('#reviewModalCenter').modal('hide');
+                        //$('#reviewModalCenter').hide();
+
+                        reviewBtn.parent().append("<button " +
+                            "                                                                        type=\"button\"\n" +
+                            "                                                                        class=\"btn-review btn btn-primary text-right read-reviewed-btn\"\n" +
+                            "                                                                        data-toggle=\"modal\"\n" +
+                            "                                                                        data-target=\"#readReviewModalCenter\"\n" +
+                            "                                                                       >Xem đánh giá\n" +
+                            "                                                                </button>");
+                        //$('#reviewModalCenter').modal('hide');
+                        reviewBtn.remove();
+                    } else {
+                        alert("Gặp lỗi, hiện không thể đánh giá");
+                    }
+                })
+            }
+        }
+
+        // Cancel order
         $('.cancel-order').on('click', function () {
             let orderId = $(this)[0].id;
             let url = "/home/information/cancel-order/" + orderId;
@@ -963,13 +1138,13 @@
             $.ajax({
                 type: "post",
                 url: url
-            }).done(function (isSuccess){
+            }).done(function (isSuccess) {
                 if (isSuccess) {
                     $('#content-cancel-order').html('<p>Đơn hàng của bạn đã được hủy thành công.</p>\n' +
-                                                    '<p>Treeshop hy vọng có thể phục vụ bạn trong tương lai.</p>')
+                        '<p>Treeshop hy vọng có thể phục vụ bạn trong tương lai.</p>')
                 } else {
                     $('#content-cancel-order').html('<p style="color: red">Không thể hủy đơn hàng vì đã được xác nhận này!</p>\n' +
-                                                    '<p>Hãy liên hệ admin để được hỗ trợ!</p>')
+                        '<p>Hãy liên hệ admin để được hỗ trợ!</p>')
                 }
             })
         });
@@ -988,7 +1163,7 @@
                         "                                            </form>\n" +
                         "                                        </div>")
                 }
-            })
+            });
         })
     </script>
 </div>

@@ -8,10 +8,9 @@ import com.treeshop.entity.StatusOfOrder;
 import com.treeshop.entity.cart.CartEntity;
 import com.treeshop.entity.cart.CartIdKey;
 import com.treeshop.entity.lineitem.LineItemEntity;
-import com.treeshop.service.CartService;
-import com.treeshop.service.OrdersService;
-import com.treeshop.service.ProductsService;
-import com.treeshop.service.UsersService;
+import com.treeshop.entity.review.ReviewsEntity;
+import com.treeshop.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
@@ -25,13 +24,17 @@ public class InformationRestController {
     private final OrdersService ordersService;
     private final UsersService usersService;
     private final CartService cartService;
+    private final ReviewProductService reviewProductService;
 
-    public InformationRestController(ProductsService productsService, OrdersService ordersService, UsersService usersService, CartService cartService) {
+    @Autowired
+    public InformationRestController(ProductsService productsService, OrdersService ordersService, UsersService usersService, CartService cartService, ReviewProductService reviewProductService) {
         this.productsService = productsService;
         this.ordersService = ordersService;
         this.usersService = usersService;
         this.cartService = cartService;
+        this.reviewProductService = reviewProductService;
     }
+
 
     @PostMapping("/save/{username}/password")
     public boolean savePasswordOfClient(@PathVariable("username") String username,
@@ -42,8 +45,7 @@ public class InformationRestController {
 
     @PostMapping("/buy-again/{username}/{orderId}")
     public List<LineItemEntity> buyOrderAgain(@PathVariable("orderId") String orderId) {
-        OrdersEntity ordersEntity = ordersService.findOrderEntityById(orderId);
-        List<LineItemEntity> lineItemEntityListAll = ordersEntity.getLineItemEntityList();
+        List<LineItemEntity> lineItemEntityListAll = lineItemEntityListAll(orderId);
 
         return lineItemEntityListAll.stream()
                 .filter(l -> productsService.checkProductIsDelete(l.getProductsEntity().getProductId()))
@@ -60,8 +62,7 @@ public class InformationRestController {
             Type lineItemListType = new TypeToken<List<LineItemEntity>>() {}.getType();
             List<LineItemEntity> lineItemHaveProductIsDelete = gson.fromJson(body, lineItemListType);
 
-            OrdersEntity ordersEntity = ordersService.findOrderEntityById(orderId);
-            List<LineItemEntity> lineItemEntityListAll = ordersEntity.getLineItemEntityList();
+            List<LineItemEntity> lineItemEntityListAll = lineItemEntityListAll(orderId);
 
             int sizeOfLineItemIsDelete = lineItemHaveProductIsDelete.size();
             if (sizeOfLineItemIsDelete != 0) {
@@ -95,5 +96,31 @@ public class InformationRestController {
             e.printStackTrace();
         }
         return isSuccess;
+    }
+
+    @GetMapping("/{orderId}/line-item/detail")
+    public List<LineItemEntity> findLineItemByOrderId(@PathVariable("orderId") String orderId) {
+        return lineItemEntityListAll(orderId);
+    }
+
+    @PostMapping("/{orderId}/review")
+    public boolean reviewProduct(@RequestBody String body,
+                                 @PathVariable("orderId") String orderId) {
+        boolean isSuccess = false;
+        try {
+            Gson gson = new Gson();
+            Type reviewType = new TypeToken<List<ReviewsEntity>>() {}.getType();
+            List<ReviewsEntity> reviewsEntityList = gson.fromJson(body, reviewType);
+            reviewProductService.addReviewForProduct(reviewsEntityList, orderId);
+            isSuccess = true;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return isSuccess;
+    }
+
+    private List<LineItemEntity> lineItemEntityListAll(String orderId){
+        OrdersEntity ordersEntity = ordersService.findOrderEntityById(orderId);
+        return  ordersEntity.getLineItemEntityList();
     }
 }

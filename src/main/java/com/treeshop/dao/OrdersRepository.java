@@ -30,5 +30,9 @@ public interface OrdersRepository extends JpaRepository<OrdersEntity, String> {
     @Modifying
     void assignShipperForOrder(@Param("shipperId")Integer shipperId, @Param("orderId")String orderId);
 
+    @Query("update OrdersEntity o set o.review_flg = :isReview where o.orderId = :orderId")
+    @Modifying
+    void updateReviewFlg(@Param("isReview")boolean isReview, @Param("orderId")String orderId);
+
     boolean existsByStatusAndOrderId(StatusOfOrder status, String orderId);
 }

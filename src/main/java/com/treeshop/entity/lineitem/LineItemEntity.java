@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 @Entity
@@ -43,6 +44,24 @@ public class LineItemEntity implements Serializable {
     @Transient
     public String getProductName(){
         return productsEntity.getProductName();
+    }
+
+    @Transient
+    public String getCategoryName() {
+        return productsEntity.getCategoryEntity().getCategoryName();
+    }
+
+    @Transient
+    public String getProductId() {
+        return  productsEntity.getProductId();
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (productsEntity.getImageUrl() == null || productsEntity.getProductId() == null) {
+            return null;
+        }
+        return "/dynamic-resources/product-source/" + productsEntity.getProductId() + "/" + productsEntity.getImageUrl();
     }
 
     @Override
