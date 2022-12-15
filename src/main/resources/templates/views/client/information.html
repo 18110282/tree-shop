@@ -905,16 +905,16 @@
                                 </div>
                             </div>
                         </div>
-                            <!--                                <div class="review-product-action text-right">-->
-                            <!--                                    <button type="submit" class="btn btn-primary text-center"-->
-                            <!--                                            style="background: #7fad39;color: #ffffff; border-width: 1px;border-color: #7fad39;font-size: 14px;">-->
-                            <!--                                        Hoàn Thành-->
-                            <!--                                    </button>-->
-                            <!--                                </div>-->
-                        </div>
+                        <!--                                <div class="review-product-action text-right">-->
+                        <!--                                    <button type="submit" class="btn btn-primary text-center"-->
+                        <!--                                            style="background: #7fad39;color: #ffffff; border-width: 1px;border-color: #7fad39;font-size: 14px;">-->
+                        <!--                                        Hoàn Thành-->
+                        <!--                                    </button>-->
+                        <!--                                </div>-->
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <script th:unless="${session.client}" type="text/javascript" th:inline="javascript">
         checkClientSession();
@@ -1061,9 +1061,6 @@
                         "                                    </div>\n" +
                         "                                </div>");
                 });
-                let submitFunction = "submitReviews(this, '" + orderId + "')";
-                //console.log(orderId);
-                //console.log(submitFunction);
                 $('#list-product-review').append(" <div class=\"review-product-action text-right\">\n" +
                     "                                    <button type=\"button\" class=\"btn btn-primary text-center\" onclick=" + "submitReviews(this,'" + orderId + "')" +
                     "                                            style=\"background: #7fad39;color: #ffffff; border-width: 1px;border-color: #7fad39;font-size: 14px;\">\n" +
@@ -1112,16 +1109,12 @@
                     if (isSuccess) {
                         alert("Đánh giá thành công, cảm ơn bạn đã ủng hộ ^^");
                         $('#reviewModalCenter').modal('hide');
-                        //$('#reviewModalCenter').hide();
-
-                        reviewBtn.parent().append("<button " +
-                            "                                                                        type=\"button\"\n" +
-                            "                                                                        class=\"btn-review btn btn-primary text-right read-reviewed-btn\"\n" +
-                            "                                                                        data-toggle=\"modal\"\n" +
-                            "                                                                        data-target=\"#readReviewModalCenter\"\n" +
-                            "                                                                       >Xem đánh giá\n" +
-                            "                                                                </button>");
-                        //$('#reviewModalCenter').modal('hide');
+                        reviewBtn.parent().append("<button onclick='readReview(this)' type=\"button\"\n" +
+                            "                                class=\"btn-review btn btn-primary text-right read-reviewed-btn\"\n" +
+                            "                                data-toggle=\"modal\"\n" +
+                            "                                data-target=\"#readReviewModalCenter\"\n" +
+                            "                                name=" + orderId + ">Xem đánh giá\n" +
+                            "                        </button>");
                         reviewBtn.remove();
                     } else {
                         alert("Gặp lỗi, hiện không thể đánh giá");
@@ -1129,6 +1122,52 @@
                 })
             }
         }
+        function readReview(btnReadReview){
+            let orderId = $(btnReadReview)[0].name;
+            let url = "/home/" + orderId + "/read/review";
+            $.ajax({
+                type: "get",
+                url: url
+            }).done(function (list) {
+                $('#list-product-reviewed').html("");
+                let urlOrigin = window.location.origin;
+                list.forEach(function (element) {
+                    let productHref = "/home/product/" + element.productId + "/detail";
+                    let srcImage = urlOrigin + element.photosImagePath;
+                    let productName = element.productName;
+                    let productId = element.productId;
+                    let categoryName = element.categoryName;
+                    let content = element.content;
+                    $('#list-product-reviewed').append("<div class=\"item-product-review\" id=" + productId + ">\n" +
+                        "                                    <div class=\"card\">\n" +
+                        "                                        <div class=\"card-header\">\n" +
+                        "                                            <div class=\"infor-product-review row\">\n" +
+                        "                                                <div class=\"col-lg-2 col-sm-2 col-3\">\n" +
+                        "                                                    <a href=" + productHref + "><img\n" +
+                        "                                                            src=" + srcImage + "\n" +
+                        "                                                            alt=\"\"></a>\n" +
+                        "                                                </div>\n" +
+                        "                                                <div class=\"col-lg-10 col-sm-10 col-9\">\n" +
+                        "                                                    <div class=\"product-name-review\"><a href=" + productHref + "><h5>" + productName + "</h5></a></div>\n" +
+                        "                                                    <div class=\"product-category-review\"><p>" + categoryName + "</p></div>\n" +
+                        "                                                </div>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"card-body\">\n" +
+                        "                                            <div class=\"form-outline\">\n" +
+                        "                                            <textarea class=\"form-control comment-content\" rows=\"3\"\n" +
+                        "                                                      disabled>" + content + "</textarea>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>");
+                });
+            })
+        }
+        // Read review order
+        $('.read-reviewed-btn').on('click', function () {
+            readReview(this);
+        });
 
         // Cancel order
         $('.cancel-order').on('click', function () {

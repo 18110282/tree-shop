@@ -103,6 +103,12 @@ public class InformationRestController {
         return lineItemEntityListAll(orderId);
     }
 
+    @GetMapping("/{orderId}/read/review")
+    public List<ReviewsEntity> findReviewByOrderId(@PathVariable("orderId") String orderId) {
+        OrdersEntity ordersEntity = ordersService.findOrderEntityById(orderId);
+        return ordersEntity.getReviewsEntityList();
+    }
+
     @PostMapping("/{orderId}/review")
     public boolean reviewProduct(@RequestBody String body,
                                  @PathVariable("orderId") String orderId) {
