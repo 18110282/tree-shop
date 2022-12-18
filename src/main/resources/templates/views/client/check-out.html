@@ -24,6 +24,37 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Province<span>*</span></p>
+                                            <select id="selectProvince" required>
+                                                <option value="nope">Choose a province</option>
+                                            </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>District<span>*</span></p>
+                                        <select id="selectDistrict" style="width: 200px" required>
+<!--                                            <option>Choose a district</option>-->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Ward<span>*</span></p>
+                                        <select id="selectWard" style="width: 200px" required>
+                                            <!--                                            <option>Choose a district</option>-->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="checkout__input">
                                 <p>Địa Chỉ<span>*</span></p>
                                 <input type="text" class="checkout__input__add" th:name="address" required>
@@ -84,6 +115,92 @@
             </div>
         </div>
     </section>
+    <script type="text/javascript" th:inline="javascript">
+        let cbbProvince = $('#selectProvince');
+        let cbbDistrict = $('#selectDistrict');
+        let cbbWard = $('#selectWard');
+
+        function createXMLHttpRequest(url){
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Token", "a377794a-7d54-11ed-b190-ea4934f9883e");
+            xhr.setRequestHeader("Authorization", "Bearer {token}");
+            return xhr;
+        }
+
+        function loadDataProvinceCbb(){
+
+            let url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/province";
+            let xhr = createXMLHttpRequest(url);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    //console.log(xhr.status);
+                    //console.log(xhr.responseText);
+                    //console.log(xhr.response);
+                    let result = JSON.parse(xhr.response);
+                    let dataArr = result["data"];
+                    dataArr.sort((a,b) => (a.ProvinceName > b.ProvinceName) ? 1 : ((b.ProvinceName > a.ProvinceName) ? -1 : 0))
+                    $.each(dataArr, function (i, province){
+                        cbbProvince.append($('<option></option>').val(province.ProvinceID).html(province.ProvinceName));
+                    })
+                }};
+            xhr.send();
+        };
+        function loadDataDistrictCbb(provinceID){
+            cbbDistrict.empty();
+            let url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=" + provinceID;
+            if(provinceID === "nope"){
+                return;
+            }
+            let xhr = createXMLHttpRequest(url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+
+                    let result = JSON.parse(xhr.response);
+                    let dataArr = result["data"];
+                    dataArr.sort((a,b) => (a.DistrictName > b.DistrictName) ? 1 : ((b.DistrictName > a.DistrictName) ? -1 : 0))
+                    $.each(dataArr, function (i, district){
+                        cbbDistrict.append($('<option></option>').val(district.DistrictID).html(district.DistrictName));
+                    })
+                }};
+
+            xhr.send();
+        };
+
+        function loadDataWardCbb(districtID){
+            cbbWard.empty();
+            let url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + districtID;
+            let xhr = createXMLHttpRequest(url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+
+                    let result = JSON.parse(xhr.response);
+                    let dataArr = result["data"];
+                    dataArr.sort((a,b) => (a.WardName > b.WardName) ? 1 : ((b.WardName > a.WardName) ? -1 : 0))
+                    $.each(dataArr, function (i, ward){
+                        cbbWard.append($('<option></option>').val(ward.WardCode).html(ward.WardName));
+                    })
+                }};
+
+            xhr.send();
+        }
+
+        cbbProvince.on('click', function () {
+            let provinceID = $(this).val();
+            cbbWard.empty();
+            loadDataDistrictCbb(provinceID);
+        })
+
+        cbbDistrict.on('click', function () {
+            let districtID = $(this).val();
+            loadDataWardCbb(districtID);
+        })
+        $(document).ready(function () {
+            loadDataProvinceCbb();
+        });
+    </script>
     <!-- Checkout Section End -->
 </div>
 
