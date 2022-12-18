@@ -19,7 +19,7 @@
     <link rel="stylesheet" th:href="@{/web/css/bootstrap.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/web/css/font-awesome.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/web/css/elegant-icons.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/web/css/nice-select.css}" type="text/css">
+<!--    <link rel="stylesheet" th:href="@{/web/css/nice-select.css}" type="text/css">-->
     <link rel="stylesheet" th:href="@{/web/css/jquery-ui.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/web/css/owl.carousel.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/web/css/slicknav.min.css}" type="text/css">
@@ -44,7 +44,7 @@
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
-        <a th:href="@{/}"><img th:src="@{/web/img/logo.png}" alt=""></a>
+        <a th:href="@{/home}"><img th:src="@{/web/img/logo.png}" alt=""></a>
     </div>
     <div class="humberger__menu__cart ">
         <ul>
@@ -73,7 +73,7 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li><a th:href="@{/}">Trang Chủ</a></li>
+            <li><a th:href="@{/home}">Trang Chủ</a></li>
             <li><a th:href="@{/home/list-web-product}">Sản Phẩm</a></li>
             <li><a href="./blog.html">Tin Tức</a></li>
             <li><a th:href="@{/home/contact}">Liên Hệ</a></li>
@@ -139,13 +139,13 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a th:href="@{/}"><img th:src="@{/web/img/logo.png}" alt=""></a>
+                    <a th:href="@{/home}"><img th:src="@{/web/img/logo.png}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li><a th:href="@{/}">Trang Chủ</a></li>
+                        <li><a th:href="@{/home}">Trang Chủ</a></li>
                         <li><a th:href="@{/home/list-web-product}">Sản Phẩm</a></li>
                         <li><a href="./blog.html">Tin Tức</a></li>
                         <li><a th:href="@{/home/contact}">Liên Hệ</a></li>
@@ -217,9 +217,10 @@
                         <span>TREE SHOP</span>
                         <h2> Thả Ga Mua Sắm<br/>Cây Cảnh Nội Thất</h2>
                         <p>Miễn Phí Giao Hàng Cho Đơn Từ 9.999.000 VNĐ</p>
-                        <a href="#" class="primary-btn">ĐẶT HÀNG NGAY</a>
+                        <a onclick="viewResult()" class="primary-btn">ĐẶT HÀNG NGAY</a>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -252,7 +253,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a th:href="@{/}"><img th:src="@{/web/img/logo.png}" alt=""></a>
+                        <a th:href="@{/home}"><img th:src="@{/web/img/logo.png}" alt=""></a>
                     </div>
                     <ul>
                         <li>Address: Số 1 Võ Văn Ngân, Linh Chiểu, Thủ Đức, Hồ Chí Minh</li>
@@ -430,9 +431,9 @@
             if(confirm([[${registerMessage}]])){
                 location.assign("https://mail.google.com/mail");
             }
-            else{
-
-            }
+            // else{
+            //
+            // }
         });
     }
 </script>
@@ -453,7 +454,7 @@
 <script type="text/javascript" th:inline="javascript">
     $(function($) {
         let url = window.location.href;
-        let urlHome = window.location.protocol + "//" + window.location.host + "/";
+        let urlHome = window.location.protocol + "//" + window.location.host + "/home";
         $('li a').each(function () {
             if (url.includes("/list-web-product")) {
                 if(url.includes(this.href) && this.href !== urlHome) {
@@ -472,7 +473,7 @@
 
 <script th:src="@{/web/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/web/js/bootstrap.min.js}"></script>
-<script th:src="@{/web/js/jquery.nice-select.min.js}"></script>
+<!--<script th:src="@{/web/js/jquery.nice-select.min.js}"></script>-->
 <script th:src="@{/web/js/jquery-ui.min.js}"></script>
 <script th:src="@{/web/js/jquery.slicknav.js}"></script>
 <script th:src="@{/web/js/mixitup.min.js}"></script>
