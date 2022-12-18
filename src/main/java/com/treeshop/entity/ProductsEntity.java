@@ -40,8 +40,16 @@ public class ProductsEntity {
     private String categoryId;
     @Column(name = "enabled")
     private boolean enabled;
-    @Column(name="visit")
+    @Column(name = "visit")
     private Integer visit;
+    @Column(name = "height")
+    private Integer height;
+    @Column(name = "length")
+    private Integer length;
+    @Column(name = "width")
+    private Integer width;
+    @Column(name = "weight")
+    private Integer weight;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
@@ -80,7 +88,7 @@ public class ProductsEntity {
     public Integer discountPrice;
 
     @Transient
-    public Integer getDiscountPrice(){
+    public Integer getDiscountPrice() {
         return price * (100 - discountPercent) / 100;
     }
 
