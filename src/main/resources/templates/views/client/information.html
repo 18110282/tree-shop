@@ -231,7 +231,7 @@
                                                             <td class="order-pay-infor" colspan="2">Tổng tiền
                                                                 hàng</td>
                                                             <td th:if="${order.codeId != null}" class="order-pay-fee">
-                                                                <span th:text="${#numbers.formatDecimal(10000, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                <span th:text="${#numbers.formatDecimal(order.totalPrice * 100 / (100 - order.discountCodeEntity.discountPercent), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                             </td>
                                                             <td th:if="${order.codeId == null}" class="order-pay-fee">
                                                                 <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
@@ -348,7 +348,7 @@
                                                                     </td>
                                                                     <td th:if="${order.codeId != null}"
                                                                         class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(10000, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice * 100 / (100 - order.discountCodeEntity.discountPercent), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                     <td th:if="${order.codeId == null}"
                                                                         class="order-pay-fee">
@@ -437,7 +437,7 @@
                                                                     </td>
                                                                     <td th:if="${order.codeId != null}"
                                                                         class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(10000, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice * 100 / (100 - order.discountCodeEntity.discountPercent), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                     <td th:if="${order.codeId == null}"
                                                                         class="order-pay-fee">
@@ -515,7 +515,7 @@
                                                                     </td>
                                                                     <td th:if="${order.codeId != null}"
                                                                         class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(10002, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice * 100 / (100 - order.discountCodeEntity.discountPercent), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                     <td th:if="${order.codeId == null}"
                                                                         class="order-pay-fee">
@@ -616,7 +616,7 @@
                                                                     </td>
                                                                     <td th:if="${order.codeId != null}"
                                                                         class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(10000, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice * 100 / (100 - order.discountCodeEntity.discountPercent), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                     <td th:if="${order.codeId == null}"
                                                                         class="order-pay-fee">
@@ -1194,20 +1194,7 @@
         $(document).ready(function () {
             const arr = ['.delivering-order', '.waiting-order', '.all-order', '.cancel-order', '.success-order'];
             arr.forEach(function (item) {
-                // console.log("------------");
-                // console.log(item);
-                // console.log($(item));
-                // console.log(($(item).find('.card').length));
-                // console.log("------------");
-                if ($(item).find('.card').length === 1) {
-                    console.log("------------");
-                    console.log(item);
-                    console.log($(item));
-                    console.log(($(item).find('.card').length));
-                    console.log("------------");
-
-                }
-                else if ($(item).find('.card').length === 0) {
+                if ($(item).find('.card').length === 0) {
                     $(item).append("<div class=\"no-order\">\n" +
                         "                                            <form class=\"centered\">\n" +
                         "                                                <img src=\"/web/img/empty-deliver-removebg-preview.png\"\n" +
