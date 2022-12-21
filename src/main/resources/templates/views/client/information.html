@@ -247,10 +247,26 @@
                                                                 [[${order.discountCodeEntity.discountPercent}]] %
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td class="order-pay-infor" colspan="2">Tổng số tiền</td>
+                                                        <tr th:if="${order.codeId != null}">
+                                                            <td class="order-pay-infor" colspan="2">Còn
+                                                            </td>
                                                             <td class="order-pay-fee">
                                                                 <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                            </td>
+                                                            <td class="order-pay-fee">
+                                                                <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-pay-infor" colspan="2">Tổng số
+                                                                tiền
+                                                            </td>
+                                                            <td class="order-pay-fee">
+                                                                <span th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                             </td>
                                                         </tr>
                                                         <tr th:switch="${order.status}">
@@ -363,12 +379,26 @@
                                                                         %
                                                                     </td>
                                                                 </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Còn
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
                                                                 <tr>
                                                                     <td class="order-pay-infor" colspan="2">Tổng số
                                                                         tiền
                                                                     </td>
                                                                     <td class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -452,12 +482,26 @@
                                                                         %
                                                                     </td>
                                                                 </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Còn
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
                                                                 <tr>
                                                                     <td class="order-pay-infor" colspan="2">Tổng số
                                                                         tiền
                                                                     </td>
                                                                     <td class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                 </tr>
                                                                 </tfoot>
@@ -530,12 +574,26 @@
                                                                         %
                                                                     </td>
                                                                 </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Còn
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
                                                                 <tr>
                                                                     <td class="order-pay-infor" colspan="2">Tổng số
                                                                         tiền
                                                                     </td>
                                                                     <td class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -631,12 +689,26 @@
                                                                         %
                                                                     </td>
                                                                 </tr>
+                                                                <tr th:if="${order.codeId != null}">
+                                                                    <td class="order-pay-infor" colspan="2">Còn
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    </td>
+                                                                    <td class="order-pay-fee">
+                                                                        <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                    </td>
+                                                                </tr>
                                                                 <tr>
                                                                     <td class="order-pay-infor" colspan="2">Tổng số
                                                                         tiền
                                                                     </td>
                                                                     <td class="order-pay-fee">
-                                                                        <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                        <span th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>

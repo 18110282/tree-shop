@@ -13,7 +13,8 @@
         <div class="container">
             <div class="checkout__form">
                 <h4>THÔNG TIN THANH TOÁN</h4>
-                <form th:action="@{'/home/' + ${session.client.username} + '/create-order'}"  method="post" th:object="${order}">
+                <form th:action="@{'/home/' + ${session.client.username} + '/create-order'}" method="post"
+                      th:object="${order}">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <div class="row">
@@ -28,9 +29,9 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Province<span>*</span></p>
-                                            <select id="selectProvince" required>
-                                                <option value="nope">Choose a province</option>
-                                            </select>
+                                        <select id="selectProvince" required>
+                                            <option value="nope">Choose a province</option>
+                                        </select>
 
                                     </div>
                                 </div>
@@ -40,7 +41,7 @@
                                     <div class="checkout__input">
                                         <p>District<span>*</span></p>
                                         <select id="selectDistrict" style="width: 200px" required>
-<!--                                            <option>Choose a district</option>-->
+                                            <!--                                            <option>Choose a district</option>-->
                                         </select>
                                     </div>
                                 </div>
@@ -55,10 +56,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkout__input">
-                                <p>Địa Chỉ<span>*</span></p>
-                                <input type="text" class="checkout__input__add" th:name="address" required>
-                            </div>
+<!--                            <div class="checkout__input">-->
+<!--                                <p>Địa Chỉ<span>*</span></p>-->
+<!--                                <input type="text" class="checkout__input__add" th:name="address" required>-->
+<!--                            </div>-->
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
@@ -76,7 +78,8 @@
                             <div class="checkout__input">
                                 <p>Ghi Chú</p>
                                 <input type="text"
-                                       placeholder="Ghi chú đơn hàng của bạn. Ví dụ: Thời gian nhận hàng,..." th:name="note">
+                                       placeholder="Ghi chú đơn hàng của bạn. Ví dụ: Thời gian nhận hàng,..."
+                                       th:name="note">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -84,15 +87,38 @@
                                 <h4>Đơn Hàng Của Bạn</h4>
                                 <div class="checkout__order__products">Sản phẩm<span>Giá</span></div>
                                 <ul th:each="item :${cartDetailList}">
-                                    <li>[[${item.getProductsEntity.getProductName()}]] (x[[${item.quantity}]])<span th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span></li>
+                                    <li>[[${item.getProductsEntity.getProductName()}]] (x[[${item.quantity}]])<span
+                                            th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                    </li>
                                 </ul>
-                                <div class="checkout__order__total">Tổng tiền hàng <span th:text="${#numbers.formatDecimal(subTotal, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
-                                <div th:if="${discountPercent != 0}" class="checkout__order__total">Giảm: <span>[[${discountPercent}]]%</span></div>
-                                <div class="checkout__order__total">Thành tiền <span th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
+                                <div class="checkout__order__total">Tổng tiền hàng: <span
+                                        th:text="${#numbers.formatDecimal(subTotal, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                </div>
+                                <div th:if="${discountPercent != 0}" class="checkout__order__total">Giảm: <span>[[${discountPercent}]]%</span>
+                                </div>
+                                <div class="checkout__order__total" th:if="${discountPercent == 0}">Thành tiền: <span
+                                        th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                </div>
+                                <div class="checkout__order__total" th:if="${discountPercent != 0}">Còn: <span
+                                        th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                </div>
+                                <div class="checkout__order__total">Phí vận chuyển: <span
+                                        id="shipping-fee"></span>
+                                </div>
+                                <div class="checkout__order__total">Tổng cộng: <span
+                                        id="total-all-price"></span>
+                                </div>
                                 <div style="display:none;"><input th:name="subTotalPrice" th:value="${subTotal}"></div>
-                                <div th:if="${discountPercent != 0}" style="display:none;"><input th:name="discountPercent" th:value="${discountPercent}"></div>
-                                <div th:if="${discountPercent == 0}" style="display:none;"><input th:name="discountPercent" th:value="${0}"></div>
-                                <div style="display:none;"><input th:name="totalPrice" th:value="${total}"></div>
+                                <div th:if="${discountPercent != 0}" style="display:none;"><input
+                                        th:name="discountPercent" th:value="${discountPercent}"></div>
+                                <div th:if="${discountPercent == 0}" style="display:none;"><input
+                                        th:name="discountPercent" th:value="${0}"></div>
+                                <div style="display:none;">
+                                    <input th:name="totalPrice" th:value="${total}">
+                                    <input type="text" class="checkout__input__add" th:name="address" id="address-input">
+                                    <input type="text" class="checkout__input__add" th:name="shippingFee" id="shipping-fee-input">
+                                </div>
+
                                 <div class="checkout__input__checkbox">
                                     <label for="payment">
                                         Trả Tiền Khi Nhận (COD)
@@ -119,8 +145,85 @@
         let cbbProvince = $('#selectProvince');
         let cbbDistrict = $('#selectDistrict');
         let cbbWard = $('#selectWard');
+        let shippingFeeElement = $('#shipping-fee');
+        let totalAllPriceElement = $('#total-all-price');
 
-        function createXMLHttpRequest(url){
+
+        function getFeeShipment() {
+            let fromDistrictID, toDistrictID, toWardCode;
+            //E-commerce shipping service
+            let serviceTypeID = 2;
+
+            let cartDetailList = [[${cartDetailList}]];
+            let totalOrder = [[${total}]];
+            let weightOfOrder = 0;
+            let maxHeight = 0;
+            let maxLength = 0;
+            let maxWidth = 0;
+
+            cartDetailList.forEach(function (element) {
+                weightOfOrder += parseInt(element.totalWeightPerProduct);
+                maxHeight = (element.height > maxHeight) ? element.height : maxHeight;
+                maxLength = (element.length > maxLength) ? element.length : maxLength;
+                maxWidth = (element.width > maxWidth) ? element.width : maxWidth;
+            })
+
+            maxHeight += 10;
+            maxLength += 10;
+            maxWidth += 10;
+
+            // Thu Duc District
+            fromDistrictID = 3695;
+            toDistrictID = cbbDistrict.val();
+            toWardCode = cbbWard.val();
+
+            let informationToGetFee = {
+                service_type_id: "service_type_id=" + serviceTypeID,
+                insurance_value: "&insurance_value=" + totalOrder,
+                coupon: "&coupon=",
+                from_district_id: "&from_district_id=" + fromDistrictID,
+                to_district_id: "&to_district_id=" + toDistrictID,
+                to_ward_code: "&to_ward_code=" + toWardCode,
+                height: "&height=" + maxHeight,
+                length: "&length=" + maxLength,
+                weight: "&weight=" + weightOfOrder,
+                width: "&width=" + maxWidth
+            }
+            let url = "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?";
+            for (const [key, value] of Object.entries(informationToGetFee)) {
+                url += `${value}`;
+            }
+            console.log(url);
+            let xhr = createXMLHttpRequest(url);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    let result = JSON.parse(xhr.response);
+                    let data = result["data"];
+                    let shippingFeeVal =  data.service_fee;
+                    let totalOrderVal = parseFloat(shippingFeeVal) + totalOrder;
+
+                    let shippingFeeStr = getCurrencyStr(shippingFeeVal);
+                    let totalOrderStr = getCurrencyStr(totalOrderVal);
+
+                    shippingFeeElement.html(shippingFeeStr);
+                    totalAllPriceElement.html(totalOrderStr);
+                    let address = cbbProvince.val() + " - " + cbbDistrict.val() + " - " + cbbWard.val();
+                    $('#address-input').val(address);
+                    $('#shipping-fee-input').val(shippingFeeVal);
+
+                }
+
+            };
+            xhr.send();
+        }
+
+        function  getCurrencyStr(val){
+            let str = val.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+
+            return str.substring(0, str.length - 3) + '₫';
+        }
+        function createXMLHttpRequest(url) {
             let xhr = new XMLHttpRequest();
             xhr.open("GET", url);
             xhr.setRequestHeader("Accept", "application/json");
@@ -129,7 +232,7 @@
             return xhr;
         }
 
-        function loadDataProvinceCbb(){
+        function loadDataProvinceCbb() {
 
             let url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/province";
             let xhr = createXMLHttpRequest(url);
@@ -141,36 +244,44 @@
                     //console.log(xhr.response);
                     let result = JSON.parse(xhr.response);
                     let dataArr = result["data"];
-                    dataArr.sort((a,b) => (a.ProvinceName > b.ProvinceName) ? 1 : ((b.ProvinceName > a.ProvinceName) ? -1 : 0))
-                    $.each(dataArr, function (i, province){
+                    dataArr.sort((a, b) => (a.ProvinceName > b.ProvinceName) ? 1 : ((b.ProvinceName > a.ProvinceName) ? -1 : 0))
+                    $.each(dataArr, function (i, province) {
                         cbbProvince.append($('<option></option>').val(province.ProvinceID).html(province.ProvinceName));
                     })
-                }};
+                }
+            };
             xhr.send();
         };
-        function loadDataDistrictCbb(provinceID){
-            cbbDistrict.empty();
-            let url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=" + provinceID;
-            if(provinceID === "nope"){
+
+        function loadDataDistrictCbb(provinceID) {
+            //cbbDistrict.empty();
+            $('#shipping-fee').html("");
+            if (provinceID === "nope") {
                 return;
             }
+            let url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=" + provinceID;
             let xhr = createXMLHttpRequest(url);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
 
                     let result = JSON.parse(xhr.response);
                     let dataArr = result["data"];
-                    dataArr.sort((a,b) => (a.DistrictName > b.DistrictName) ? 1 : ((b.DistrictName > a.DistrictName) ? -1 : 0))
-                    $.each(dataArr, function (i, district){
+                    dataArr.sort((a, b) => (a.DistrictName > b.DistrictName) ? 1 : ((b.DistrictName > a.DistrictName) ? -1 : 0))
+                    $.each(dataArr, function (i, district) {
                         cbbDistrict.append($('<option></option>').val(district.DistrictID).html(district.DistrictName));
                     })
-                }};
+                }
+            };
 
             xhr.send();
         };
 
-        function loadDataWardCbb(districtID){
-            cbbWard.empty();
+        function loadDataWardCbb(districtID) {
+            //cbbWard.empty();
+            $('#shipping-fee').html("");
+            if (districtID === null) {
+                return;
+            }
             let url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + districtID;
             let xhr = createXMLHttpRequest(url);
             xhr.onreadystatechange = function () {
@@ -178,25 +289,37 @@
 
                     let result = JSON.parse(xhr.response);
                     let dataArr = result["data"];
-                    dataArr.sort((a,b) => (a.WardName > b.WardName) ? 1 : ((b.WardName > a.WardName) ? -1 : 0))
-                    $.each(dataArr, function (i, ward){
+                    dataArr.sort((a, b) => (a.WardName > b.WardName) ? 1 : ((b.WardName > a.WardName) ? -1 : 0))
+                    $.each(dataArr, function (i, ward) {
                         cbbWard.append($('<option></option>').val(ward.WardCode).html(ward.WardName));
                     })
-                }};
+                }
+            };
 
             xhr.send();
         }
 
         cbbProvince.on('click', function () {
-            let provinceID = $(this).val();
             cbbWard.empty();
+            cbbDistrict.empty();
+            shippingFeeElement.html("");
+            totalAllPriceElement.html("");
+
+            let provinceID = $(this).val();
             loadDataDistrictCbb(provinceID);
         })
-
         cbbDistrict.on('click', function () {
+            cbbWard.empty();
+            shippingFeeElement.html("");
+            totalAllPriceElement.html("");
+
             let districtID = $(this).val();
             loadDataWardCbb(districtID);
         })
+        cbbWard.on('click', function () {
+            getFeeShipment();
+        })
+
         $(document).ready(function () {
             loadDataProvinceCbb();
         });
