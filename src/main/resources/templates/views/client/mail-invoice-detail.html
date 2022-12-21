@@ -314,9 +314,17 @@
                                                             <td class="alignright" width="80%">Giảm giá:</td>
                                                             <td class="alignright">[[${discountPercent}]]%</td>
                                                         </tr>
+                                                        <tr th:if="${discountPercent}">
+                                                            <td class="alignright" width="80%">Còn:</td>
+                                                            <td class="alignright" style="color:red;"><span th:remove="tag" th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="alignright" width="80%">Phí vận chuyển:</td>
+                                                            <td class="alignright" style="color:red;"><span th:remove="tag" th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
+                                                        </tr>
                                                         <tr class="total">
                                                             <td class="alignright" width="80%">Thành tiền: </td>
-                                                            <td class="alignright" style="color:red;"><span th:remove="tag" th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
+                                                            <td class="alignright" style="color:red;"><span th:remove="tag" th:text="${#numbers.formatDecimal(order.totalOrder, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
                                                         </tr>
                                                         </tbody></table>
                                                 </td>
