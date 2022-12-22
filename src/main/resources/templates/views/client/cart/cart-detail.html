@@ -41,9 +41,7 @@
                                             style="color: red; font-family: Arial ">
                                             <strong>Đã hết hàng</strong></h6>
                                     </td>
-                                    <td class="shoping__cart__price">
-                                        [[${item.price}]]
-                                    </td>
+                                    <td class="shoping__cart__price"><span th:remove="tag" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
@@ -55,9 +53,7 @@
                                         </div>
                                     </td>
                                     <td class="shoping__cart__total"
-                                        th:id="'subtotal' + ${item.cartIdKey.getProductId()}">
-                                        [[${item.getTotalPerProduct()}]]
-                                    </td>
+                                        th:id="'subtotal' + ${item.cartIdKey.getProductId()}"><span th:remove="tag" th:text="${#numbers.formatDecimal(item.getTotalPerProduct(), 0, 'POINT', 0, 'POINT')} + '₫'"></span></td>
                                     <td class="shoping__cart__item__close">
                                         <a th:if="${session.client}"
                                            th:href="@{'/home/' + ${session.client.username} + '/cart/delete/' + ${item.cartIdKey.getProductId()}}"><span
@@ -131,18 +127,27 @@
             updateTotal();
         });
 
+        function  getCurrencyStr(val){
+            let str = val.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+
+            return str.substring(0, str.length - 3) + '₫';
+        }
+
         function updateTotal() {
             total = 0;
             $('.shoping__cart__total').each(function (index, element) {
-                total = total + parseInt(element.innerHTML);
+                totalPerProduct =  element.innerHTML.replace(/\D+/g, "");
+                //total = total + parseInt(element.innerHTML);
+                total = total + parseInt(totalPerProduct);
             });
-            $('#sub-total').text(total);
+            $('#sub-total').text(getCurrencyStr(total));
             if ([[${session.discountCode}]] != null) {
                 total = parseInt(total * (100 - [[${session.discountPercent}]]) / 100);
-                $('#all-total').text(total);
-            } else {
-                $('#all-total').text(total);
             }
+            // } else {
+            //     $('#all-total').text(total);
+            // }
+            $('#all-total').text(getCurrencyStr(total));
         }
 
         var proQty = $('.pro-qty');
@@ -203,7 +208,8 @@
         });
 
         function updateSubTotal(newSubtotal, productId) {
-            $("#subtotal" + productId).text(newSubtotal);
+            let subtotalStr = getCurrencyStr(parseInt(newSubtotal));
+            $("#subtotal" + productId).text(subtotalStr);
         }
     </script>
 </div>

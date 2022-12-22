@@ -47,12 +47,19 @@ public class OrdersEntity {
     private Integer shipperId;
     @Column(name = "review_flg")
     private boolean review_flg;
+    @Column(name = "shipping_fee")
+    private Integer shippingFee;
 
     @Transient
     private Integer subTotalPrice;
 
     @Transient
     private Integer discountPercent;
+
+    @Transient
+    public Integer getTotalOrder(){
+        return totalPrice + shippingFee;
+    }
 
     /**
      * @JsonIgnoreProperties (value = {"applications", "hibernateLazyInitializer"})

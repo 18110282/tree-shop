@@ -168,9 +168,9 @@
                 maxWidth = (element.width > maxWidth) ? element.width : maxWidth;
             })
 
-            maxHeight += 10;
-            maxLength += 10;
-            maxWidth += 10;
+            maxHeight += 8;
+            maxLength += 8;
+            maxWidth += 8;
 
             // Thu Duc District
             fromDistrictID = 3695;
@@ -193,7 +193,7 @@
             for (const [key, value] of Object.entries(informationToGetFee)) {
                 url += `${value}`;
             }
-            console.log(url);
+            //console.log(url);
             let xhr = createXMLHttpRequest(url);
 
             xhr.onreadystatechange = function () {
@@ -208,9 +208,10 @@
 
                     shippingFeeElement.html(shippingFeeStr);
                     totalAllPriceElement.html(totalOrderStr);
-                    let address = cbbProvince.val() + " - " + cbbDistrict.val() + " - " + cbbWard.val();
+                    let address = cbbProvince.find('option:selected').text() + " - " + cbbDistrict.find('option:selected').text()  + " - " + cbbWard.find('option:selected').text();
                     $('#address-input').val(address);
                     $('#shipping-fee-input').val(shippingFeeVal);
+                    console.log(address);
 
                 }
 
