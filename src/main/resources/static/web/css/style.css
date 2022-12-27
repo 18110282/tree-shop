@@ -4023,3 +4023,105 @@ ol {
 /*.product__details__pic__slider.owl-carousel .owl-item {*/
 /*	width: 20%!important;*/
 /*}*/
+/*Customize radio button size for search*/
+.size-filter .btn{
+	background: #f5f5f5;
+	color: #6f6f6f;
+	font-size: 16px;
+	border: #f5f5f5;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: #7fad39!important;
+}
+
+.size-filter label{
+	border: #7fad39!important;
+}
+
+.size-filter label.btn:active{
+	background: #7fad39!important;
+	color: #6f6f6f;
+	font-size: 16px;
+	border: #f5f5f5;
+	box-shadow: none!important;
+}
+
+.size-filter label:focus{
+	background: #7fad39!important;
+	color: #6f6f6f;
+	font-size: 16px;
+	border: #f5f5f5;
+}
+
+.size-filter label:after{
+	background: #7fad39!important;
+	color: #6f6f6f;
+	font-size: 16px;
+	border: #f5f5f5;
+}
+
+.size-filter .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+	color: #fff;
+	background-color: #7fad39!important;
+	border-color: #7fad39!important;
+	box-shadow: none!important;
+}
+
+.size-filter .btn-group-toggle{
+	width: 100%;
+}
+
+/*Customize radio button weight for search*/
+.shop-weight-range-filter__range-line {
+	flex: 1;
+	height: 1px;
+	background: #bdbdbd;
+	margin: 0 0.625rem;
+}
+
+.weight-filter .blog__sidebar__recent__item {
+	display: block;
+}
+
+.weight-filter .blog__sidebar__recent__item:last-child {
+	margin-bottom: 0;
+}
+
+.weight-filter .input-group-text{
+	background: none;
+	box-shadow: none;
+	border: none!important;
+}
+
+.action-filter .form-control{
+	border: none!important;
+	margin: 0!important;
+	padding: 0!important;
+}
+
+.action-filter .input-group{
+	margin: 0!important;
+}
+
+.action-filter .btn-outline-success{
+	color: #7fad39!important;
+	border-color: #7fad39!important;
+}
+
+.action-filter .btn-outline-success:hover{
+	box-shadow: none;
+	background: transparent;
+	box-shadow: none;
+}
+
+.action-filter .btn-outline-success:focus{
+	box-shadow: none!important;
+	background: transparent!important;
+	box-shadow: none!important;
+}
+
+.action-filter a:focus{
+	box-shadow: none!important;
+	background: transparent!important;
+	box-shadow: none!important;
+}
