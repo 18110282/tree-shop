@@ -111,13 +111,33 @@
                             </div>
                         </div>
                         <div class="form-group">
-<!--                            <label class="col-sm-1 control-label no-padding-right" for="form-field-7">-->
-<!--                                Mô tả </label>-->
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-7">
+                                Mô tả(tóm tắt)</label>
 
-<!--                            <div class="col-sm-6">-->
-<!--                                <textarea id="form-field-7" class="autosize-transition form-control tColor"-->
-<!--                                          onfocus="this.style.color='black'" th:field="*{description}" ></textarea>-->
-<!--                            </div>-->
+                            <div class="col-sm-6">
+                                <textarea id="form-field-7" class="autosize-transition form-control tColor"
+                                          onfocus="this.style.color='black'" th:field="*{description}" ></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-11">
+                                Chiều cao(cm) </label>
+
+                            <div class="col-sm-2">
+                                <input type="number" id="form-field-11" placeholder="Giá"
+                                       class="col-xs-10 col-sm-5" onfocus="this.style.color='black'"
+                                       th:field="*{height}"  required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="form-field-10">
+                                Khối lượng(g)</label>
+
+                            <div class="col-sm-2">
+                                <input type="number" id="form-field-10" placeholder="Giá"
+                                       class="col-xs-10 col-sm-5" onfocus="this.style.color='black'"
+                                       th:field="*{weight}"  required/>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label no-padding-right" for="id-input-file-2">
@@ -143,16 +163,18 @@
                             </div>
                         </div>
                         <input class="hidden" type="text" th:field="*{visit}">
+                        <input class="hidden" type="text" th:field="*{length}">
+                        <input class="hidden" type="text" th:field="*{width}">
                         <input class="hidden" type="text" th:field="*{discountPercent}">
                         <div class="form-group">
                             <label class="col-sm-1 control-label no-padding-right">
-                                Test Edit </label>
+                                Mô tả(chi tiết)</label>
 
                             <div class="col-sm-10">
                                 <div class="wysiwyg-editor" id="editor1" data-target="content"></div>
                             </div>
                             <textarea id="content" name="content" class="autosize-transition form-control tColor hidden"
-                                      onfocus="this.style.color='black'" th:field="*{description}" ></textarea>
+                                      onfocus="this.style.color='black'" th:field="*{information}" ></textarea>
                         </div>
                         <br>
                         <div class="col-md-offset-1 col-md-9">
@@ -194,7 +216,7 @@
                     <script type="text/javascript" th:inline="javascript">
                         $(document).ready(
                             function () {
-                                let content = [[${product.description}]];
+                                let content = [[${product.information}]];
                                 $('#editor1').html(content);
                                 $('#id-input-file-2').change(function (){
                                     showImageThumnail(this);
@@ -204,7 +226,7 @@
                         $(".copy-editor").on("click", function() {
 
                             var targetName = $("#editor1").attr('data-target');
-                            alert(targetName);
+                            //alert(targetName);
 
                             $('#'+targetName).val($('#editor1').html());
                         });

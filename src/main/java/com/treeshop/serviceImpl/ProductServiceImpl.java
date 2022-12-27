@@ -54,6 +54,8 @@ public class ProductServiceImpl implements ProductsService {
         String fileNameVideo = StringUtils.cleanPath(Objects.requireNonNull(multipartFileVideo.getOriginalFilename()));
         productsEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
         productsEntity.setEnabled(true);
+        productsEntity.setLength(20);
+        productsEntity.setWidth(30);
         Integer visit = productsEntity.getVisit();
         Integer discountPercent = productsEntity.getDiscountPercent();
 

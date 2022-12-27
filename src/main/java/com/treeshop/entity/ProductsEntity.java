@@ -50,6 +50,8 @@ public class ProductsEntity {
     private Integer width;
     @Column(name = "weight")
     private Integer weight;
+    @Column(name = "information")
+    private String information;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
