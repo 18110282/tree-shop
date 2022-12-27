@@ -44,8 +44,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6"  id="img-zoomer-box">
-                <div class="product__details__pic">
+            <div class="col-lg-6 col-md-6" id="img-zoomer-box">
+                <div class="product__details__pic" >
 <!--                    <div id="img-zoomer-box">-->
                     <div class="product__details__pic__item">
                         <img class="product__details__pic__item--large"
@@ -83,8 +83,8 @@
 <!--                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>-->
                     <div class="product__details__text" id="error" style="color: red"> </div>
                     <ul>
-                        <li><b>Chiều cao</b> <span>[[${product.height}]] cm</span></li>
-                        <li><b>Khối lượng</b> <span>[[${product.weight}]] g</span></li>
+<!--                        <li><b>Chiều cao</b> <span>[[${product.height}]] cm</span></li>-->
+<!--                        <li><b>Khối lượng</b> <span>[[${product.weight}]] g</span></li>-->
                         <li><b>Số lượng</b> <span>[[${product.unitInStock}]] sản phẩm có sẵn.</span></li>
                         <li><b style="color: red; font-size: large"><a data-toggle="modal" data-target="#playVideoProduct">XEM VIDEO</a></b>
                             <div class="share">
@@ -100,7 +100,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
-                               aria-selected="true">Mô Tả Sản Phẩm</a>
+                               aria-selected="true">Thông Tin Sản Phẩm</a>
                         </li>
 <!--                        <li class="nav-item">-->
 <!--                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"-->
@@ -114,7 +114,10 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="product__details__tab__desc">
-                                <h6>Mô tả sản phẩm</h6>
+<!--                                <h6>Mô tả sản phẩm</h6>-->
+                                <b>- Chiều cao:</b> <span>[[${product.height}]] cm</span>
+                                <br>
+                                <b>- Khối lượng:</b> <span>[[${product.weight}]] g</span>
                                 <p style="white-space: break-spaces;" th:utext="${product.information}"></p>
                             </div>
                         </div>
