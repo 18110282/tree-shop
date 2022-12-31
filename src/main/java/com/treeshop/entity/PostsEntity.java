@@ -25,7 +25,21 @@ public class PostsEntity {
     private Timestamp createDate;
     @Column(name = "user_name", length = 20)
     private String username;
+    @Column(name = "enabled")
+    private boolean enabled;
+    @Column(name = "introduce")
+    private String introduce;
 
+    @Transient
+    private String author = "admin";
+
+    @Transient
+    public String getPhotosImageHeaderPath(){
+        if (headerImage == null || postsId == null) {
+            return null;
+        }
+        return "/dynamic-resources/post-imgs/" + postsId + "/" + headerImage;
+    }
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "postsEntity")
     private List<ItemPostsListEntity> itemPostsListEntityList;
 

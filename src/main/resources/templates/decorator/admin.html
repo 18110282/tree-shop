@@ -249,6 +249,35 @@
                     </li>
                 </ul>
             </li>
+            <li id="manage-posts">
+                <a th:href="@{/admin/}" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-product-hunt"></i>
+                    <span class="menu-text"> Quản lí bài viết </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a th:href="@{/admin/post/list}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Danh sách bài viết
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a th:href="@{/admin/post/add-post}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Thêm bài viết
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
             <li id="manage-shipment">
                 <a th:href="@{/admin/}" class="dropdown-toggle">
                     <i class="menu-icon fa fa-car"></i>
