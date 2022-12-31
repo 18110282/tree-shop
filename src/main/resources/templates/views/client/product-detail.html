@@ -72,15 +72,15 @@
                     <div class="product__details__price" th:if="${product.discountPercent == 0}"><span th:remove="tag" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
                     <p>[[${product.description}]]</p>
                     <div style="font-family: Arial" class="product__details__price" th:if="${product.unitInStock == 0}"> Hết hàng</div>
-                    <div class="product__details__quantity" th:if="${product.unitInStock != 0}">
+                    <div class="product__details__quantity mr-0"  th:if="${product.unitInStock != 0}">
                         <div class="quantity">
-                            <div class="pro-qty">
+                            <div class="pro-qty" style="height: 53px!important;">
                                 <input type="text" value="1"  id="quantity" class="quantity">
                             </div>
                         </div>
                     </div>
-                    <button class="primary-btn" href="" th:if="${product.unitInStock != 0}" onclick="addToCart()">THÊM VÀO GIỎ HÀNG</button>
-<!--                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>-->
+                    <div class="btn primary-btn mr-0" href="" th:if="${product.unitInStock != 0}" onclick="addToCart()">THÊM VÀO GIỎ HÀNG</div>
+                    <div class="like-tree btn primary-btn" style="background: #f5f5f5"><span class="fa fa-heart" style="color: red; font-size: 19px"></span></div><!--                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>-->
                     <div class="product__details__text" id="error" style="color: red"> </div>
                     <ul>
 <!--                        <li><b>Chiều cao</b> <span>[[${product.height}]] cm</span></li>-->

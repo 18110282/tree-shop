@@ -28,42 +28,6 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Province<span>*</span></p>
-                                        <select id="selectProvince" required>
-                                            <option value="nope">Choose a province</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>District<span>*</span></p>
-                                        <select id="selectDistrict" style="width: 200px" required>
-                                            <!--                                            <option>Choose a district</option>-->
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Ward<span>*</span></p>
-                                        <select id="selectWard" style="width: 200px" required>
-                                            <!--                                            <option>Choose a district</option>-->
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-<!--                            <div class="checkout__input">-->
-<!--                                <p>Địa Chỉ<span>*</span></p>-->
-<!--                                <input type="text" class="checkout__input__add" th:name="address" required>-->
-<!--                            </div>-->
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
                                         <p>Số Điện Thoại<span>*</span></p>
                                         <input type="text" th:name="phoneNumber" required>
                                     </div>
@@ -75,6 +39,38 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="checkout__input">
+                                        <p>Tỉnh/ thành<span>*</span></p>
+                                        <select class="item-address" id="selectProvince" style="width: 100%" required>
+                                            <option value="nope">Chọn Tỉnh/ thành</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="checkout__input">
+                                        <p>Quận/ huyện<span>*</span></p>
+                                        <select class="item-address" id="selectDistrict" style="width: 100%" required>
+                                            <option>Chọn Quận/ huyện</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="checkout__input">
+                                        <p>Phường/ xã<span>*</span></p>
+                                        <select class="item-address" id="selectWard" style="width: 100%" required>
+                                            <option>Chọn Phường/ xã</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="checkout__input">-->
+<!--                                <p>Địa Chỉ<span>*</span></p>-->
+<!--                                <input type="text" class="checkout__input__add" th:name="address" required>-->
+<!--                            </div>-->
+
                             <div class="checkout__input">
                                 <p>Ghi Chú</p>
                                 <input type="text"

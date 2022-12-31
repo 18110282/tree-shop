@@ -4024,6 +4024,25 @@ ol {
 /*	width: 20%!important;*/
 /*}*/
 /*Customize radio button size for search*/
+.sidebar__item h5 {
+	color: #1c1c1c;
+	margin-bottom: 25px;
+}
+.size-filter .btn{
+	background: #f5f5f5;
+	color: #6f6f6f;
+	font-size: 16px;
+	border: #f5f5f5;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.size-filter .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+	color: #fff;
+	background-color: #7fad39!important;
+	border-color: #7fad39!important;
+	box-shadow: none!important;
+}
+
 .size-filter .btn{
 	background: #f5f5f5;
 	color: #6f6f6f;
@@ -4033,7 +4052,6 @@ ol {
 	padding-bottom: 10px;
 	border: #7fad39!important;
 }
-
 .size-filter label{
 	border: #7fad39!important;
 }
@@ -4092,36 +4110,160 @@ ol {
 	box-shadow: none;
 	border: none!important;
 }
-
-.action-filter .form-control{
-	border: none!important;
-	margin: 0!important;
-	padding: 0!important;
+/*Customize radio button price for search*/
+.price-radio.customRadio li{
+	list-style: none;
+}
+.price-radio.customRadio input[type="radio"] {
+	position: absolute;
+	left: -9999px;
 }
 
-.action-filter .input-group{
-	margin: 0!important;
+
+.price-radio.customRadio input[type="radio"]+label {
+	position: relative;
+	padding: 0px 0 0 40px;
+	cursor: pointer;
 }
 
-.action-filter .btn-outline-success{
-	color: #7fad39!important;
-	border-color: #7fad39!important;
+.price-radio.customRadio input[type="radio"]+label:before {
+	content: '';
+	background: #fff;
+	border: 2px solid #7fad39;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
-.action-filter .btn-outline-success:hover{
-	box-shadow: none;
-	background: transparent;
-	box-shadow: none;
+.price-radio.customRadio input[type="radio"]+label:after {
+	content: '';
+	background: #7fad39;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	opacity: 0;
+	transform: scale(2);
+	transition: transform 0.3s linear, opacity 0.3s linear;
 }
 
-.action-filter .btn-outline-success:focus{
-	box-shadow: none!important;
-	background: transparent!important;
-	box-shadow: none!important;
+.price-radio.customRadio input[type="radio"]:checked+label:after {
+	opacity: 1;
+	transform: scale(1);
+}
+/*Customize radio button size for search*/
+.size-radio.customRadio li{
+	list-style: none;
+}
+.size-radio.customRadio input[type="radio"] {
+	position: absolute;
+	left: -9999px;
 }
 
-.action-filter a:focus{
-	box-shadow: none!important;
-	background: transparent!important;
-	box-shadow: none!important;
+
+.size-radio.customRadio input[type="radio"]+label {
+	position: relative;
+	padding: 0px 0 0 40px;
+	cursor: pointer;
+}
+
+.size-radio.customRadio input[type="radio"]+label:before {
+	content: '';
+	background: #fff;
+	border: 2px solid #7fad39;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.size-radio.customRadio input[type="radio"]+label:after {
+	content: '';
+	background: #7fad39;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	opacity: 0;
+	transform: scale(2);
+	transition: transform 0.3s linear, opacity 0.3s linear;
+}
+
+.size-radio.customRadio input[type="radio"]:checked+label:after {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.sidebar__item h5 {
+	color: #1c1c1c;
+	font-weight: 550;
+	margin-bottom: 10px;
+	font-size: 19px!important;
+}
+
+/* Css combobox address*/
+.checkout__form .item-address{
+	height: 40px;
+	color: #737373;;
+	padding-left: 20px;
+	border: 1px solid #737373;
+}
+.checkout__form input{
+	height: 40px;
+	color: #737373;
+	border: 1px solid #737373;
+}
+
+/* Cass action filter*/
+.action-filter .btn-group{
+	width: 100%;
+}
+.action-filter input[type="radio"] {
+	visibility: hidden;
+}
+
+.action-filter .reset-filter.btn.btn-success {
+	background-color: #ddd;
+	color: #333;
+	border: none;
+}
+
+.action-filter .reset-filter.btn-success:not(:disabled):not(.disabled).active, .reset-filter.btn-success:not(:disabled):not(.disabled):active, .show>.reset-filter.btn-success.dropdown-toggle {
+	background-color: #ddd;
+	color: #333;
+	border: none;
+}
+
+action-filter .apply-filter.btn.btn-success {
+	color: #fff;
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.action-filter .apply-filter.btn-success:not(:disabled):not(.disabled).active, .apply-filter.btn-success:not(:disabled):not(.disabled):active, .show>.apply-filter.btn-success.dropdown-toggle {
+	color: #fff;
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+/*customize icon like tree for user's collection*/
+.like-tree.sub-like-tree{
+	color: #dddddd;
+}
+
+.like-tree.add-like-tree{
+	color: #c82333;
+}
+
+.like-tree.btn.primary-btn:hover{
+	color: #c82333!important;
 }
