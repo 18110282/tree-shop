@@ -368,6 +368,7 @@
                 $('input[name=radio-height]').prop('checked',false);
                 $("#minamount").val("");
                 $("#maxamount").val("");
+                $("#search-submit").prop("disabled", false);
             }
 
             function checkPrice() {
@@ -380,7 +381,7 @@
                     errorInput.html("Không thể tìm giá âm        ");
                 } else if (min > max) {
                     search_btn.prop("disabled", true);
-                    errorInput.html("Giá trị bên trái phải nhỏ hơn bên phải");
+                    errorInput.html("Giá trị nhập ô bên trái phải nhỏ hơn bên phải");
                 } else {
                     search_btn.prop("disabled", false);
                     errorInput.html("");
