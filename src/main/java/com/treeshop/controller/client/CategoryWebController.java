@@ -36,7 +36,7 @@ public class CategoryWebController {
                                                      @PathVariable(name = "page") Integer currentPage) {
         Page<ProductsEntity> productsEntityPage = categoryService.findListProductInCategory(categoryId, currentPage);
         Integer totalPages = productsEntityPage.getTotalPages();
-        commonController.setUpCommonAttributeOfListWebProduct(productsEntityPage, session, model);
+        commonController.setUpCommonAttributeOfListWebProduct(productsEntityPage.getContent(), productsEntityPage.getTotalElements(), session, model);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPagesByCategory", totalPages);

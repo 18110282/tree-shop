@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SearchServiceImpl implements SearchService {
     private final ProductsRepository productsRepository;
@@ -26,5 +28,10 @@ public class SearchServiceImpl implements SearchService {
     public Page<ProductsEntity> searchProductByPrice(Integer minPrice, Integer maxPrice, Integer number) {
         Pageable pageable = PageRequest.of(number - 1, 9);
         return productsRepository.findAllByPriceBetweenAndEnabledIsTrue(minPrice, maxPrice, pageable);
+    }
+
+    @Override
+    public List<ProductsEntity> searchProductByCondition(Integer minPrice, Integer maxPrice, String weight, String height) {
+        return productsRepository.searchByCondition(minPrice, maxPrice, weight, height);
     }
 }

@@ -31,22 +31,31 @@
                             <hr>
                         </div>
                         <!-- 2022/12/03 UPD -->
-                        <form>
+                        <form th:action="@{/home/list-web-product/search}" method="get">
                             <div class="sidebar__item" style="margin-bottom: 10px!important;">
                                 <h4 class="mb-3"><i class="fa fa-filter"></i> Bộ Lọc Tìm Kiếm</h4>
                                 <h5>Khối Lượng</h5>
                                 <div class="price-range-wrap">
                                     <div class="price-radio customRadio">
                                         <li>
-                                            <input type="radio" name="radio-price" id="radio1" />
+                                            <input th:if="${weight_check == null or weight_check == '2000-10000' or weight_check == '>10000'}"
+                                                   type="radio" name="radio-weight" id="radio1" value="<2000"/>
+                                            <input th:if="${weight_check == '<2000'}" type="radio" name="radio-weight"
+                                                   id="radio1" value="<2000" checked/>
                                             <label class="radio" for="radio1">Dưới 2.000 gam </label>
                                         </li>
                                         <li>
-                                            <input type="radio" name="radio-price" id="radio2" />
+                                            <input th:if="${weight_check == null or weight_check == '<2000' or weight_check == '>10000'}"
+                                                   type="radio" name="radio-weight" id="radio2" value="2000-10000"/>
+                                            <input th:if="${weight_check == '2000-10000'}" type="radio"
+                                                   name="radio-weight" id="radio2" value="2000-10000" checked/>
                                             <label for="radio2">2.000 - 10.000 gam</label>
                                         </li>
                                         <li>
-                                            <input type="radio" name="radio-price" id="radio3" />
+                                            <input th:if="${weight_check == null or weight_check == '<2000' or weight_check == '2000-10000'}"
+                                                   type="radio" name="radio-weight" id="radio3" value=">10000"/>
+                                            <input th:if="${weight_check == '>10000'}" type="radio" name="radio-weight"
+                                                   id="radio3" value=">10000" checked/>
                                             <label for="radio3">Trên 10.000 gam</label>
                                         </li>
                                     </div>
@@ -57,15 +66,24 @@
                                 <div class="size-filter">
                                     <div class="size-radio customRadio">
                                         <li>
-                                            <input type="radio" name="radio" id="radio4" checked="checked"/>
+                                            <input th:if="${height_check == null or height_check == '>150' or height_check == '50-150'}"
+                                                   type="radio" name="radio-height" id="radio4" value="<50"/>
+                                            <input th:if="${height_check == '<50'}" type="radio" name="radio-height"
+                                                   id="radio4" value="<50" checked/>
                                             <label class="radio" for="radio4">Dưới 50 cm </label>
                                         </li>
                                         <li>
-                                            <input type="radio" name="radio" id="radio5" />
+                                            <input th:if="${height_check == null or height_check == '<50' or height_check == '>150'}"
+                                                   type="radio" name="radio-height" id="radio5" value="50-150"/>
+                                            <input th:if="${height_check == '50-150'}" type="radio" name="radio-height"
+                                                   id="radio5" value="50-150" checked/>
                                             <label for="radio5">50 cm - 150 cm</label>
                                         </li>
                                         <li>
-                                            <input type="radio" name="radio" id="radio6" />
+                                            <input th:if="${height_check == null or height_check == '<50' or height_check == '50-150'}"
+                                                   type="radio" name="radio-height" id="radio6" value=">150"/>
+                                            <input th:if="${height_check == '>150'}" type="radio" name="radio-height"
+                                                   id="radio6" value=">150" checked/>
                                             <label for="radio6">Trên 150 cm</label>
                                         </li>
                                     </div>
@@ -75,18 +93,26 @@
                                 <h5>Khoảng Giá</h5>
                                 <div class="weight-filter">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" style="font-size: 15px!important;">
+                                        <input type="number" id="minamount" name="min" th:value="${minP}"
+                                               onclick="checkPrice()" onkeyup="checkPrice()" class="form-control"
+                                               style="font-size: 15px!important;">
                                         <span class="input-group-text">-</span>
-                                        <input type="number" class="form-control" style="font-size: 15px!important;">
+                                        <input type="number" id="maxamount" name="max" th:value="${maxP}"
+                                               onclick="checkPrice()" onkeyup="checkPrice()" class="form-control"
+                                               style="font-size: 15px!important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <span id="errorInput" style="color: red"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="sidebar__item" style="margin-bottom: 15px!important;">
                                 <div class="action-filter">
                                     <div class="form-group text-center">
-                                        <div class="btn-group" data-toggle="buttons">
-                                            <button type="button" class="reset-filter mr-1">Làm Mới</button>
-                                            <button type="submit" class="apply-filter ml-1">Áp Dụng</button>
+                                        <div class="btn-group">
+                                            <button type="button"  onclick="resetSearhInput()" class="reset-filter mr-1">Làm Mới</button>
+                                            <button type="submit" id="search-submit" class="apply-filter ml-1">Áp Dụng
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -132,8 +158,10 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>[[${item.productName}]]</h6>
-                                                    <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
-                                                    <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                    <span th:if="${item.discountPercent != 0}"
+                                                          th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                    <span th:if="${item.discountPercent == 0}"
+                                                          th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                 </div>
                                             </a>
                                         </th:block>
@@ -149,8 +177,10 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>[[${item.productName}]]</h6>
-                                                    <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
-                                                    <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                    <span th:if="${item.discountPercent != 0}"
+                                                          th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                    <span th:if="${item.discountPercent == 0}"
+                                                          th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                 </div>
                                             </a>
                                         </th:block>
@@ -193,7 +223,9 @@
                                                     <a th:href="@{'/home/product/' + ${discountProduct.productId} + '/detail'}">[[${discountProduct.productName}]]</a>
                                                 </h5>
                                                 <div class="product__item__price">
-                                                    <span th:remove="tag" th:text="${#numbers.formatDecimal(discountProduct.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span th:text="${#numbers.formatDecimal(discountProduct.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                    <span th:remove="tag"
+                                                          th:text="${#numbers.formatDecimal(discountProduct.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span
+                                                        th:text="${#numbers.formatDecimal(discountProduct.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -205,13 +237,13 @@
                     <div class="filter__item">
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
-<!--                                <div class="filter__sort">-->
-<!--                                    <span>Sắp Xếp</span>-->
-<!--                                    <select>-->
-<!--                                        <option value="0">Mặc Định</option>-->
-<!--                                        <option value="0">Thời Gian</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
+                                <!--                                <div class="filter__sort">-->
+                                <!--                                    <span>Sắp Xếp</span>-->
+                                <!--                                    <select>-->
+                                <!--                                        <option value="0">Mặc Định</option>-->
+                                <!--                                        <option value="0">Thời Gian</option>-->
+                                <!--                                    </select>-->
+                                <!--                                </div>-->
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
@@ -228,22 +260,22 @@
                     </div>
                     <div class="row">
                         <th:block th:each="product :${listProduct}">
-<!--                            <div class="col-lg-4 col-md-6 col-sm-6">-->
-<!--                                <div class="product__item">-->
-<!--                                    <div class="product__item__pic set-bg" th:data-setbg="@{/web/img/product/product-2.jpg}">-->
-<!--                                        <ul class="product__item__pic__hover">-->
-<!--                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>-->
-<!--                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>-->
-<!--                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>-->
-<!--                                        </ul>-->
-<!--                                    </div>-->
-<!--                                    <div class="product__item__text">-->
-<!--                                        <h6><a href="#">Crab Pool Security</a></h6>-->
-<!--                                        <h5>$30.00</h5>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </th:block>-->
+                            <!--                            <div class="col-lg-4 col-md-6 col-sm-6">-->
+                            <!--                                <div class="product__item">-->
+                            <!--                                    <div class="product__item__pic set-bg" th:data-setbg="@{/web/img/product/product-2.jpg}">-->
+                            <!--                                        <ul class="product__item__pic__hover">-->
+                            <!--                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>-->
+                            <!--                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>-->
+                            <!--                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>-->
+                            <!--                                        </ul>-->
+                            <!--                                    </div>-->
+                            <!--                                    <div class="product__item__text">-->
+                            <!--                                        <h6><a href="#">Crab Pool Security</a></h6>-->
+                            <!--                                        <h5>$30.00</h5>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                        </th:block>-->
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__discount__item">
                                     <div class="product__discount__item__pic set-bg"
@@ -263,9 +295,13 @@
                                         <h5><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}">[[${product.productName}]]</a>
                                         </h5>
                                         <div th:if="${product.discountPercent != 0}" class="product__item__price">
-                                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
+                                            <span th:remove="tag"
+                                                  th:text="${#numbers.formatDecimal(product.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span
+                                                th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                        </div>
                                         <div th:if="${product.discountPercent == 0}" class="product__item__price">
-                                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:remove="tag"
+                                                  th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                         </div>
                                     </div>
                                     <br><br>
@@ -318,21 +354,36 @@
         <script type="text/javascript" th:inline="javascript" th:if="${orderSuccess}">
             alert([[${orderSuccess}]])
         </script>
-        <script type="text/javascript">
-            function checkPrice(){
-                let min= parseInt($("#minamount").val());
+        <script type="text/javascript" th:inline="javascript">
+            $(document).ready(function () {
+                if ([[${minP}]] != null) {
+                    $("#minamount").val([[${minP}]]);
+                }
+                if ([[${maxP}]] != null) {
+                    $("#maxamount").val([[${maxP}]]);
+                }
+            })
+            function resetSearhInput() {
+                $('input[name=radio-weight]').prop('checked',false);
+                $('input[name=radio-height]').prop('checked',false);
+                $("#minamount").val("");
+                $("#maxamount").val("");
+                $("#search-submit").prop("disabled", false);
+                $("#errorInput").html("");
+            }
+
+            function checkPrice() {
+                let min = parseInt($("#minamount").val());
                 let max = parseInt($("#maxamount").val());
-                let search_btn = $("#searchPrice");
+                let search_btn = $("#search-submit");
                 let errorInput = $("#errorInput");
-                if(min < 0 || max < 0){
+                if (min < 0 || max < 0) {
                     search_btn.prop("disabled", true);
-                    errorInput.html("Không thể tìm giá âm");
-                }
-                else if(min > max){
+                    errorInput.html("Không thể tìm giá âm        ");
+                } else if (min > max) {
                     search_btn.prop("disabled", true);
-                    errorInput.html("Giá trị bên trái phải nhỏ hơn bên phải");
-                }
-                else {
+                    errorInput.html("Giá trị nhập ô bên trái phải nhỏ hơn bên phải");
+                } else {
                     search_btn.prop("disabled", false);
                     errorInput.html("");
                 }

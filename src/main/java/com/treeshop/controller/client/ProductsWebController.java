@@ -48,7 +48,7 @@ public class ProductsWebController {
         //List All Product
         Page<ProductsEntity> productsEntityPage = productsService.findAll(currentPage);
         Integer totalPages = productsEntityPage.getTotalPages();
-        commonController.setUpCommonAttributeOfListWebProduct(productsEntityPage, session, model);
+        commonController.setUpCommonAttributeOfListWebProduct(productsEntityPage.getContent(), productsEntityPage.getTotalElements(), session, model);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         return "/views/client/list-web-product";

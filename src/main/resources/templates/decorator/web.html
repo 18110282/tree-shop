@@ -198,7 +198,7 @@
                             <div class="hero__search__categories">
                                 Tất Cả
                             </div>
-                            <input th:name="keyword" type="text" placeholder="Bạn cần tìm gì?" required>
+                            <input th:name="keyword" th:value="${keyword}" id="keyword" type="text" placeholder="Bạn cần tìm gì?" required>
                             <button type="submit" class="site-btn">TÌM KIẾM</button>
                         </form>
                     </div>
