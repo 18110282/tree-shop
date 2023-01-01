@@ -4227,32 +4227,27 @@ ol {
 .action-filter .btn-group{
 	width: 100%;
 }
-.action-filter input[type="radio"] {
-	visibility: hidden;
+
+.action-filter button.reset-filter {
+	width: 50%;
+	height: calc(1.5em + 0.75rem + 2px);
 }
 
-.action-filter .reset-filter.btn.btn-success {
+.action-filter button.apply-filter {
+	width: 50%;
+	height: calc(1.5em + 0.75rem + 2px);
+}
+
+.action-filter button.reset-filter {
 	background-color: #ddd;
 	color: #333;
 	border: none;
 }
 
-.action-filter .reset-filter.btn-success:not(:disabled):not(.disabled).active, .reset-filter.btn-success:not(:disabled):not(.disabled):active, .show>.reset-filter.btn-success.dropdown-toggle {
-	background-color: #ddd;
-	color: #333;
+.action-filter button.apply-filter {
+	background-color: #7fad39;
+	color: #fff;
 	border: none;
-}
-
-action-filter .apply-filter.btn.btn-success {
-	color: #fff;
-	background-color: #28a745;
-	border-color: #28a745;
-}
-
-.action-filter .apply-filter.btn-success:not(:disabled):not(.disabled).active, .apply-filter.btn-success:not(:disabled):not(.disabled):active, .show>.apply-filter.btn-success.dropdown-toggle {
-	color: #fff;
-	background-color: #28a745;
-	border-color: #28a745;
 }
 
 /*customize icon like tree for user's collection*/
