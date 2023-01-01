@@ -8,7 +8,7 @@
     <title>Admin Manage Order</title>
     <style>
         .modal-dialog {
-            top: auto;
+            top: 50px;
             bottom: auto;
             left: auto;
             right: auto;
@@ -46,7 +46,7 @@
                     <div class="clearfix">
                         <div class="pull-right tableTools-container">
                             <button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i
-                                    class='fa fa-check-square-o bigger-110 white'></i> Xác nhận nhiều đơn
+                                    class='fa fa-check-square-o bigger-110 white'></i> Phân Công Giao Hàng
                             </button>
                         </div>
                     </div>
@@ -73,7 +73,6 @@
                                 <th class="hidden-480">Ngày đặt</th>
                                 <th>Tổng giá</th>
                                 <th>Tình trạng</th>
-                                <th>Thao tác</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -107,15 +106,6 @@
                                     <td>
                                         <span class="label label-success arrowed-in arrowed-in-right">Đã xác nhận</span>
                                     </td>
-
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a title="Xem chi tiết" class="green view-order-detail" data-toggle="modal"
-                                               data-target="#exampleModalCenter" th:id="${order.orderId}">
-                                                <i class="ace-icon fa fa-eye bigger-130"></i>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                             </th:block>
                             </tbody>
@@ -125,103 +115,40 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <span class="widget-title" style="font-size: 20px"> &ensp;&emsp;<strong>Chi tiết đơn hàng </strong> </span>
-                                        <span class="widget-toolbar">
+                                        <span class="widget-title" style="font-size: 20px">
+                                                &ensp;
+                                                <strong>Chọn Nhân Viên Giao Hàng </strong>
+                                                    <span class="widget-toolbar">
                                                                                             <a href="#"
                                                                                                data-dismiss="modal">
                                                                                                 <i class="ace-icon fa fa-times"></i>
                                                                                             </a>
                                                                                     </span>
+                                            </span>
                                     </div>
                                     <div class="modal-body">
                                         <div class="page-content">
                                             <div class="row">
-                                                <div class="col-xs-12">
-
-                                                    <div class="row">
-                                                        <div class="col-sm-10 col-sm-offset-1">
-                                                            <div class="widget-box transparent">
-                                                                <div class="widget-header widget-header-large">
-                                                                    <div class="widget-title invoice-info">
-                                                                        <span class="invoice-info-label">Mã đơn:</span>
-                                                                        <span class="red"
-                                                                              id="orderId">#20220424OhhrOf</span>
-                                                                        <span>||</span>
-                                                                        <b><i><span
-                                                                                id="status">Đã xác nhận</span></i></b>
-                                                                        <br>
-                                                                        <span class="invoice-info-label">Date:</span>
-                                                                        <select id="form-field-5"
-                                                                                class="col-xs-10 col-sm-5 tColor"
-                                                                                th:object="${listShipper}">
-                                                                            <option th:each="i : ${listShipper}"
-                                                                                    th:value="${i.shipperId}"
-                                                                                    th:text="${i.fullname}"
-                                                                                    class="tColor"></option>
-                                                                        </select>
-                                                                        <span class="blue"
-                                                                              id="orderDate">04/04/2014</span>
-                                                                    </div>
-                                                                    <div class="widget-toolbar hidden-480">
-                                                                        <a href="#">
-                                                                            <i class="ace-icon fa fa-print"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="widget-body">
-                                                                    <div class="widget-main padding-24">
-                                                                        <div class="row">
-
-                                                                            <div class="col-sm-9">
-                                                                                <div class="row">
-                                                                                    <button type="button"
-                                                                                            onclick="insertListOrderToShipper()">
-                                                                                        Phân công
-                                                                                    </button>
-                                                                                </div>
-
-                                                                                <div>
-                                                                                    <ul class="list-unstyled  spaced">
-                                                                                        <li id="username">
-                                                                                            <i class="ace-icon fa fa-caret-right green"></i>Street,
-                                                                                            City
-                                                                                        </li>
-                                                                                        <li id="contactName">
-                                                                                            <i class="ace-icon fa fa-caret-right green"></i>Street,
-                                                                                            City
-                                                                                        </li>
-
-                                                                                        <li id="phoneNumber">
-                                                                                            <i class="ace-icon fa fa-caret-right green"></i>Zip
-                                                                                            Code
-                                                                                        </li>
-
-                                                                                        <li id="email">
-                                                                                            <i class="ace-icon fa fa-caret-right green"></i>State,
-                                                                                            Country
-                                                                                        </li>
-
-                                                                                        <li id="note">
-                                                                                            <i class="ace-icon fa fa-caret-right green"></i>
-                                                                                            Contact Info
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div><!-- /.col -->
-                                                                        </div><!-- /.row -->
-
-                                                                        <div class="space"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- PAGE CONTENT ENDS -->
-                                                </div><!-- /.col -->
+                                               <form class="centered form-control text-center" style="border: none!important; max-width: 70%; margin-bottom: 10%; margin-left: 16%">
+                                                       <p style="font-size: 16px"><i>Chọn một nhân viên để giao các đơn hàng đã tick</i><i class="red"> (*)</i></p>
+                                                       <select id="form-field-5"
+                                                               th:object="${listShipper}"
+                                                               style="width: 200px!important; font-size: 16px; color: #393939">
+                                                           <option th:each="i : ${listShipper}"
+                                                                   th:value="${i.shipperId}"
+                                                                   th:text="${i.fullname}"
+                                                                   class="tColor"></option>
+                                                       </select>
+                                                   <hr class="mt-2 mb-4" style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #337ab7;">
+                                               </form>
                                             </div>
-                                        </div><!-- /.page-content -->
+                                            <div class="row text-right" style="margin-right: 38%">
+                                                <button class="btn btn-info" type="submit" id="submit" style="margin-top: 6%; background: #337ab7" onclick="insertListOrderToShipper()">
+                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                    Hoàn Tất
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
