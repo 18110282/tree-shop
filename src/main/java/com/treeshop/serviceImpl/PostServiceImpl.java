@@ -33,7 +33,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostsEntity> listAll() {
-        return postRepository.findAll();
+        return postRepository.findAllByEnabledIsTrue();
     }
 
     @Override
@@ -64,6 +64,13 @@ public class PostServiceImpl implements PostService {
         postsEntity.setHeaderImage(fileName);
         postsEntity.setEnabled(true);
 
+        postRepository.save(postsEntity);
+    }
+
+    @Override
+    public void deletePost(String postId) {
+        PostsEntity postsEntity = postRepository.findByPostsId(postId);
+        postsEntity.setEnabled(false);
         postRepository.save(postsEntity);
     }
 }

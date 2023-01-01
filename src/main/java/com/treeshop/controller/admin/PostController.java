@@ -74,9 +74,16 @@ public class PostController {
             }
         } else if (url.contains("/admin/post/edit")) {
 
-            ra.addFlashAttribute("successMessage", "Chỉnh sửa sản phẩm: <strong> " + postsId + "</strong> thành công.");
+            ra.addFlashAttribute("successMessage", "Chỉnh sửa bài viết: <strong> " + postsId + "</strong> thành công.");
         }
         postService.savePost(postsEntity, multipartFileImg);
+        return "redirect:/admin/post/list";
+    }
+
+    @GetMapping("/delete/{postId}")
+    public String deletePost(@PathVariable("postId") String postId, RedirectAttributes ra) {
+        postService.deletePost(postId);
+        ra.addFlashAttribute("successMessage", "Xóa bài viết: <strong> " + postId + "</strong> thành công.");
         return "redirect:/admin/post/list";
     }
 }

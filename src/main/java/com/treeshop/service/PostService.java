@@ -11,4 +11,5 @@ public interface PostService {
     boolean checkPostsId(String postsId);
     PostsEntity findByPostsId(String postsId);
     void savePost(PostsEntity postsEntity, MultipartFile multipartFileImg) throws IOException;
+    void deletePost(String postId);
 }
