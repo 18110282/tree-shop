@@ -229,7 +229,8 @@
                                                         <tfoot>
                                                         <tr>
                                                             <td class="order-pay-infor" colspan="2">Tổng tiền
-                                                                hàng</td>
+                                                                hàng
+                                                            </td>
                                                             <td th:if="${order.codeId != null}" class="order-pay-fee">
                                                                 <span th:text="${#numbers.formatDecimal(order.totalPrice * 100 / (100 - order.discountCodeEntity.discountPercent), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                                                             </td>
@@ -387,7 +388,8 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận
+                                                                        chuyển
                                                                     </td>
                                                                     <td class="order-pay-fee">
                                                                         <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
@@ -490,7 +492,8 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận
+                                                                        chuyển
                                                                     </td>
                                                                     <td class="order-pay-fee">
                                                                         <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
@@ -582,7 +585,8 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận
+                                                                        chuyển
                                                                     </td>
                                                                     <td class="order-pay-fee">
                                                                         <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
@@ -697,7 +701,8 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="order-pay-infor" colspan="2">Phí vận chuyển
+                                                                    <td class="order-pay-infor" colspan="2">Phí vận
+                                                                        chuyển
                                                                     </td>
                                                                     <td class="order-pay-fee">
                                                                         <span th:text="${#numbers.formatDecimal(order.shippingFee, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
@@ -738,120 +743,41 @@
                                         <h4 class="text-right py-2 ">Sản phẩm yêu thích</h4>
                                     </div>
                                     <div class="favourite-product-list">
-                                        <div class="row">
-                                            <div class="favourite-product-item">
-                                                <div class="card centered">
-                                                    <div class="card-header">
-                                                        <div class="delete-favourite-product">
-                                                            <a href=""><i class="fa fa-times-circle"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-2 col-sm-3">
-                                                                <a href="shop-details.html">
-                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
-                                                                         alt="">
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-lg-10 col-sm-9">
-                                                                <span class="favourite-product-category">Cây văn phòng</span>
-                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
-                                                                </h5>
-                                                                <div class="favourite-product-price">695.000đ</div>
-                                                                <div class="buy-now-product"><a
-                                                                        href="shoping-cart.html"><i
-                                                                        class="fa fa-shopping-cart"></i></a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="row" th:if="${listFavouriteProduct.size() == 0}">
+                                            <div class="no-like-product" style="margin-left: 15px">
+                                                <p>Không có bất kỳ sản phẩm nào trong danh sách yêu thích ❤</p>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row" th:if="${listFavouriteProduct.size() != 0}"
+                                             th:each="favouriteP : ${listFavouriteProduct}">
                                             <div class="favourite-product-item">
                                                 <div class="card centered">
                                                     <div class="card-header">
                                                         <div class="delete-favourite-product">
-                                                            <a href=""><i class="fa fa-times-circle"></i></a>
+                                                            <a class="delete-favourite-product-a"
+                                                               th:id="${favouriteP.favouriteProductIdKey.productId}"><i
+                                                                    class="fa fa-times-circle"></i></a>
                                                         </div>
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-lg-2 col-sm-3">
-                                                                <a href="shop-details.html">
-                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
-                                                                         alt="">
+                                                                <a th:href="@{'/home/product/' + ${favouriteP.favouriteProductIdKey.productId} + '/detail'}">
+                                                                    <img th:src="${favouriteP.photosImagePath}"
+                                                                         alt="${favouriteP.productName}">
                                                                 </a>
                                                             </div>
                                                             <div class="col-lg-10 col-sm-9">
-                                                                <span class="favourite-product-category">Cây văn phòng</span>
-                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
+                                                                <span class="favourite-product-category">[[${favouriteP.category}]]</span>
+                                                                <h5>
+                                                                    <a th:href="@{'/home/product/' + ${favouriteP.favouriteProductIdKey.productId} + '/detail'}">[[${favouriteP.productName}]]</a>
                                                                 </h5>
-                                                                <div class="favourite-product-price">695.000đ</div>
-                                                                <div class="buy-now-product"><a
-                                                                        href="shoping-cart.html"><i
-                                                                        class="fa fa-shopping-cart"></i></a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="favourite-product-item">
-                                                <div class="card centered">
-                                                    <div class="card-header">
-                                                        <div class="delete-favourite-product">
-                                                            <a href=""><i class="fa fa-times-circle"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-2 col-sm-3">
-                                                                <a href="shop-details.html">
-                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
-                                                                         alt="">
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-lg-10 col-sm-9">
-                                                                <span class="favourite-product-category">Cây văn phòng</span>
-                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
-                                                                </h5>
-                                                                <div class="favourite-product-price">695.000đ</div>
-                                                                <div class="buy-now-product"><a
-                                                                        href="shoping-cart.html"><i
-                                                                        class="fa fa-shopping-cart"></i></a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="favourite-product-item">
-                                                <div class="card centered">
-                                                    <div class="card-header">
-                                                        <div class="delete-favourite-product">
-                                                            <a href=""><i class="fa fa-times-circle"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-2 col-sm-3">
-                                                                <a href="shop-details.html">
-                                                                    <img src="https://chaucanh.vn/kcfinder/upload/images/chau-canh-cay-canh-bonsai-la-mat-doc-dao(1).jpg"
-                                                                         alt="">
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-lg-10 col-sm-9">
-                                                                <span class="favourite-product-category">Cây văn phòng</span>
-                                                                <h5><a href="shop-details.html">Cây bàng Singapore</a>
-                                                                </h5>
-                                                                <div class="favourite-product-price">695.000đ</div>
-                                                                <div class="buy-now-product"><a
-                                                                        href="shoping-cart.html"><i
-                                                                        class="fa fa-shopping-cart"></i></i></a></div>
+                                                                <div class="favourite-product-price"><span
+                                                                        th:text="${#numbers.formatDecimal(favouriteP.getProductPrice(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                                                </div>
+                                                                <!--                                                                <div class="buy-now-product"><a-->
+                                                                <!--                                                                        href="shoping-cart.html"><i-->
+                                                                <!--                                                                        class="fa fa-shopping-cart"></i></a></div>-->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -996,8 +922,38 @@
     <script th:if="${alert}" type="text/javascript" th:inline="javascript">
         alert([[${alert}]]);
     </script>
+    <script type="text/javascript" th:inline="javascript">
+        $('.delete-favourite-product-a').on('click', function () {
+            let productId = $(this)[0].id;
+            let url = "/favourite/delete/" + [[${session.client_username}]] + "/" + productId;
+            let item = $(this).closest('.favourite-product-item');
+            let itemList = $(this).closest('.favourite-product-list');
+            let totalFavouriteList = parseInt(itemList[0].childElementCount);
+
+            $.ajax({
+                type: "POST",
+                url: url
+            }).done(function (isSuccess) {
+                if (isSuccess) {
+                    alert("Đã xóa khỏi danh sách yêu thích!");
+                    item.remove();
+                }
+                if (totalFavouriteList > 0) {
+                    totalFavouriteList -= 1;
+                }
+                console.log(totalFavouriteList);
+                if (totalFavouriteList === 0) {
+                    itemList.append("<div class=\"row\">\n" +
+                        "                                            <div class=\"no-like-product\" style=\"margin-left: 15px\">\n" +
+                        "                                                <p>Không có bất kỳ sản phẩm nào trong danh sách yêu thích ❤</p>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>")
+                }
+            });
+        })
+    </script>
     <script th:if="${session.client}" type="text/javascript" th:inline="javascript">
-        let username = [[${session.client.username}]];
+        let username = [[${session.client_username}]];
 
         function checkPass() {
             let newPassword = $('#newPass').val();
@@ -1196,7 +1152,8 @@
                 })
             }
         }
-        function readReview(btnReadReview){
+
+        function readReview(btnReadReview) {
             let orderId = $(btnReadReview)[0].name;
             let url = "/home/" + orderId + "/read/review";
             $.ajax({
@@ -1238,6 +1195,7 @@
                 });
             })
         }
+
         // Read review order
         $('.read-reviewed-btn').on('click', function () {
             readReview(this);

@@ -8,254 +8,369 @@
 </head>
 <body>
 <div layout:fragment="~{content}">
-<!-- Breadcrumb Section Begin -->
-<!-- Breadcrumb Section End -->
+    <!-- Breadcrumb Section Begin -->
+    <!-- Breadcrumb Section End -->
 
-<!-- Product Details Section Begin -->
-<section class="product-details spad">
-    <div class="container">
-        <th:block th:object="${product}">
-        <div class="row">
-<!--            <div class="col-lg-6 col-md-6">-->
-<!--                <div class="product__details__pic">-->
-<!--                    <div class="product__details__pic__item">-->
-<!--                        <img class="product__details__pic__item&#45;&#45;large"-->
-<!--                             src="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="product__details__pic__slider owl-carousel" >-->
-<!--                        <img data-imgbigurl="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" style = "width: 120px; height: 120px"-->
-<!--                             src="img/video/play-video.png" alt="" data-toggle="modal" data-target="#playVideoProduct">-->
-<!--                        <img data-imgbigurl="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" style = "width: 120px; height: 120px"-->
-<!--                             src="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" alt="">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-            <div class="play-video-modal modal fade" id="playVideoProduct" tabindex="-1" role="dialog" aria-labelledby="playVideoProduct" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="height: 100%; width: 50%">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <iframe id="cartoonVideo" class="embed-responsive-item" width="100%" height="450px" th:src="${product.videoPath}" allowfullscreen="true"></iframe>
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <th:block th:object="${product}">
+                <div class="row">
+                    <!--            <div class="col-lg-6 col-md-6">-->
+                    <!--                <div class="product__details__pic">-->
+                    <!--                    <div class="product__details__pic__item">-->
+                    <!--                        <img class="product__details__pic__item&#45;&#45;large"-->
+                    <!--                             src="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" alt="">-->
+                    <!--                    </div>-->
+                    <!--                    <div class="product__details__pic__slider owl-carousel" >-->
+                    <!--                        <img data-imgbigurl="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" style = "width: 120px; height: 120px"-->
+                    <!--                             src="img/video/play-video.png" alt="" data-toggle="modal" data-target="#playVideoProduct">-->
+                    <!--                        <img data-imgbigurl="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" style = "width: 120px; height: 120px"-->
+                    <!--                             src="https://caycanhonline.vn/wp-content/uploads/2021/08/hoa-thuy-tien-dep-768x432.jpg" alt="">-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
+                    <!--            </div>-->
+                    <div class="play-video-modal modal fade" id="playVideoProduct" tabindex="-1" role="dialog"
+                         aria-labelledby="playVideoProduct" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document"
+                             style="height: 100%; width: 50%">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe id="cartoonVideo" class="embed-responsive-item" width="100%" height="450px"
+                                            th:src="${product.videoPath}" allowfullscreen="true"></iframe>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6" id="img-zoomer-box">
-                <div class="product__details__pic" >
-<!--                    <div id="img-zoomer-box">-->
-                    <div class="product__details__pic__item">
-                        <img class="product__details__pic__item--large"
-                             th:src="${product.photosImagePath}" th:title="${product.productName}" id="img-1">
-                        <div id="img-2" th:style="'background:' + 'url(\'' + ${product.photosImagePath} +'\')' + 'no-repeat #FFF'"> </div>
+                    <div class="col-lg-6 col-md-6" id="img-zoomer-box">
+                        <div class="product__details__pic">
+                            <!--                    <div id="img-zoomer-box">-->
+                            <div class="product__details__pic__item">
+                                <img class="product__details__pic__item--large"
+                                     th:src="${product.photosImagePath}" th:title="${product.productName}" id="img-1">
+                                <div id="img-2"
+                                     th:style="'background:' + 'url(\'' + ${product.photosImagePath} +'\')' + 'no-repeat #FFF'"></div>
 
-<!--                    </div>-->
-                </div>
-                    <div class="product__details__pic__slider owl-carousel" >
-<!--                        <img th:data-imgbigurl="${product.photosImagePath}" style = "width: 120px; height: 120px"-->
-<!--                             th:src="@{/web/play-video.png}" alt="" data-toggle="modal" data-target="#playVideoProduct">-->
-<!--                        <img th:data-imgbigurl="${product.photosImagePath}" style = "width: 120px; height: 120px"-->
-<!--                             th:src="${product.photosImagePath}" alt="">-->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="product__details__text">
-                    <h3 style="font-family: Arial">[[${product.productName}]]</h3>
-<!--                    <div class="product__details__rating">-->
-<!--                        <span>([[${product.reviewsEntityList.size()}]] reviews)</span>-->
-<!--                    </div>-->
-                    <div class="product__details__price" th:if="${product.discountPercent != 0}"> <del th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></del>&nbsp; <span th:text="${#numbers.formatDecimal(product.getDiscountPrice(), 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
-                    <div class="product__details__price" th:if="${product.discountPercent == 0}"><span th:remove="tag" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></div>
-                    <p>[[${product.description}]]</p>
-                    <div style="font-family: Arial" class="product__details__price" th:if="${product.unitInStock == 0}"> Hết hàng</div>
-                    <div class="product__details__quantity mr-0"  th:if="${product.unitInStock != 0}">
-                        <div class="quantity">
-                            <div class="pro-qty" style="height: 53px!important;">
-                                <input type="text" value="1"  id="quantity" class="quantity">
+                                <!--                    </div>-->
+                            </div>
+                            <div class="product__details__pic__slider owl-carousel">
+                                <!--                        <img th:data-imgbigurl="${product.photosImagePath}" style = "width: 120px; height: 120px"-->
+                                <!--                             th:src="@{/web/play-video.png}" alt="" data-toggle="modal" data-target="#playVideoProduct">-->
+                                <!--                        <img th:data-imgbigurl="${product.photosImagePath}" style = "width: 120px; height: 120px"-->
+                                <!--                             th:src="${product.photosImagePath}" alt="">-->
                             </div>
                         </div>
                     </div>
-                    <div class="btn primary-btn mr-0" href="" th:if="${product.unitInStock != 0}" onclick="addToCart()">THÊM VÀO GIỎ HÀNG</div>
-                    <div class="like-tree btn primary-btn" style="background: #f5f5f5"><span class="fa fa-heart" style="color: red; font-size: 19px"></span></div><!--                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>-->
-                    <div class="product__details__text" id="error" style="color: red"> </div>
-                    <ul>
-<!--                        <li><b>Chiều cao</b> <span>[[${product.height}]] cm</span></li>-->
-<!--                        <li><b>Khối lượng</b> <span>[[${product.weight}]] g</span></li>-->
-                        <li><b>Số lượng</b> <span>[[${product.unitInStock}]] sản phẩm có sẵn.</span></li>
-                        <li><b style="color: red; font-size: large"><a data-toggle="modal" data-target="#playVideoProduct">XEM VIDEO</a></b>
-                            <div class="share">
-                                <a data-toggle="modal" data-target="#playVideoProduct"><i class="fa fa-file-video-o"></i></a>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="product__details__text">
+                            <h3 style="font-family: Arial">[[${product.productName}]]</h3>
+                            <!--                    <div class="product__details__rating">-->
+                            <!--                        <span>([[${product.reviewsEntityList.size()}]] reviews)</span>-->
+                            <!--                    </div>-->
+                            <div class="product__details__price" th:if="${product.discountPercent != 0}">
+                                <del th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></del>&nbsp;
+                                <span th:text="${#numbers.formatDecimal(product.getDiscountPrice(), 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                             </div>
-                        </li>
-<!--                        <li><b>Share on</b>-->
-<!--                            <div class="share">-->
-<!--                                <a href="https://www.facebook.com/sharer/sharer.php?u=URLENCODED_URL&t=TITLE"-->
-<!--                                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"-->
-<!--                                   target="_blank" title="Share on Facebook">-->
-<!--                                    <i class="fa fa-facebook"></i></a>-->
-<!--                                <a href="#"><i class="fa fa-twitter"></i></a>-->
-<!--                                <a href="#"><i class="fa fa-instagram"></i></a>-->
-<!--                                <a href="#"><i class="fa fa-pinterest"></i></a>-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                        <li><b>Vận Chuyển</b> <span>1 ngày vận chuyển.</span></li>-->
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="product__details__tab">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
-                               aria-selected="true">Thông Tin Sản Phẩm</a>
-                        </li>
-<!--                        <li class="nav-item">-->
-<!--                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"-->
-<!--                               aria-selected="false">Information</a>-->
-<!--                        </li>-->
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                               aria-selected="false">Reviews <span>([[${product.reviewsEntityList.size()}]])</span></a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                            <div class="product__details__tab__desc">
-<!--                                <h6>Mô tả sản phẩm</h6>-->
-                                <b>- Chiều cao:</b> <span>[[${product.height}]] cm</span>
-                                <br>
-                                <b>- Khối lượng:</b> <span>[[${product.weight}]] g</span>
-                                <p style="white-space: break-spaces;" th:utext="${product.information}"></p>
+                            <div class="product__details__price" th:if="${product.discountPercent == 0}"><span
+                                    th:remove="tag"
+                                    th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
                             </div>
-                        </div>
-<!--                        <div class="tab-pane" id="tabs-2" role="tabpanel">-->
-<!--                            <div class="product__details__tab__desc">-->
-<!--                                <h6>Products Infomation</h6>-->
-<!--                                <p> Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.-->
-<!--                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.-->
-<!--                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam-->
-<!--                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo-->
-<!--                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.-->
-<!--                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent-->
-<!--                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac-->
-<!--                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante-->
-<!--                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;-->
-<!--                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.-->
-<!--                                    Proin eget tortor risus.</p>-->
-<!--                                <p> Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem-->
-<!--                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet-->
-<!--                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum-->
-<!--                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus-->
-<!--                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <div class="tab-pane" id="tabs-3" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                <h6>Đánh giá nhận xét về sản phẩm</h6>
-                                <th:block th:each="review: ${product.reviewsEntityList}">
-                                <div class="reviews-members pt-4 pb-1">
-                                    <div class="media">
-                                        <a href="#"><img alt="Generic placeholder image" src="https://i.imgur.com/Mcd6HIg.jpg" class="mr-3 rounded-pill"></a>
-                                        <div class="media-body">
-                                            <div class="reviews-members-header">
-                                                <h6 class="mb-1">[[${review.userReview}]]</h6>
-                                                <p class="text-gray" style="font-size: 14px">[[${review.created}]]</p>
-                                            </div>
-                                            <div class="reviews-members-body">
-                                                <p>[[${review.content}]]</p>
-                                            </div>
-                                        </div>
+                            <p>[[${product.description}]]</p>
+                            <div style="font-family: Arial" class="product__details__price"
+                                 th:if="${product.unitInStock == 0}"> Hết hàng
+                            </div>
+                            <div class="product__details__quantity mr-0" th:if="${product.unitInStock != 0}">
+                                <div class="quantity">
+                                    <div class="pro-qty" style="height: 53px!important;">
+                                        <input type="text" value="1" id="quantity" class="quantity">
                                     </div>
                                 </div>
-                                <hr>
-                                </th:block>
+                            </div>
+                            <div class="btn primary-btn mr-0" href="" th:if="${product.unitInStock != 0}"
+                                 onclick="addToCart()">THÊM VÀO GIỎ HÀNG
+                            </div>
+                            <div th:if="${session.client_username}" onclick="toggleLikeProduct()"
+                                 class="like-tree btn primary-btn" style="background: #f5f5f5"><span class="fa fa-heart"
+                                                                                                     id="icon-heart"
+                                                                                                     style="color: black;font-size: 19px"></span>
+                            </div>
+                            <!--                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>-->
+                            <div class="product__details__text" id="error" style="color: red"></div>
+                            <ul>
+                                <!--                        <li><b>Chiều cao</b> <span>[[${product.height}]] cm</span></li>-->
+                                <!--                        <li><b>Khối lượng</b> <span>[[${product.weight}]] g</span></li>-->
+                                <li><b>Số lượng</b> <span>[[${product.unitInStock}]] sản phẩm có sẵn.</span></li>
+                                <li><b style="color: red; font-size: large"><a data-toggle="modal"
+                                                                               data-target="#playVideoProduct">XEM
+                                    VIDEO</a></b>
+                                    <div class="share">
+                                        <a data-toggle="modal" data-target="#playVideoProduct"><i
+                                                class="fa fa-file-video-o"></i></a>
+                                    </div>
+                                </li>
+                                <!--                        <li><b>Share on</b>-->
+                                <!--                            <div class="share">-->
+                                <!--                                <a href="https://www.facebook.com/sharer/sharer.php?u=URLENCODED_URL&t=TITLE"-->
+                                <!--                                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"-->
+                                <!--                                   target="_blank" title="Share on Facebook">-->
+                                <!--                                    <i class="fa fa-facebook"></i></a>-->
+                                <!--                                <a href="#"><i class="fa fa-twitter"></i></a>-->
+                                <!--                                <a href="#"><i class="fa fa-instagram"></i></a>-->
+                                <!--                                <a href="#"><i class="fa fa-pinterest"></i></a>-->
+                                <!--                            </div>-->
+                                <!--                        </li>-->
+                                <!--                        <li><b>Vận Chuyển</b> <span>1 ngày vận chuyển.</span></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="product__details__tab">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                       aria-selected="true">Thông Tin Sản Phẩm</a>
+                                </li>
+                                <!--                        <li class="nav-item">-->
+                                <!--                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"-->
+                                <!--                               aria-selected="false">Information</a>-->
+                                <!--                        </li>-->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                       aria-selected="false">Reviews
+                                        <span>([[${product.reviewsEntityList.size()}]])</span></a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                    <div class="product__details__tab__desc">
+                                        <!--                                <h6>Mô tả sản phẩm</h6>-->
+                                        <b>- Chiều cao:</b> <span>[[${product.height}]] cm</span>
+                                        <br>
+                                        <b>- Khối lượng:</b> <span>[[${product.weight}]] g</span>
+                                        <p style="white-space: break-spaces;" th:utext="${product.information}"></p>
+                                    </div>
+                                </div>
+                                <!--                        <div class="tab-pane" id="tabs-2" role="tabpanel">-->
+                                <!--                            <div class="product__details__tab__desc">-->
+                                <!--                                <h6>Products Infomation</h6>-->
+                                <!--                                <p> Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.-->
+                                <!--                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.-->
+                                <!--                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam-->
+                                <!--                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo-->
+                                <!--                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.-->
+                                <!--                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent-->
+                                <!--                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac-->
+                                <!--                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante-->
+                                <!--                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;-->
+                                <!--                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.-->
+                                <!--                                    Proin eget tortor risus.</p>-->
+                                <!--                                <p> Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem-->
+                                <!--                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet-->
+                                <!--                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum-->
+                                <!--                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus-->
+                                <!--                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>-->
+                                <!--                            </div>-->
+                                <!--                        </div>-->
+                                <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                    <div class="product__details__tab__desc">
+                                        <h6>Đánh giá nhận xét về sản phẩm</h6>
+                                        <th:block th:each="review: ${product.reviewsEntityList}">
+                                            <div class="reviews-members pt-4 pb-1">
+                                                <div class="media">
+                                                    <a href="#"><img alt="Generic placeholder image"
+                                                                     src="https://i.imgur.com/Mcd6HIg.jpg"
+                                                                     class="mr-3 rounded-pill"></a>
+                                                    <div class="media-body">
+                                                        <div class="reviews-members-header">
+                                                            <h6 class="mb-1">[[${review.userReview}]]</h6>
+                                                            <p class="text-gray" style="font-size: 14px">
+                                                                [[${review.created}]]</p>
+                                                        </div>
+                                                        <div class="reviews-members-body">
+                                                            <p>[[${review.content}]]</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </th:block>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </th:block>
-    </div>
-
-</section>
-<!-- Product Details Section End -->
-
-<!-- Related Product Section Begin -->
-<section class="related-product">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title related__product__title">
-                    <h2>Sản Phẩm Liên Quan</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <th:block th:each="product: ${listRelatedProduct}">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__discount__item">
-                    <div class="product__discount__item__pic set-bg" th:data-setbg="${product.photosImagePath}">
-                        <div th:if="${product.discountPercent != 0}" class="product__discount__percent">
-                            -[[${product.discountPercent}]]%
-                        </div>
-                        <ul class="product__item__pic__hover">
-                            <li><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><i class="fa fa-eye" title="Chi tiết sản phẩm"></i></a></li>
-                            <li><a th:href="@{'/home/add-product/' + ${product.productId} + '/1'}"><i
-                                    class="fa fa-shopping-cart" title="Thêm vào giỏ hàng"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__discount__item__text">
-                        <a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><h6>[[${product.productName}]]</h6></a>
-                        <h5 th:if="${product.discountPercent != 0}" class="product__item__price">
-                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span></h5>
-                        <h5 th:if="${product.discountPercent == 0}" class="product__item__price">
-                            <span th:remove="tag" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
-                        </h5>
-                    </div>
-                </div>
-            </div>
             </th:block>
         </div>
-    </div>
-</section>
+
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Related Product Section Begin -->
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Sản Phẩm Liên Quan</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <th:block th:each="product: ${listRelatedProduct}">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__discount__item">
+                            <div class="product__discount__item__pic set-bg" th:data-setbg="${product.photosImagePath}">
+                                <div th:if="${product.discountPercent != 0}" class="product__discount__percent">
+                                    -[[${product.discountPercent}]]%
+                                </div>
+                                <ul class="product__item__pic__hover">
+                                    <li><a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><i
+                                            class="fa fa-eye" title="Chi tiết sản phẩm"></i></a></li>
+                                    <li><a th:href="@{'/home/add-product/' + ${product.productId} + '/1'}"><i
+                                            class="fa fa-shopping-cart" title="Thêm vào giỏ hàng"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__discount__item__text">
+                                <a th:href="@{'/home/product/' + ${product.productId} + '/detail'}"><h6>
+                                    [[${product.productName}]]</h6></a>
+                                <h5 th:if="${product.discountPercent != 0}" class="product__item__price">
+                                    <span th:remove="tag"
+                                          th:text="${#numbers.formatDecimal(product.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span><span
+                                        th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                </h5>
+                                <h5 th:if="${product.discountPercent == 0}" class="product__item__price">
+                                    <span th:remove="tag"
+                                          th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </section>
     <script type="text/javascript" th:inline="javascript">
-        $(document).ready(function(){
+        let gbExist;
+        let iconHeart = $('#icon-heart');
+        $(document).ready(function () {
             /* Get iframe src attribute value i.e. YouTube video url
             and store it in a variable */
             var url = $("#cartoonVideo").attr('src');
 
             /* Assign empty url value to the iframe src attribute when
             modal hide, which stop the video playing */
-            $("#playVideoProduct").on('hide.bs.modal', function(){
+            $("#playVideoProduct").on('hide.bs.modal', function () {
                 $("#cartoonVideo").attr('src', '');
             });
 
             /* Assign the initially stored url back to the iframe src
             attribute when modal is displayed again */
-            $("#playVideoProduct").on('show.bs.modal', function(){
+            $("#playVideoProduct").on('show.bs.modal', function () {
                 $("#cartoonVideo").attr('src', url);
             });
+            if ([[${session.client_username}]] != null) {
+                let url = "/favourite/check-exist/" + [[${session.client_username}]] + "/" + [[${product.productId}]];
+                $.ajax({
+                    type: "GET",
+                    url: url
+                }).done(function (exist) {
+                    if (exist) {
+                        iconHeart.css('color', 'red');
+                    } else {
+                        iconHeart.css('color', 'black');
+                    }
+                });
+            }
         });
+
+        function checkExistFavouriteProduct() {
+            let url = "/favourite/check-exist/" + [[${session.client_username}]] + "/" + [[${product.productId}]];
+            $.ajax({
+                type: "GET",
+                url: url
+            }).done(function (exist) {
+                a = exist;
+            });
+        }
+
+        function toggleLikeProduct() {
+            let url = "/favourite/check-exist/" + [[${session.client_username}]] + "/" + [[${product.productId}]];
+            $.ajax({
+                type: "GET",
+                url: url
+            }).done(function (exist) {
+                let url;
+                if (exist) {
+                    url = "/favourite/delete/" + [[${session.client_username}]] + "/" + [[${product.productId}]];
+                    $.ajax({
+                        type: "POST",
+                        url: url
+                    }).done(function (isSuccess) {
+                        if (isSuccess) {
+                            alert("Đã xóa khỏi danh sách yêu thích!");
+                            iconHeart.css('color', 'black');
+                        }
+                    });
+                } else {
+                    url = "/favourite/add/" + [[${session.client_username}]] + "/" + [[${product.productId}]];
+                    $.ajax({
+                        type: "POST",
+                        url: url
+                    }).done(function (isSuccess) {
+                        if (isSuccess) {
+                            alert("Đã thêm vào danh sách yêu thích!");
+                            iconHeart.css('color', 'red');
+                        }
+                    });
+                }
+            });
+
+            // if (exist === true) {
+            //     url = "/favourite/delete/" + [[${session.client_username}]] + "/" + [[${product.productId}]];
+            //     $.ajax({
+            //         type: "POST",
+            //         url: url
+            //     }).done(function (isSuccess) {
+            //         if (isSuccess) {
+            //             alert("Đã xóa khỏi danh sách yêu thích!");
+            //             iconHeart.css('color', 'black');
+            //         }
+            //     });
+            // } else {
+            //     url = "/favourite/add/" + [[${session.client_username}]] + "/" + [[${product.productId}]];
+            //     $.ajax({
+            //         type: "POST",
+            //         url: url
+            //     }).done(function (isSuccess) {
+            //         if (isSuccess) {
+            //             alert("Đã thêm được vào danh sách yêu thích!");
+            //             iconHeart.css('color', 'red');
+            //         }
+            //     });
+            // }
+        }
     </script>
     <script type="text/javascript" th:inline="javascript">
         let newVal = 1;
         let url;
-        function  disable(x){
-            if (x == 0){
+
+        function disable(x) {
+            if (x == 0) {
                 $('.primary-btn').prop("disabled", true);
                 $('#error').html("Bạn đang chọn số lượng vào giỏ hàng là 0.");
 
-            }
-            else{
+            } else {
                 $('#error').html("");
                 $('.primary-btn').prop("disabled", false);
             }
         }
+
         var proQty = $('.pro-qty');
         proQty.prepend('<span class="dec qtybtn">-</span>');
         proQty.append('<span class="inc qtybtn">+</span>');
@@ -287,32 +402,33 @@
             var $button = $(this);
             var oldValue = $button.parent().find('input').val();
             var maxUnit = parseFloat([[${product.unitInStock}]]);
-            if (maxUnit > oldValue-1) {
+            if (maxUnit > oldValue - 1) {
                 newVal = parseFloat(oldValue);
             } else {
                 alert("Số lượng sản phẩm này trong kho chỉ còn " + maxUnit);
                 newVal = maxUnit;
             }
-            if(isNaN(newVal)){
+            if (isNaN(newVal)) {
                 newVal = 0;
             }
             disable(newVal);
             $button.parent().find('input').val(newVal);
         });
+
         function addToCart() {
-            url = "/home/add-product/" + [[${product.productId}]] + "/" +  parseInt(newVal);
+            url = "/home/add-product/" + [[${product.productId}]] + "/" + parseInt(newVal);
             $.ajax({
                 type: "GET",
                 url: url,
-            }).done(function (){
+            }).done(function () {
                 window.location.assign(location.href);
             })
         }
     </script>
     <script type="text/javascript">
-        let zoomer = function (){
+        let zoomer = function () {
             document.querySelector('#img-zoomer-box')
-                .addEventListener('mousemove', function(e) {
+                .addEventListener('mousemove', function (e) {
 
                     let original = document.querySelector('#img-1'),
                         magnified = document.querySelector('#img-2'),
@@ -321,18 +437,20 @@
                         y = e.pageY - this.offsetTop,
                         imgWidth = original.offsetWidth,
                         imgHeight = original.offsetHeight,
-                        xperc = ((x/imgWidth) * 100),
-                        yperc = ((y/imgHeight) * 100);
+                        xperc = ((x / imgWidth) * 100),
+                        yperc = ((y / imgHeight) * 100);
 
                     //lets user scroll past right edge of image
-                    if(x > (.01 * imgWidth)) {
+                    if (x > (.01 * imgWidth)) {
                         xperc += (.15 * xperc);
-                    };
+                    }
+                    ;
 
                     //lets user scroll past bottom edge of image
-                    if(y >= (.01 * imgHeight)) {
+                    if (y >= (.01 * imgHeight)) {
                         yperc += (.15 * yperc);
-                    };
+                    }
+                    ;
 
                     style.backgroundPositionX = (xperc - 9) + '%';
                     style.backgroundPositionY = (yperc - 9) + '%';
@@ -343,7 +461,7 @@
                 }, false);
         }();
     </script>
-<!-- Related Product Section End -->
+    <!-- Related Product Section End -->
 </div>
 
 </body>

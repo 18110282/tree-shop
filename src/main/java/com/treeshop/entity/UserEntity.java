@@ -1,8 +1,11 @@
 package com.treeshop.entity;
 
 import com.treeshop.entity.cart.CartEntity;
+import com.treeshop.entity.favouriteproduct.FavouriteProductEntity;
+import com.treeshop.entity.review.ReviewsEntity;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,6 +48,9 @@ public class UserEntity implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<CartEntity> cartEntityList;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<FavouriteProductEntity> favouriteProductEntityList;
 
     @Override
     public String toString() {

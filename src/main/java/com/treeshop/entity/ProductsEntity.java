@@ -1,6 +1,7 @@
 package com.treeshop.entity;
 
 import com.treeshop.entity.cart.CartEntity;
+import com.treeshop.entity.favouriteproduct.FavouriteProductEntity;
 import com.treeshop.entity.lineitem.LineItemEntity;
 import com.treeshop.entity.review.ReviewsEntity;
 import lombok.Getter;
@@ -69,6 +70,10 @@ public class ProductsEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productsEntity")
     @ToString.Exclude
     private List<ReviewsEntity> reviewsEntityList;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productsEntity")
+    @ToString.Exclude
+    private List<FavouriteProductEntity> favouriteProductEntityList;
 
     @Transient
     public String getPhotosImagePath() {

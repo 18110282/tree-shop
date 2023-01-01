@@ -31,6 +31,7 @@ public class ClientController {
     public String logClient(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.removeAttribute("client");
+        session.removeAttribute("client_username");
         session.invalidate();
         return "redirect:/";
     }
@@ -46,6 +47,7 @@ public class ClientController {
             UserEntity client = usersService.findByUserName(username);
             if(client.isEnabled()){
                 session.setAttribute("client", client);
+                session.setAttribute("client_username", client.getUsername());
             }
             else {
                 ra.addFlashAttribute("errorMessage", "Tài khoản chưa được xác thực, hãy tiến hành xác thực");

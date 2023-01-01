@@ -2,6 +2,7 @@ package com.treeshop.controller.client;
 
 import com.treeshop.controller.CommonController;
 import com.treeshop.entity.UserEntity;
+import com.treeshop.service.FavouriteProductService;
 import com.treeshop.service.OrdersService;
 import com.treeshop.service.ProductsService;
 import com.treeshop.service.UsersService;
@@ -20,13 +21,15 @@ public class InformationController {
     private final ProductsService productsService;
     private final UsersService usersService;
     private final OrdersService ordersService;
+    private final FavouriteProductService favouriteProductService;
 
     @Autowired
-    public InformationController(CommonController commonController, ProductsService productsService, UsersService usersService, OrdersService ordersService) {
+    public InformationController(CommonController commonController, ProductsService productsService, UsersService usersService, OrdersService ordersService, FavouriteProductService favouriteProductService) {
         this.commonController = commonController;
         this.productsService = productsService;
         this.usersService = usersService;
         this.ordersService = ordersService;
+        this.favouriteProductService = favouriteProductService;
     }
 
     @GetMapping("/{username}/information")
@@ -35,7 +38,8 @@ public class InformationController {
                                       HttpSession session) {
         model.addAttribute("informationOfClient", usersService.findByUserName(username));
         model.addAttribute("listOrderOfClient", ordersService.findListOrderOfClient(username));
-        model.addAttribute("listWaitConfirmOrderOfClient", ordersService.findListOrderOfClient(username));
+        //model.addAttribute("listWaitConfirmOrderOfClient", ordersService.findListOrderOfClient(username));
+        model.addAttribute("listFavouriteProduct", favouriteProductService.findByFavouriteProductByUsername(username));
         model.addAttribute("numberProductInCart", commonController.getNumberProductInCart(session));
         return "/views/client/information";
     }
