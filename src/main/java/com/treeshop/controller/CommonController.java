@@ -68,9 +68,9 @@ public class CommonController implements ErrorController {
         return numberProductInCart;
     }
 
-    public void setUpCommonAttributeOfListWebProduct(Page<ProductsEntity> productsEntityPage, HttpSession session, Model model){
-        List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
-        Long totalProducts = productsEntityPage.getTotalElements();
+    public void setUpCommonAttributeOfListWebProduct(List<ProductsEntity> listAllProduct, Long totalProducts, HttpSession session, Model model){
+        //List<ProductsEntity> listAllProduct = productsEntityPage.getContent();
+        //Long totalProducts = productsEntityPage.getTotalElements();
         List<ProductsEntity> listDiscountProduct = productsService.findListDiscountProduct();
         List<CategoryEntity> categoryEntityList = productsService.findAllCategory();
         Integer maxPrice = productsService.findMaxPriceInAllProduct();
