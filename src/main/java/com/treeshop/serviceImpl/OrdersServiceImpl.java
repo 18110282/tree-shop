@@ -143,7 +143,12 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public void updateStatusOfListOrder(StatusOfOrder status, List<String> listOrder) {
         for (String orderId: listOrder) {
-            ordersRepository.updateStatusOfOrder(status, orderId);
+            if (status == StatusOfOrder.DELIVERED){
+                OrdersEntity ordersEntity = ordersRepository.findByOrderId(orderId.trim());
+                ordersEntity.setDeliveryDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+                ordersRepository.save(ordersEntity);
+            }
+            ordersRepository.updateStatusOfOrder(status, orderId.trim());
         }
     }
 

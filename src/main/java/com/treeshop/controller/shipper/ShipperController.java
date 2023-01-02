@@ -3,30 +3,28 @@ package com.treeshop.controller.shipper;
 import com.treeshop.entity.OrdersEntity;
 import com.treeshop.entity.ShipperEntity;
 import com.treeshop.entity.StatusOfOrder;
-import com.treeshop.entity.UserEntity;
+import com.treeshop.service.OrdersService;
 import com.treeshop.service.ShipperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(path = "/shipper")
 public class ShipperController {
     private final ShipperService shipperService;
+    private final OrdersService ordersService;
 
     @Autowired
-    public ShipperController(ShipperService shipperService) {
+    public ShipperController(ShipperService shipperService, OrdersService ordersService) {
         this.shipperService = shipperService;
+        this.ordersService = ordersService;
     }
 
     @GetMapping(value = {"/login", "/logout"})
@@ -80,5 +78,11 @@ public class ShipperController {
         session.setAttribute("shipper_flg", 1);
         session.removeAttribute("admin_flg");
         return "/views/shipper/history-delivery";
+    }
+
+    @PostMapping("/order-delivery/confirm")
+    @ResponseBody
+    public void confirmListOrder(@RequestParam(value = "arrOfOrderId[]", required = false) List<String> listWaitConfirm) {
+        ordersService.updateStatusOfListOrder(StatusOfOrder.DELIVERED, listWaitConfirm);
     }
 }
