@@ -98,7 +98,12 @@
                                         [[${post.title}]]
                                     </td>
                                     <td class="hidden-480">
-                                        [[${post.introduce}]]
+                                        <span style="
+                                                       max-height:150px;
+                                                       white-space: pre-line;display: -webkit-box;-webkit-line-clamp: 6;-webkit-box-orient: vertical;
+                                                       overflow: hidden;
+                                                       text-overflow: ellipsis;
+                                                       max-width: 100ch;">[[${post.introduce}]]</span>
                                     </td>
                                     <td>
                                         <img th:title="${post.title}" class="img-responsive"

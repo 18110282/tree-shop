@@ -1,20 +1,19 @@
 package com.treeshop.controller.admin;
 
 import com.treeshop.controller.CommonController;
-import com.treeshop.entity.CategoryEntity;
 import com.treeshop.entity.PostsEntity;
-import com.treeshop.entity.ProductsEntity;
 import com.treeshop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.exceptions.TemplateEngineException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping(path = "/admin/post")
@@ -42,8 +41,9 @@ public class PostController {
     }
     @GetMapping("/edit/{postId}")
     public String showEditPostView(@PathVariable("postId") String postId,
-                                      Model model) {
+                                   Model model) {
         PostsEntity postsEntity = postService.findByPostsId(postId);
+
         model.addAttribute("post", postsEntity);
         model.addAttribute("titlePage", "Chỉnh sửa bài viết: " + postId);
         model.addAttribute("edit", "");

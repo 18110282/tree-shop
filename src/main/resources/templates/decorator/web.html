@@ -75,7 +75,7 @@
         <ul>
             <li><a th:href="@{/home}">Trang Chủ</a></li>
             <li><a th:href="@{/home/list-web-product}">Sản Phẩm</a></li>
-            <li><a href="./blog.html">Tin Tức</a></li>
+            <li><a th:href="@{/home/post/list}">Tin Tức</a></li>
             <li><a th:href="@{/home/contact}">Liên Hệ</a></li>
         </ul>
     </nav>
@@ -147,7 +147,7 @@
                     <ul>
                         <li><a th:href="@{/home}">Trang Chủ</a></li>
                         <li><a th:href="@{/home/list-web-product}">Sản Phẩm</a></li>
-                        <li><a href="./blog.html">Tin Tức</a></li>
+                        <li><a th:href="@{/home/post/list}">Tin Tức</a></li>
                         <li><a th:href="@{/home/contact}">Liên Hệ</a></li>
                     </ul>
                 </nav>
@@ -246,7 +246,7 @@
                     <h2>[[${post.title}]]</h2>
                     <ul>
                         <li>By HVH(Admin)</li>
-                        <li>[[${post.createDate}]]</li>
+                        <li>Posted: <span th:text="${#dates.format(post.createDate, 'dd-MM-yyyy')}"></span></li>
                     </ul>
                 </div>
             </div>
