@@ -1,9 +1,7 @@
 package com.treeshop.controller.shipper;
 
-import com.treeshop.controller.CommonController;
-import com.treeshop.entity.UserEntity;
-import com.treeshop.service.UsersService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,7 +18,9 @@ public class ShipperController {
     }
 
     @GetMapping("/home")
-    public String showShipperHome(HttpSession session) {
+    public String showShipperHome(HttpSession session, Model model) {
+        session.setAttribute("shipper_flg", 1);
+        session.removeAttribute("admin_flg");
         return "/views/shipper/home";
     }
 }
