@@ -48,7 +48,7 @@
     </div>
     <div class="humberger__menu__cart ">
         <ul>
-            <li><a href="#"><i class="fa fa-heart"></i> <span>0</span></a></li>
+<!--            <li><a href="#"><i class="fa fa-heart"></i> <span>0</span></a></li>-->
             <li th:if="${session.client}"><a th:href="@{'/home/' + ${session.client.username} + '/cart/detail'}"><i
                     class="fa fa-shopping-bag"></i> <span>[[${numberProductInCart}]]</span></a></li>
             <li th:unless="${session.client}"><a th:href="@{/home/no-user/cart/detail}"><i
@@ -155,7 +155,7 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>0</span></a></li>
+<!--                        <li><a href="#"><i class="fa fa-heart"></i> <span>0</span></a></li>-->
                         <li th:if="${session.client}"><a
                                 th:href="@{'/home/' + ${session.client.username} + '/cart/detail'}"><i
                                 class="fa fa-shopping-bag"></i> <span>[[${numberProductInCart}]]</span></a></li>
