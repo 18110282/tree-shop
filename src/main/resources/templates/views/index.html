@@ -71,7 +71,7 @@
     <section class="latest-product spad">
         <div class="container">
             <div class="row">
-                <div class="col-xs-6 col-sm-2"></div>
+<!--                <div class="col-xs-6 col-sm-2"></div>-->
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
                         <h4>Top Mới Nhất</h4>
@@ -136,6 +136,47 @@
                             </div>
                             <div class="latest-prdouct__slider__item">
                                 <th:block th:each="item: ${topVisitProductList2}">
+                                    <a th:href="@{'/home/product/' + ${item.productId} + '/detail'}"
+                                       class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img style="width: 110px; height: 110px"
+                                                 th:src="@{${item.photosImagePath}}"
+                                                 th:tittle="${item.productName}">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>[[${item.productName}]]</h6>
+                                            <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                        </div>
+                                    </a>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>Top Review</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            <div class="latest-prdouct__slider__item">
+                                <th:block th:each="item: ${topReviewProductList1}">
+                                    <a th:href="@{'/home/product/' + ${item.productId} + '/detail'}"
+                                       class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img style="width: 110px; height: 110px"
+                                                 th:src="@{${item.photosImagePath}}"
+                                                 th:tittle="${item.productName}">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>[[${item.productName}]]</h6>
+                                            <span th:if="${item.discountPercent != 0}" th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                            <span th:if="${item.discountPercent == 0}" th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'POINT')} + '₫'"></span>
+                                        </div>
+                                    </a>
+                                </th:block>
+                            </div>
+                            <div class="latest-prdouct__slider__item">
+                                <th:block th:each="item: ${topReviewProductList2}">
                                     <a th:href="@{'/home/product/' + ${item.productId} + '/detail'}"
                                        class="latest-product__item">
                                         <div class="latest-product__item__pic">

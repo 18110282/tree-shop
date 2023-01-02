@@ -96,4 +96,12 @@ public class ProductsCustomRepositoryImpl implements ProductsCustomRepository {
         }
         return query.list();
     }
+
+    @Override
+    public List<ProductsEntity> findTop6Review() {
+        SessionFactory sessionFactory = this.sessionFactory.getSessionFactory(entityManagerFactory);
+        Session session = sessionFactory.openSession();
+        String hql = "select r.productsEntity from ReviewsEntity r where r.productsEntity.enabled = true group by r.reviewsIdKey.productId order by count(r.reviewsIdKey.productId) desc";
+        return session.createQuery(hql, ProductsEntity.class).setMaxResults(6).list();
+    }
 }

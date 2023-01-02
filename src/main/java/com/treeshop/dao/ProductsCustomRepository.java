@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProductsCustomRepository {
     List<ProductsEntity> findRandomProductInSameCategory(String categoryId);
     List<ProductsEntity> searchByCondition(Integer max, Integer min, String weight, String height);
+    List<ProductsEntity> findTop6Review();
 }

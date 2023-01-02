@@ -11,5 +11,7 @@ public interface HomeService {
 
     List<ProductsEntity> findTopSixVisitProduct(Integer slide);
 
+    List<ProductsEntity> findTopSixReviewProduct(Integer slide);
+
     List<ProductsEntity> handleSlideOfTopSixProduct(Integer slide, List<ProductsEntity> productsEntityList);
 }

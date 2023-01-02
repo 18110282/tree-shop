@@ -33,6 +33,8 @@ public class HomeController {
         model.addAttribute("topLatestProductList2", homeService.findTopSixLatestProduct(2));
         model.addAttribute("topVisitProductList1", homeService.findTopSixVisitProduct(1));
         model.addAttribute("topVisitProductList2", homeService.findTopSixVisitProduct(2));
+        model.addAttribute("topReviewProductList1", homeService.findTopSixReviewProduct(1));
+        model.addAttribute("topReviewProductList2", homeService.findTopSixReviewProduct(2));
         model.addAttribute("home", "");
         return "/views/index";
     }

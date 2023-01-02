@@ -51,6 +51,8 @@ public interface ProductsRepository extends PagingAndSortingRepository<ProductsE
 
     List<ProductsEntity> findTop6ByEnabledIsTrueOrderByVisitDesc();
 
+    //List<ProductsEntity> findTop6ByEnabledIsTrue
+
     boolean existsByProductIdAndEnabled(String productId, boolean enabled);
 
 

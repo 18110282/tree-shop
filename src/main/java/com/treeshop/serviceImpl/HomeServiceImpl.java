@@ -35,6 +35,12 @@ public class HomeServiceImpl implements HomeService {
         return this.handleSlideOfTopSixProduct(slide, productsEntityList);
     }
 
+    @Override
+    public List<ProductsEntity> findTopSixReviewProduct(Integer slide) {
+            List<ProductsEntity> productsEntityList = productsRepository.findTop6Review();
+            return this.handleSlideOfTopSixProduct(slide, productsEntityList);
+    }
+
     public List<ProductsEntity> handleSlideOfTopSixProduct(Integer slide, List<ProductsEntity> productsEntityList){
         List<ProductsEntity> result = new ArrayList<>();
         if(slide == 1){
