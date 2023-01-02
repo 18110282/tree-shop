@@ -41,6 +41,8 @@ public class PostWebController {
         Integer totalPages = postsEntitiesPage.getTotalPages();
         List<PostsEntity> postsEntityList = postsEntitiesPage.getContent();
         List<PostsEntity> topNewestPost = postService.findTop3Newest();
+        Integer numberProductInCart = commonController.getNumberProductInCart(session);
+        model.addAttribute("numberProductInCart", numberProductInCart);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("listPost", postsEntityList);
@@ -50,7 +52,9 @@ public class PostWebController {
 
     @GetMapping("/post/{postId}/detail")
     public String viewPostDetail(@PathVariable("postId") String postId,
-                                 Model model){
+                                 Model model, HttpSession session){
+        Integer numberProductInCart = commonController.getNumberProductInCart(session);
+        model.addAttribute("numberProductInCart", numberProductInCart);
         model.addAttribute("post", postService.findByPostsId(postId));
         model.addAttribute("listTopNewest", postService.findTop3Newest());
         model.addAttribute("listTopRandom", postService.findTop3Random());
