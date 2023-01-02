@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ShipperRepository extends CrudRepository<ShipperEntity, Integer> {
-    List<ShipperEntity> findAll();
+    List<ShipperEntity> findAllByEnabledIsTrue();
+    ShipperEntity findByShipperId(Integer shipperId);
+    boolean existsByUsername(String username);
 }
