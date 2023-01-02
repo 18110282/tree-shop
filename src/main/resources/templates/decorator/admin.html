@@ -69,9 +69,16 @@
                     <a href="#"  class="dropdown-toggle" th:if="${session.adminEntity}">
                         Welcome, [[${session.adminEntity.username}]]
                     </a>
+                    <a href="#"  class="dropdown-toggle" th:if="${session.shipperEntity}">
+                        Welcome, [[${session.shipperEntity.username}]]
+                    </a>
                 </li>
                 <li class="light-blue dropdown-modal">
-                    <a th:href="@{/admin/logout}">
+                    <a th:href="@{/admin/logout}"  th:if="${session.adminEntity}">
+                        <i class="ace-icon fa fa-power-off"></i>
+                        Đăng xuất
+                    </a>
+                    <a th:href="@{/shipper/logout}"  th:if="${session.shipperEntity}">
                         <i class="ace-icon fa fa-power-off"></i>
                         Đăng xuất
                     </a>
@@ -324,14 +331,6 @@
         </ul>
         </div>
         <ul class="nav nav-list" th:if="${session.shipper_flg}">
-            <li>
-                <a th:href="@{/shipper/home}">
-                    <i class="menu-icon fa fa-user"></i>
-                    <span class="menu-text"> Shipper Profile</span>
-                </a>
-
-                <b class="arrow"></b>
-            </li>
             <li id="xxxx1">
                 <a th:href="@{/shipper/order-delivery}">
                     <i class="menu-icon fa fa-users"></i>

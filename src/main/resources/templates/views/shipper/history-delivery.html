@@ -42,55 +42,40 @@
                             <thead>
                             <tr>
                                 <th>Mã đơn</th>
-                                <th class="hidden-480">Tên khách hàng</th>
-                                <th class="hidden-480">Địa chỉ</th>
-                                <th class="hidden-480">Số điện thoại</th>
-                                <th class="hidden-480">Email</th>
+                                <th>Tên khách hàng</th>
+                                <th>Địa chỉ</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
                                 <th>Tổng giá</th>
                                 <th>Ngày giao</th>
-                                <!--<th>Thao tác</th>-->
                             </tr>
                             </thead>
                             <tbody>
-                            <!--<th:block th:each="order :${listOrder}">-->
+                            <th:block th:each="order :${listOrder}">
                             <tr>
                                 <td>
-                                    1
+                                    [[${order.orderId}]]
                                 </td>
-                                <td class="hidden-480">
-                                    Phạm Xuân Nhuận
+                                <td>
+                                    [[${order.contactName}]]
                                 </td>
-                                <td class="hidden-480">
-                                    Bến Tre - Thạnh Phú - An Thạnh
+                                <td>
+                                    [[${order.address}]]
                                 </td>
-                                <td class="hidden-480">
-                                    0327300035
+                                <td>
+                                    [[${order.phoneNumber}]]
                                 </td>
-                                <td class="hidden-480">
+                                <td>
                                     nhuan.cntt.k18@gmail.com
                                 </td>
                                 <td>
-                                    7.500.000 đ
+                                    [[${order.email}]]
                                 </td>
-                                <td class="hidden-480">
-                                    2022-12-12 10:30:28
+                                <td>
+                                    [[${order.deliveryDate}]]
                                 </td>
-                                <!--
-                                                                    <td>
-                                                                        <div class="action-buttons">
-                                                                            <a title="Xem chi tiết" class="green view-order-detail" data-toggle="modal"
-                                                                               data-target="#exampleModalCenter" th:id="${order.orderId}">
-                                                                                <i class="ace-icon fa fa-eye bigger-130"></i>
-                                                                            </a>
-                                                                            <a title="Xóa" class="red"
-                                                                               th:href="@{'/admin/order/' + ${order.orderId}}">
-                                                                                <i class="ace-icon fa fa-close bigger-130"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </td>-->
                             </tr>
-
-                            <!--</th:block>-->
+                            </th:block>
                             </tbody>
                         </table>
 <!--                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"

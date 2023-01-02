@@ -15,6 +15,7 @@ public interface OrdersRepository extends JpaRepository<OrdersEntity, String> {
     boolean existsByUsernameAndCodeId(String username, String codeId);
     OrdersEntity findByOrderId(String orderId);
     List<OrdersEntity> findByStatus(StatusOfOrder status);
+    List<OrdersEntity> findByShipperIdAndStatus(Integer shipperId, StatusOfOrder status);
 
     List<OrdersEntity> findByUsername(String username);
 

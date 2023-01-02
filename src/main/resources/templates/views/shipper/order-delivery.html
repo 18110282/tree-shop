@@ -55,18 +55,17 @@
                                     </label>
                                 </th>
                                 <th>Mã đơn</th>
-                                <th class="hidden-480">Tên khách hàng</th>
-                                <th class="hidden-480">Địa chỉ</th>
-                                <th class="hidden-480">Số điện thoại</th>
-                                <th class="hidden-480">Email</th>
-                                <th class="hidden-480">Ngày đặt</th>
+                                <th>Tên khách hàng</th>
+                                <th>Địa chỉ</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Ngày đặt</th>
                                 <th>Tổng giá</th>
-                                <!--<th>Thao tác</th>-->
                             </tr>
                             </thead>
                             <tbody>
-                            <!--<th:block th:each="order :${listOrder}">-->
-                                <tr>
+<!--                            <th:block th:each="order :${listOrder}">-->
+                                <tr th:each="order :${listOrder}">
                                     <td class="center">
                                         <label class="pos-rel">
                                             <input type="checkbox" class="ace"/>
@@ -74,42 +73,28 @@
                                         </label>
                                     </td>
                                     <td>
-                                        1
-                                    </td>
-                                    <td class="hidden-480">
-                                        Phạm Xuân Nhuận
-                                    </td>
-                                    <td class="hidden-480">
-                                        Bến Tre - Thạnh Phú - An Thạnh
-                                    </td>
-                                    <td class="hidden-480">
-                                        0327300035
-                                    </td>
-                                    <td class="hidden-480">
-                                        nhuan.cntt.k18@gmail.com
-                                    </td>
-                                    <td class="hidden-480">
-                                        2022-12-12 10:30:28
+                                        [[${order.orderId}]]
                                     </td>
                                     <td>
-                                        7.500.000 đ
+                                       [[${order.contactName}]]
                                     </td>
-<!--
                                     <td>
-                                        <div class="action-buttons">
-                                            <a title="Xem chi tiết" class="green view-order-detail" data-toggle="modal"
-                                               data-target="#exampleModalCenter" th:id="${order.orderId}">
-                                                <i class="ace-icon fa fa-eye bigger-130"></i>
-                                            </a>
-                                            <a title="Xóa" class="red"
-                                               th:href="@{'/admin/order/' + ${order.orderId}}">
-                                                <i class="ace-icon fa fa-close bigger-130"></i>
-                                            </a>
-                                        </div>
-                                    </td>-->
+                                        [[${order.address}]]
+                                    </td>
+                                    <td>
+                                        [[${order.phoneNumber}]]
+                                    </td>
+                                    <td>
+                                        [[${order.email}]]
+                                    </td>
+                                    <td>
+                                        [[${order.orderDate}]]
+                                    </td>
+                                    <td>
+                                        [[${order.totalOrder}]]
+                                    </td>
                                 </tr>
-
-                            <!--</th:block>-->
+<!--                            </th:block>-->
                             </tbody>
                         </table>
                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"

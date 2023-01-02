@@ -49,6 +49,8 @@ public class OrdersEntity {
     private boolean review_flg;
     @Column(name = "shipping_fee")
     private Integer shippingFee;
+    @Column(name = "delivery_date")
+    private String deliveryDate;
 
     @Transient
     private Integer subTotalPrice;

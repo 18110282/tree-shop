@@ -10,5 +10,7 @@ import java.util.List;
 public interface ShipperRepository extends CrudRepository<ShipperEntity, Integer> {
     List<ShipperEntity> findAllByEnabledIsTrue();
     ShipperEntity findByShipperId(Integer shipperId);
+    ShipperEntity findByUsername(String username);
     boolean existsByUsername(String username);
+    boolean existsByUsernameAndPasswordAndEnabledIsTrue(String username, String password);
 }
