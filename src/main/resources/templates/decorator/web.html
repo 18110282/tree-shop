@@ -227,12 +227,27 @@
 </section>
 <!-- Hero Section End -->
 <!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg" th:data-setbg="@{/web/img/breadcrumb.jpg}" th:unless="${home}">
+<section class="breadcrumb-section set-bg" th:data-setbg="@{/web/img/breadcrumb.jpg}" th:if="${home == null and post_detail_flg == null}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
                     <h2>Săn Sale Tháng 5 - Ngập Tràn Ưu Đãi</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="blog-details-hero set-bg" th:data-setbg="@{/web/img/blog/details/details-hero.jpg}" th:if="${post_detail_flg}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="blog__details__hero__text">
+                    <h2>[[${post.title}]]</h2>
+                    <ul>
+                        <li>By HVH(Admin)</li>
+                        <li>[[${post.createDate}]]</li>
+                    </ul>
                 </div>
             </div>
         </div>

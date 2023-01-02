@@ -48,13 +48,15 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String showAdminHome(HttpSession session) {
+    public String showAdminHome(HttpSession session, Model model) {
         UserEntity adminEntity = (UserEntity) session.getAttribute("adminEntity");
         if (adminEntity == null) {
             return "redirect:/admin/login";
         } else {
             UserEntity updatedAdminEntity = userService.findByUserName(adminEntity.getUsername());
             session.setAttribute("adminEntity", updatedAdminEntity);
+            session.setAttribute("admin_flg", 1);
+            session.removeAttribute("shipper_flg");
             return "/views/admin/home";
         }
     }

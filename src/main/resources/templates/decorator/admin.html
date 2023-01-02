@@ -50,10 +50,16 @@
         </button>
 
         <div class="navbar-header pull-left">
-            <a href="" class="navbar-brand">
+            <a href="" class="navbar-brand" th:if="${session.admin_flg}">
                 <small>
                     <i class="fa fa-leaf"></i>
                     Admin Tree Shop
+                </small>
+            </a>
+            <a href="" class="navbar-brand" th:if="${session.shipper_flg}">
+                <small>
+                    <i class="fa fa-leaf"></i>
+                    Shipper Tree Shop
                 </small>
             </a>
         </div>
@@ -116,7 +122,7 @@
             </div>
         </div>
         <div id="act">
-        <ul class="nav nav-list">
+        <ul class="nav nav-list" th:if="${session.admin_flg}">
             <li>
                 <a th:href="@{/admin/home}">
                     <i class="menu-icon fa fa-user"></i>
@@ -309,6 +315,32 @@
             </li>
         </ul>
         </div>
+        <ul class="nav nav-list" th:if="${session.shipper_flg}">
+            <li>
+                <a th:href="@{/shipper/home}">
+                    <i class="menu-icon fa fa-user"></i>
+                    <span class="menu-text"> Shipper Profile</span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li id="xxxx1">
+                <a th:href="@{/shipper/order-delivery}">
+                    <i class="menu-icon fa fa-users"></i>
+                    <span class="menu-text"> Đơn chưa giao </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li id="xxxx">
+                <a th:href="@{/shipper/history-delivery}">
+                    <i class="menu-icon fa fa-users"></i>
+                    <span class="menu-text"> Lịch sử giao hàng </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+        </ul>
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
             <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"
                data-icon2="ace-icon fa fa-angle-double-right"></i>

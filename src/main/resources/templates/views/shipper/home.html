@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{decorator/shipper}">
+      layout:decorate="~{decorator/admin}">
 <head>
     <title>Shipper Profile</title>
 </head>
@@ -21,13 +21,13 @@
                     <i class="ace-icon fa fa-home home-icon"></i>
                     <a th:href="@{/admin/home}">Trang chủ</a>
                 </li>
-                <li class="active">Admin Profile</li>
+                <li class="active">Shipper Profile</li>
             </ul><!-- /.breadcrumb -->
         </div>
 
         <div class="page-header">
             <h1>
-                &ensp;Admin Profile Page
+                &ensp;Shipper Profile Page
             </h1>
 
         </div><!-- /.page-header -->
@@ -66,7 +66,7 @@
                                                     <label class="col-sm-4 control-label no-padding-right" for="form-field-username">Username</label>
 
                                                     <div class="col-sm-8">
-                                                        <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="Username" th:value="${session.adminEntity.username}" disabled/>
+                                                        <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="Username" value="a" disabled/>
                                                     </div>
                                                 </div>
 
@@ -76,7 +76,7 @@
                                                     <label class="col-sm-4 control-label no-padding-right" for="form-field-first">Name</label>
 
                                                     <div class="col-sm-8">
-                                                        <input class="col-xs-12 col-sm-10" type="text" id="form-field-first" placeholder="Full Name" th:value="${session.adminEntity.fullname}" disabled/>
+                                                        <input class="col-xs-12 col-sm-10" type="text" id="form-field-first" placeholder="Full Name" value="a" disabled/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -89,7 +89,7 @@
 
                                             <div class="col-sm-9">
 																	<span class="input-icon input-icon-right">
-																		<input type="email" id="form-field-email" th:value="${session.adminEntity.email}" disabled/>
+																		<input type="email" id="form-field-email" value="nhuan" disabled/>
 																		<i class="ace-icon fa fa-envelope"></i>
 																	</span>
                                             </div>
@@ -168,7 +168,7 @@
 
                                         <div class="clearfix form-actions">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <script  th:inline="javascript" th:if="${message}">
+                                                <script  th:inline="javascript">
                                                     alert([[${message}]]);
                                                     location.href("/admin/home");
                                                 </script>
