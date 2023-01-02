@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface ShipperService {
     List<ShipperEntity> findAll();
+    ShipperEntity findByShipperId(Integer shipperId);
+    boolean checkUsername(String username);
+    void saveShipper(ShipperEntity shipperEntity);
+    void deleteShipper(Integer shipperId);
 }
