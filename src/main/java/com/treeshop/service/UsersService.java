@@ -29,5 +29,7 @@ public interface UsersService {
 
     void sendVerificationEmail(UserEntity userEntity, String siteURL) throws MessagingException, UnsupportedEncodingException;
 
+    void sendForgotPassEmail(UserEntity userEntity, String siteURL) throws MessagingException, UnsupportedEncodingException;
+
     boolean verifyClient(String verificationCode);
 }

@@ -24,6 +24,13 @@ function showRegisterForm(){
         });
         $('.modal-title').html('&emsp;&ensp;Đăng ký tài khoản');
     });
+    $('.forgotPassBox').fadeOut('fast',function(){
+        $('.registerBox').fadeIn('fast');
+        $('.verify-footer').fadeOut('fast',function(){
+            $('.register-footer').fadeIn('fast');
+        });
+        $('.modal-title').html('&emsp;&ensp;Đăng ký tài khoản');
+    });
     $('.error').removeClass('alert alert-danger').html('');
        
 }
@@ -40,6 +47,19 @@ function showSendVerifyForm(){
     $('.error').removeClass('alert alert-danger').html('');
 
 }
+function showForgotPassForm(){
+    $('.loginBox').fadeOut('fast',function(){
+        $('.forgotPassBox').fadeIn('fast');
+        $('.login-footer').fadeOut('fast',function(){
+            $('.verify-footer').fadeIn('fast');
+        });
+        $('.social').fadeOut('fast');
+        $('.division').fadeOut('fast');
+        $('.modal-title').html('&emsp;&ensp; Quên mật khẩu');
+    });
+    $('.error').removeClass('alert alert-danger').html('');
+
+}
 function showLoginForm(){
     $('#loginModal .registerBox').fadeOut('fast',function(){
         $('.loginBox').fadeIn('fast');
@@ -52,6 +72,14 @@ function showLoginForm(){
         $('.modal-title').html('&emsp;&emsp;Đăng nhập');
     });
     $('#loginModal .sendVerifyBox').fadeOut('fast',function(){
+        $('.loginBox').fadeIn('fast');
+        $('.verify-footer').fadeOut('fast',function(){
+            $('.login-footer').fadeIn('fast');
+        });
+
+        $('.modal-title').html('&emsp;&emsp;Đăng nhập');
+    });
+    $('#loginModal .forgotPassBox').fadeOut('fast',function(){
         $('.loginBox').fadeIn('fast');
         $('.verify-footer').fadeOut('fast',function(){
             $('.login-footer').fadeIn('fast');
@@ -78,6 +106,13 @@ function openRegisterModal(){
 }
 function openSendVerifyForm(){
     showSendVerifyForm();
+    setTimeout(function(){
+        $('#loginModal').modal('show');
+    }, 150);
+
+}
+function openForgotPassForm(){
+    showForgotPassForm();
     setTimeout(function(){
         $('#loginModal').modal('show');
     }, 150);

@@ -157,7 +157,7 @@
     text-align: center;
     width: 100%;
 }
-.login .btn-login, .registerBox .btn-register, .sendVerifyBox .btn-verify{
+.login .btn-login, .registerBox .btn-register, .sendVerifyBox .btn-verify, .forgotPassBox .btn-verify{
     background-color: #7fad39;
     border-color: #7fad39;
     border-width: 0;
@@ -168,7 +168,7 @@
     text-transform: uppercase;
     width: 100%;
 }
-.login .btn-login:hover, .registerBox .btn-register:hover, .sendVerifyBox .btn-verify:hover{
+.login .btn-login:hover, .registerBox .btn-register:hover, .sendVerifyBox .btn-verify:hover, .forgotPassBox .btn-verify:hover{
     background-color:#7fad39;
     color: #FFFFFF;
 }

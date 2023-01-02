@@ -16,6 +16,7 @@ public interface UserRepository extends CrudRepository<UserEntity, String> {
     void deleteByUsername(String username);
     List<UserEntity> findAll();
     boolean existsByUsernameAndPassword(String username, String password);
+//    boolean existsByUsernameAndPasswordIgnoreCase(String username, String password);
     boolean existsByUsername(String username);
 
     //Fìnd for client

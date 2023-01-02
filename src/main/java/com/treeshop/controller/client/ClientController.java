@@ -45,11 +45,10 @@ public class ClientController {
         String password = user.getPassword();
         if (usersService.checkLogin(username, password)) {
             UserEntity client = usersService.findByUserName(username);
-            if(client.isEnabled()){
+            if (client.isEnabled()) {
                 session.setAttribute("client", client);
                 session.setAttribute("client_username", client.getUsername());
-            }
-            else {
+            } else {
                 ra.addFlashAttribute("errorMessage", "Tài khoản chưa được xác thực, hãy tiến hành xác thực");
                 return "redirect:" + url;
             }
@@ -93,20 +92,38 @@ public class ClientController {
                                          RedirectAttributes ra, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         String url = commonController.getHeaderURL(request);
         UserEntity client = usersService.findByUserName(username);
-        if(client == null){
+        if (client == null) {
             ra.addFlashAttribute("verifyError", "Không tồn tại tài khoản " + username);
-        }
-        else {
-            if(!client.getEmail().equals(email)){
+        } else {
+            if (!client.getEmail().equals(email)) {
                 ra.addFlashAttribute("verifyError", "Email không đúng với tài khoản " + username);
-            }
-            else {
+            } else {
                 String siteURL = commonController.getSiteUrl(request);
                 usersService.sendVerificationEmail(client, siteURL);
                 ra.addFlashAttribute("registerMessage", "Vui lòng kiểm tra hòm thư để tiến hành xác thực");
             }
         }
         return "redirect:" + url;
-
     }
+
+    @PostMapping("/forgot-pass")
+    public String forgotPass(@RequestParam(value = "username") String username,
+                             @RequestParam(value = "email") String email,
+                             RedirectAttributes ra, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        String url = commonController.getHeaderURL(request);
+        UserEntity client = usersService.findByUserName(username);
+        if (client == null) {
+            ra.addFlashAttribute("verifyPassError", "Không tồn tại tài khoản " + username);
+        } else {
+            if (!client.getEmail().equals(email)) {
+                ra.addFlashAttribute("verifyPassError", "Email không đúng với tài khoản " + username);
+            } else {
+                String siteURL = commonController.getSiteUrl(request);
+                usersService.sendForgotPassEmail(client, siteURL);
+                ra.addFlashAttribute("registerMessage", "Vui lòng kiểm tra hòm thư để tiến hành xác thực");
+            }
+        }
+        return "redirect:" + url;
+    }
+
 }

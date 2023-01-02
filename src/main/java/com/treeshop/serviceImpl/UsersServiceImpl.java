@@ -13,6 +13,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,7 +97,7 @@ public class UsersServiceImpl implements UsersService {
         mailContent.append("<p> Bấm vào link sau để tiến hành xác nhận tài khoản người dùng: </p>");
         String verifyURL = siteURL + "/home/" + userEntity.getUsername() +"/verify?code=" + userEntity.getVerificationCode();
         mailContent.append("<h3><a href=\"").append(verifyURL).append("\">VERIFY</a></h3>");
-        mailContent.append("<p>Xin cám ơn, <br> Tree Shop</p>");
+        mailContent.append("<p>Xin cám ơn, <br> ❤ Tree Shop ❤</p>");
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message);
@@ -109,6 +111,27 @@ public class UsersServiceImpl implements UsersService {
 
     }
     @Override
+    public void sendForgotPassEmail(UserEntity userEntity, String siteURL) throws MessagingException, UnsupportedEncodingException {
+        String subject = "Quên mật khẩu";
+        String senderName = "Tree Shop";
+        String newPass =  RandomString.make(8);
+        StringBuilder mailContent = new StringBuilder("<p>Dear, " + userEntity.getFullname() + "</p>");
+        mailContent.append("<p> Mật khẩu của bạn là: <strong style='color:blue'>" + newPass + "</strong></p>");
+        mailContent.append("<p>Xin cám ơn, <br> ❤ Tree Shop ❤</p>");
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message);
+
+        mimeMessageHelper.setFrom("treeshop49@gmail.com", senderName);
+        mimeMessageHelper.setTo(userEntity.getEmail());
+        mimeMessageHelper.setSubject(subject);
+
+        mimeMessageHelper.setText(mailContent.toString(), true);
+        javaMailSender.send(message);
+        userEntity.setPassword(newPass);
+        userRepository.save(userEntity);
+    }
+    @Override
     public boolean verifyClient(String verificationCode){
         UserEntity userEntity = userRepository.findUserEntityByVerificationCode(verificationCode);
         if(userEntity == null || userEntity.isEnabled()){
@@ -119,5 +142,4 @@ public class UsersServiceImpl implements UsersService {
             return true;
         }
     }
-
 }

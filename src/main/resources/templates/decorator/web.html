@@ -335,22 +335,22 @@
             <div class="modal-body">
                 <div class="box">
                     <div class="content">
-                        <div class="social">
+<!--                        <div class="social">-->
 <!--                            <a class="circle github" href="#">-->
 <!--                                <i class="fa fa-github fa-fw"></i>-->
 <!--                            </a>-->
-                            <a id="google_login" class="circle google" href="#">
-                                <i class="fa fa-google-plus fa-fw"></i>
-                            </a>
+<!--                            <a id="google_login" class="circle google" href="#">-->
+<!--                                <i class="fa fa-google-plus fa-fw"></i>-->
+<!--                            </a>-->
 <!--                            <a id="facebook_login" class="circle facebook" href="#">-->
 <!--                                <i class="fa fa-facebook fa-fw"></i>-->
 <!--                            </a>-->
-                        </div>
-                        <div class="division">
-                            <div class="line l"></div>
-                            <span>or</span>
-                            <div class="line r"></div>
-                        </div>
+<!--                        </div>-->
+<!--                        <div class="division">-->
+<!--                            <div class="line l"></div>-->
+<!--                            <span>or</span>-->
+<!--                            <div class="line r"></div>-->
+<!--                        </div>-->
                         <div class="error"></div>
                         <div class="form loginBox">
                             <form method="post" th:action="@{/home/user/check-login}" accept-charset="UTF-8"
@@ -404,10 +404,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="box">
+                        <div class="content forgotPassBox" style="display:none;">
+                            <div class="form">
+                                <form method="post" html="{:multipart=>true}" data-remote="true"
+                                      th:action="@{/home/forgot-pass}" accept-charset="UTF-8">
+                                    <input class="form-control" type="text" placeholder="Username"
+                                           th:name="username" required>
+                                    <input class="form-control" type="email" placeholder="Email"
+                                           th:name="email" required>
+                                    <div><b> <span style="color:#6dced5" th:text="${verifyPassError}"></span></b></div>
+                                    <br>
+                                    <!--                                <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">-->
+                                    <input class="btn btn-default btn-verify" type="submit" value="Yêu cầu"
+                                           name="commit">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="forgot login-footer">
+                    <span><a href="javascript: showForgotPassForm();" class="a-color">Quên mật khẩu</a>
+                            ?</span><br>
+                    <span>
                      <span><a href="javascript: showSendVerifyForm();" class="a-color">Xác thực tài khoản</a>
                             ?</span><br>
                     <span>
@@ -461,6 +482,10 @@
 <script th:if="${verifyError}" type="text/javascript" th:inline="javascript">
     $(document).ready(function () {
         openSendVerifyForm();
+    });
+</script><script th:if="${verifyPassError}" type="text/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        openForgotPassForm();
     });
 </script>
 <script th:if="${home}" type="text/javascript" th:inline="javascript">
