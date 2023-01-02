@@ -112,7 +112,7 @@ public class UsersServiceImpl implements UsersService {
     }
     @Override
     public void sendForgotPassEmail(UserEntity userEntity, String siteURL) throws MessagingException, UnsupportedEncodingException {
-        String subject = "Quên mật khẩu";
+        String subject = "Yêu cầu cấp lại mật khẩu";
         String senderName = "Tree Shop";
         String newPass =  RandomString.make(8);
         StringBuilder mailContent = new StringBuilder("<p>Dear, " + userEntity.getFullname() + "</p>");
