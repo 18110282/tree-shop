@@ -56,7 +56,7 @@
                         đã tồn tại.
                     </div>
                     <form class="form-horizontal" role="form" th:action="@{/admin/post/save}" method="post" enctype="multipart/form-data" th:object="${post}">
-                        <input type="text" class="hidden" th:field="*{postsId}" th:if="${edit}"/>
+                        <input type="text" class="hidden" name="postsId" th:field="*{postsId}" th:if="${edit}"/>
                         <div class="form-group">
                             <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
                                 Mã bài viết </label>
@@ -94,19 +94,6 @@
                                 <img th:src="@{*{photosImageHeaderPath}}" style="width: 290px; height: 220px " id="thumbnail" alt="IMG Preview" accept="image/*"/>
                             </div>
                         </div>
-
-<!--                        <div class="form-group">-->
-<!--                            <label class="col-sm-1 control-label no-padding-right" for="id-input-file-3">-->
-<!--                                Video-->
-<!--                            </label>-->
-<!--                            <div class="col-sm-3">-->
-<!--                                <input type="file"  id="id-input-file-3" class="input-file" name="fileVideo" accept="video/*,.mkv">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <input class="hidden" type="text" th:field="*{visit}">-->
-<!--                        <input class="hidden" type="text" th:field="*{length}">-->
-<!--                        <input class="hidden" type="text" th:field="*{width}">-->
-<!--                        <input class="hidden" type="text" th:field="*{discountPercent}">-->
                         <div class="form-group">
                             <label class="col-sm-1 control-label no-padding-right" for="form-field-7">
                                 Giới thiệu(tóm tắt)</label>
@@ -124,7 +111,7 @@
                                 <div class="wysiwyg-editor" id="editor1" data-target="content"></div>
                             </div>
                             <textarea id="content" name="content" class="autosize-transition form-control tColor hidden"
-                                      onfocus="this.style.color='black'" th:field="*{descriptions}" ></textarea>
+                                      onfocus="this.style.color='black'" th:field="*{content}" ></textarea>
                         </div>
                         <br>
                         <div class="col-md-offset-1 col-md-9">
@@ -166,7 +153,7 @@
                     <script type="text/javascript" th:inline="javascript">
                         $(document).ready(
                             function () {
-                                let content = [[${post.descriptions}]];
+                                let content = [[${post.content}]];
                                 $('#editor1').html(content);
                                 $('#id-input-file-2').change(function (){
                                     showImageThumnail(this);

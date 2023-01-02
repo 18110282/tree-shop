@@ -3,9 +3,13 @@ package com.treeshop.serviceImpl;
 import com.treeshop.dao.PostRepository;
 import com.treeshop.entity.CategoryEntity;
 import com.treeshop.entity.PostsEntity;
+import com.treeshop.entity.ProductsEntity;
 import com.treeshop.service.CommonService;
 import com.treeshop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -16,8 +20,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -33,7 +39,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostsEntity> listAll() {
-        return postRepository.findAllByEnabledIsTrue();
+        return postRepository.findAllQuery();
     }
 
     @Override
@@ -72,5 +78,33 @@ public class PostServiceImpl implements PostService {
         PostsEntity postsEntity = postRepository.findByPostsId(postId);
         postsEntity.setEnabled(false);
         postRepository.save(postsEntity);
+    }
+
+    @Override
+    public Page<PostsEntity> listAllWeb(Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, 4);
+        return postRepository.findAllByEnabledIsTrue(pageable);
+    }
+
+    @Override
+    public List<PostsEntity> findTop3Newest() {
+        return postRepository.findTop3ByEnabledIsTrueOrderByCreateDateDesc();
+    }
+
+    @Override
+    public List<PostsEntity> findTop3Random() {
+        List<PostsEntity> postsEntityList = postRepository.findAllQuery();
+        Random rand = new Random();
+        List<PostsEntity> postsEntityListRandom = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            if(postsEntityList.size() == 0){
+                break;
+            }
+            int randomIndex = rand.nextInt(postsEntityList.size());
+            PostsEntity randomElement = postsEntityList.get(randomIndex);
+            postsEntityList.remove(randomIndex);
+            postsEntityListRandom.add(randomElement);
+        }
+        return postsEntityListRandom;
     }
 }

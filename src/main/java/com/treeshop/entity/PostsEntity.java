@@ -2,6 +2,7 @@ package com.treeshop.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(name = "posts")
 public class PostsEntity {
     @Id
@@ -18,7 +20,7 @@ public class PostsEntity {
     @Column(name = "title", length = 300)
     private String title;
     @Column(name = "descriptions")
-    private String descriptions;
+    private String content;
     @Column(name= "header_image", length = 100)
     private String headerImage;
     @Column(name = "create_date")
