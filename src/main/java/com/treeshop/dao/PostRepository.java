@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends PagingAndSortingRepository<PostsEntity, String> {
-    List<PostsEntity> findAll();
+    List<PostsEntity> findAllByEnabledIsTrue();
     boolean existsByPostsId(String postsId);
     PostsEntity findByPostsId(String postsId);
 }
